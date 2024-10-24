@@ -4,17 +4,18 @@
 
 ## Coding
 
-* Replace in files
+* Replace in files (VSCode: Ctrl + Shift + S)
 	* replace `WinUI3Template` with your own root namespace.
 	* replace `WinUI3 Template` with your own app name.
 	* replace `A template for WinUI 3.` with your own description.
 	* replace `AuthorName` with your own name.
-	* replace `https://github.com/Jack251970/WinUI3Template` with your own repository.
+	* replace `Settings_Repository_NavigateUri` with your own repository.
 	* replace `Settings_LicenseLink_NavigateUri` with your own license link.
 	* replace `8f256a41-5ee3-4218-97c6-12e1f8d5c234` with your own GUID (PhoneProductId).
 	* replace `445ab065-101e-45ff-80ab-45efcdf5dae5` with your own GUID (ToastActivatorCLSID).
 
-* Rename file names: rename `WinUI3Template` with your own project root name.
+* Rename file names (PowerToys: Rename with PowerRename)
+	* rename `WinUI3Template` with your own project root name.
 
 ## Building
 

@@ -107,10 +107,10 @@
                         Text="{x:Bind ViewModel.Version, Mode=OneTime}" />
                     <controls:SettingsExpander.Items>
                         <controls:SettingsCard x:Uid="Settings_Repository_Card">
-                            <HyperlinkButton Content="https://github.com/Jack251970/WinUI3Template" NavigateUri="https://github.com/Jack251970/WinUI3Template" />
+                            <HyperlinkButton Content="Settings_Repository_NavigateUri" NavigateUri="Settings_Repository_NavigateUri" />
                         </controls:SettingsCard>
                         <controls:SettingsCard x:Uid="Settings_Feedback_Card">
-                            <HyperlinkButton Content="https://github.com/Jack251970/WinUI3Template/issues" NavigateUri="https://github.com/Jack251970/WinUI3Template/issues" />
+                            <HyperlinkButton Content="Settings_Repository_NavigateUri/issues" NavigateUri="Settings_Repository_NavigateUri/issues" />
                         </controls:SettingsCard>
                         <controls:SettingsCard
                             x:Uid="Settings_Dependencies_Card"
