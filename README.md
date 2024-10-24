@@ -11,6 +11,8 @@
 	* replace `AuthorName` with your own name.
 	* replace `https://github.com/Jack251970/WinUI3Template` with your own repository.
 	* replace `Settings_LicenseLink_NavigateUri` with your own license link.
+	* replace `8f256a41-5ee3-4218-97c6-12e1f8d5c234` with your own GUID (PhoneProductId).
+	* replace `445ab065-101e-45ff-80ab-45efcdf5dae5` with your own GUID (ToastActivatorCLSID).
 
 * Rename file names: rename `WinUI3Template` with your own project root name.
 
