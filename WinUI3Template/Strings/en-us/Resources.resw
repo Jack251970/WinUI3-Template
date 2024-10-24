@@ -138,9 +138,6 @@
   <data name="Settings_Appearance.Text" xml:space="preserve">
     <value>Apperance</value>
   </data>
-  <data name="Settings_CopyRight_Card.Description" xml:space="preserve">
-    <value>CopyRight © 2024 Jack251970. All rights reserved.</value>
-  </data>
   <data name="Settings_Dependencies_Card.Description" xml:space="preserve">
     <value>Dependencies &amp; references</value>
   </data>

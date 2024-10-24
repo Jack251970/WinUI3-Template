@@ -15,7 +15,7 @@
   IgnorableNamespaces="mp rescap desktop desktop4 desktop6 uap uap5 genTemplate">
 
   <Identity
-    Name="Jack251970.WinUI3Template"
+    Name="AuthorName.WinUI3Template"
     Publisher="CN=11602"
     Version="3.0.0.0" />
     
@@ -23,7 +23,7 @@
     
   <Properties>
     <DisplayName>WinUI3 Template</DisplayName>
-    <PublisherDisplayName>Jack251970</PublisherDisplayName>
+    <PublisherDisplayName>AuthorName</PublisherDisplayName>
     <Logo>Assets\Logos\StoreLogo.png</Logo>
     <desktop6:FileSystemWriteVirtualization>disabled</desktop6:FileSystemWriteVirtualization>
   </Properties>

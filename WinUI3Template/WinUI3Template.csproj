@@ -17,7 +17,7 @@
     <Product>$(AssemblyName)</Product>
     <Description>A template for WinUI 3.</Description>
     <Company>$(Title) Team</Company>
-    <Authors>$(Company). Jack251970.</Authors>
+    <Authors>$(Company). AuthorName.</Authors>
     <Copyright>Copyright © 2023-2024 $(Company)</Copyright>
     <!-- Package Properties -->
     <PackageIcon Condition="'$(Configuration)'=='Debug'">Assets\Debug\PackageIcon.png</PackageIcon>
