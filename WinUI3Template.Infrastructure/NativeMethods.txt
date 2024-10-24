@@ -1,0 +1,6 @@
+﻿// RuntimeHelper
+GetCurrentPackageFullName
+GetCurrentProcess
+OpenProcessToken
+TOKEN_ELEVATION_TYPE
+GetTokenInformation

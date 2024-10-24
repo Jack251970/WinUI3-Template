@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>WinUI3 Template</value>
+  </data>
+  <data name="AppDisplayNameDebug" xml:space="preserve">
+    <value>WinUI3 Template (Debug)</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>A template for WinUI 3.</value>
+  </data>
+  <data name="Settings_LicenseLink.Content" xml:space="preserve">
+    <value>Open-source License</value>
+  </data>
+  <data name="Settings_About.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Settings_AboutApp_Card.Description" xml:space="preserve">
+    <value>A template for WinUI 3.</value>
+  </data>
+  <data name="Settings_Appearance.Text" xml:space="preserve">
+    <value>Apperance</value>
+  </data>
+  <data name="Settings_CopyRight_Card.Description" xml:space="preserve">
+    <value>CopyRight © 2024 Jack251970. All rights reserved.</value>
+  </data>
+  <data name="Settings_Dependencies_Card.Description" xml:space="preserve">
+    <value>Dependencies &amp; references</value>
+  </data>
+  <data name="Settings_Theme_Card.Description" xml:space="preserve">
+    <value>Select which app theme to display</value>
+  </data>
+  <data name="Settings_Theme_Card.Header" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Settings_Theme_Dark.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="Settings_Theme_Default.Content" xml:space="preserve">
+    <value>Use system setting</value>
+  </data>
+  <data name="Settings_Theme_Light.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Settings_Backdrop_Card.Header" xml:space="preserve">
+    <value>Backdrop</value>
+  </data>
+  <data name="Settings_Backdrop_Card.Description" xml:space="preserve">
+    <value>Select which app backdrop to display</value>
+  </data>
+  <data name="Settings_Backdrop_None.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="Settings_Backdrop_Mica.Content" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="Settings_Backdrop_Acrylic.Content" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="Settings_Backdrop_Blur.Content" xml:space="preserve">
+    <value>Blur</value>
+  </data>
+  <data name="Settings_Backdrop_Transparent.Content" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="Shell_Home.Content" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="TrayMenu_MenuFlyoutItem_ExitApp.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="TrayMenu_MenuFlyoutItem_ShowWindow.Text" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Settings_RunStartup_Card.Description" xml:space="preserve">
+    <value>Automatically launch app when you log in to Windows</value>
+  </data>
+  <data name="Settings_RunStartup_Card.Header" xml:space="preserve">
+    <value>Run at startup</value>
+  </data>
+  <data name="ButtonCancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="ButtonOk.Content" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Settings_Feedback_Card.Header" xml:space="preserve">
+    <value>File a bug or request new features</value>
+  </data>
+  <data name="Settings_Repository_Card.Header" xml:space="preserve">
+    <value>To view this repository</value>
+  </data>
+  <data name="AppNotificationUnhandledExceptionPayload" xml:space="preserve">
+    <value>&lt;toast launch="action=ToastClick"&gt;
+  &lt;visual&gt;
+    &lt;binding template="ToastGeneric"&gt;
+      &lt;text&gt;An unhandled error occurred&lt;/text&gt;
+      &lt;text&gt;Exception: {0}Please refer to the logs for more information&lt;/text&gt;
+    &lt;/binding&gt;
+  &lt;/visual&gt;
+&lt;/toast&gt;</value>
+  </data>
+  <data name="Shell_Settings.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings_General.Text" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings_Language_Card.Header" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Settings_Language_Card.Description" xml:space="preserve">
+    <value>Select which app language to display</value>
+  </data>
+  <data name="AppLanguageItem_Default" xml:space="preserve">
+    <value>Use system setting</value>
+  </data>
+  <data name="TeachingTipRestart.Subtitle" xml:space="preserve">
+    <value>The application needs to be restarted in order to apply these settings, would you like to restart the app?</value>
+  </data>
+</root>

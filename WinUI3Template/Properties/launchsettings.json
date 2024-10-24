@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "WinUI3Template (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WinUI3Template (Unpackaged)": {
+      "commandName": "Project",
+      "commandLineArgs": "/startup"
+    }
+  }
+}

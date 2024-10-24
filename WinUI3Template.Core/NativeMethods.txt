@@ -1,0 +1,6 @@
+﻿// Monitor Info
+GetSystemMetrics
+EnumDisplayMonitors
+MonitorFromWindow
+GetMonitorInfo
+MONITORINFOEXW
