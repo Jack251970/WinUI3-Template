@@ -2,8 +2,6 @@
 
 public static class Constants
 {
-    public const string WinUI3Template = "WinUI3Template";
-
     #region Startup
 
     public const string StartupRegistryKey = "WinUI3 Template";
@@ -21,6 +19,8 @@ public static class Constants
     #endregion
 
     #region Local Settings
+
+    public const string LocalAppDataFolder = "WinUI3 Template";
 
 #if DEBUG
     public const string ApplicationDataFolder = "ApplicationData(Debug)";
