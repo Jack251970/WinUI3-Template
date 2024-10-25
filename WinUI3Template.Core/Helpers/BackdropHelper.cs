@@ -1,5 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
+using Windows.UI.Composition;
 using WinUIEx;
 
 namespace WinUI3Template.Core.Helpers;
@@ -23,7 +24,7 @@ public partial class BackdropHelper
 
     private partial class BlurredBackdrop : CompositionBrushBackdrop
     {
-        protected override Windows.UI.Composition.CompositionBrush CreateBrush(Windows.UI.Composition.Compositor compositor)
+        protected override CompositionBrush CreateBrush(Compositor compositor)
             => compositor.CreateHostBackdropBrush();
     }
 }

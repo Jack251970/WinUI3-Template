@@ -3,6 +3,7 @@ using Windows.Foundation;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace WinUI3Template.Core.Models;
 
@@ -18,7 +19,7 @@ internal class MonitorInfo
     /// <returns>A list of display monitors</returns>
     public static unsafe IList<MonitorInfo> GetDisplayMonitors()
     {
-        var monitorCount = PInvoke.GetSystemMetrics(Windows.Win32.UI.WindowsAndMessaging.SYSTEM_METRICS_INDEX.SM_CMONITORS);
+        var monitorCount = PInvoke.GetSystemMetrics(SYSTEM_METRICS_INDEX.SM_CMONITORS);
         var list = new List<MonitorInfo>(monitorCount);
         var callback = new MONITORENUMPROC((HMONITOR monitor, HDC deviceContext, RECT* rect, LPARAM data) =>
         {
