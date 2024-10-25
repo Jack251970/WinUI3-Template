@@ -75,10 +75,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Assets\FluentIcons\**" CopyToOutputDirectory="Always" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="UserControls\TrayMenuControl.xaml" />
     <None Remove="Pages\DashboardPage.xaml" />
     <None Remove="Pages\HomePage.xaml" />
