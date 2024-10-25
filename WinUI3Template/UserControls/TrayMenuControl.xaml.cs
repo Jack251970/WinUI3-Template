@@ -26,7 +26,7 @@ public sealed partial class TrayMenuControl : UserControl
 #pragma warning restore CA1822 // Mark members as static
 
     [RelayCommand]
-    private async Task ExitAppAsync()
+    private void ExitApp()
     {
         DisposeTrayIconControl();
         App.CanCloseWindow = true;
