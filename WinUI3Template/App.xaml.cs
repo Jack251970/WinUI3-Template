@@ -208,7 +208,7 @@ public partial class App : Application
         Debug.WriteLine($"An unhandled error occurred : {exceptionString}");
 
         GetService<IAppNotificationService>().TryShow(
-            string.Format("AppNotificationUnhandledExceptionPayload".GetLocalized(),
+            string.Format("AppNotificationUnhandledExceptionPayload".GetLocalizedString(),
             $"{ex?.ToString()}{Environment.NewLine}"));
     }
 

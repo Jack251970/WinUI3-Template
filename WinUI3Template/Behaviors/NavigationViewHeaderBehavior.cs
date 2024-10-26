@@ -97,7 +97,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
                 {
                     if (headerLocalize)
                     {
-                        header = header.GetLocalized();
+                        header = header.GetLocalizedString();
                     }
                     AssociatedObject.Header = header;
                 }

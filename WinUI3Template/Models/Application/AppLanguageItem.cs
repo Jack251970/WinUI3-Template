@@ -30,7 +30,7 @@ public sealed class AppLanguageItem
         if (systemDefault || string.IsNullOrEmpty(code))
         {
             Code = new CultureInfo(code).Name;
-            Name = "AppLanguageItem_Default".GetLocalized();
+            Name = "AppLanguageItem_Default".GetLocalizedString();
         }
         else
         {

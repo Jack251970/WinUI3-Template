@@ -50,7 +50,7 @@ public static class ResourceExtensions
 
     #region extension methods
 
-    public static string GetLocalized(this string resourceKey, string resourceFileName = Constants.DefaultResourceFileName)
+    public static string GetLocalizedString(this string resourceKey, string resourceFileName = Constants.DefaultResourceFileName)
     {
         // Fix resource key
         resourceKey = resourceKey.Replace(".", "/");
