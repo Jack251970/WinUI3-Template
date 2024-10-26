@@ -25,6 +25,11 @@ public static class WindowsExtensions
 
     public static T CreateWindow<T>(bool isNewThread = false, WindowLifecycleActions? lifecycleActions = null, object? parameter = null) where T : Window, new()
     {
+        return CreateWindow(() => new T(), isNewThread, lifecycleActions, parameter);
+    }
+
+    public static T CreateWindow<T>(Func<T> func, bool isNewThread = false, WindowLifecycleActions? lifecycleActions = null, object? parameter = null) where T : Window
+    {
         T window = null!;
         DispatcherExitDeferral? deferral = null;
 
@@ -47,7 +52,7 @@ public static class WindowsExtensions
                 lifecycleActions?.Window_Creating?.Invoke();
 
                 // create a new window
-                var window = new T();
+                var window = func();
 
                 // register window in ui thread extension
                 ThreadExtensions.RegisterWindow(window);
@@ -97,7 +102,7 @@ public static class WindowsExtensions
             lifecycleActions?.Window_Creating?.Invoke();
 
             // create a new window
-            window = new T();
+            window = func();
 
             // register window in ui thread extension
             ThreadExtensions.RegisterWindow(window);
@@ -155,6 +160,7 @@ public static class WindowsExtensions
         {
             await CloseWindowAsync(window);
         }
+        CurrentParameter = null;
     }
 
     #endregion

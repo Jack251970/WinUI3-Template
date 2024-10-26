@@ -212,12 +212,15 @@ public partial class App : Application
             $"{ex?.ToString()}{Environment.NewLine}"));
     }
 
-    public static new void Exit()
+    public static async new void Exit()
     {
         Debug.WriteLine("Exit current application.");
 
         // Unregister app notification service
         GetService<IAppNotificationService>().Unregister();
+
+        // Close all windows
+        await WindowsExtensions.CloseAllWindowsAsync();
 
         Current.Exit();
     }
