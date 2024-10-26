@@ -2,6 +2,14 @@
 
 **A template for WinUI 3.**
 
+## Features
+
+* Navigation View
+* Setting Page
+* Tray Icon
+* Window Creation
+* Multi-thread Window
+
 ## Coding
 
 * Replace in files (VSCode: Ctrl + Shift + S)
@@ -22,6 +30,7 @@
 Build the solution in Visual Studio or run `dotnet build` from the command line.
 
 ## Reference
+
 * Files: https://github.com/files-community/Files
 * fluentui-system-icons: https://github.com/microsoft/fluentui-system-icons
 * H.NotifyIcon: https://github.com/HavenDV/H.NotifyIcon
