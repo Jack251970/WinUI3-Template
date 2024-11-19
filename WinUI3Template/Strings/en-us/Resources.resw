@@ -132,7 +132,7 @@
   <data name="Settings_About.Text" xml:space="preserve">
     <value>About</value>
   </data>
-  <data name="Settings_AboutApp_Card.Description" xml:space="preserve">
+  <data name="Settings_AboutApp_Expander.Description" xml:space="preserve">
     <value>A template for WinUI 3.</value>
   </data>
   <data name="Settings_Appearance.Text" xml:space="preserve">

@@ -97,7 +97,7 @@
                 <!--  About  -->
                 <TextBlock x:Uid="Settings_About" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                <controls:SettingsExpander x:Uid="Settings_AboutApp_Card" Header="{x:Bind ViewModel.AppDisplayName, Mode=OneTime}">
+                <controls:SettingsExpander x:Uid="Settings_AboutApp_Expander" Header="{x:Bind ViewModel.AppDisplayName, Mode=OneTime}">
                     <controls:SettingsExpander.HeaderIcon>
                         <BitmapIcon ShowAsMonochrome="False" UriSource="ms-appx:///Assets/Icon.ico" />
                     </controls:SettingsExpander.HeaderIcon>
