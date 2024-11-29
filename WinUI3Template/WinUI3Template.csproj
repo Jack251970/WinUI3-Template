@@ -76,9 +76,9 @@
 
   <ItemGroup>
     <None Remove="UserControls\TrayMenuControl.xaml" />
-    <None Remove="Pages\HomePage.xaml" />
-    <None Remove="Pages\NavShellPage.xaml" />
-    <None Remove="Pages\SettingsPage.xaml" />
+    <None Remove="Views\Pages\HomePage.xaml" />
+    <None Remove="Views\Pages\NavShellPage.xaml" />
+    <None Remove="Views\Pages\SettingsPage.xaml" />
     <None Remove="Views\Windows\MainWindow.xaml" />
   </ItemGroup>
 
@@ -106,13 +106,13 @@
     <Page Update="UserControls\TrayMenuControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Pages\HomePage.xaml">
+    <Page Update="Views\Pages\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Pages\NavShellPage.xaml">
+    <Page Update="Views\Pages\NavShellPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Pages\SettingsPage.xaml">
+    <Page Update="Views\Pages\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Windows\MainWindow.xaml">
