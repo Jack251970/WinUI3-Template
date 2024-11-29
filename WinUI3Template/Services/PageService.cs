@@ -10,6 +10,7 @@ internal class PageService : IPageService
 
     public PageService()
     {
+        // Main Window Pages
         Configure<HomeViewModel, HomePage>();
         Configure<SettingsViewModel, SettingsPage>();
     }
