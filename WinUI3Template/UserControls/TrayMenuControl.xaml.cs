@@ -8,7 +8,7 @@ namespace WinUI3Template.UserControls;
 public sealed partial class TrayMenuControl : UserControl
 {
     [ObservableProperty]
-    private string _appDisplayName = ConstantHelper.AppDisplayName;
+    private string _trayIconToolTip = string.Empty;
 
     public TrayMenuControl()
     {

@@ -43,6 +43,12 @@ public partial class App : Application
 
     #endregion
 
+    #region Tray Icon
+
+    public static TrayMenuControl TrayIcon { get; set; } = null!;
+
+    #endregion
+
     #region Constructor
 
     public App()

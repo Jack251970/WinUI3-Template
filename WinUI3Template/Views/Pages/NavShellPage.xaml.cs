@@ -12,6 +12,14 @@ public sealed partial class NavShellPage : Page
         ViewModel = DependencyExtensions.GetRequiredService<NavShellViewModel>();
         InitializeComponent();
 
+        var trayIcon = new TrayMenuControl
+        {
+            TrayIconToolTip = ConstantHelper.AppDisplayName
+        };
+        ContentArea.Children.Add(trayIcon);
+
+        App.TrayIcon = trayIcon;
+
         ViewModel.NavigationService.Frame = NavigationFrame;
         ViewModel.ShellService.Initialize(NavigationViewControl);
 
