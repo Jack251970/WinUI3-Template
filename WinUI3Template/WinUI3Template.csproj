@@ -80,23 +80,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="UserControls\TrayMenuControl.xaml" />
-    <None Remove="Views\Pages\HomePage.xaml" />
-    <None Remove="Views\Pages\NavShellPage.xaml" />
-    <None Remove="Views\Pages\SettingsPage.xaml" />
-    <None Remove="Views\Windows\MainWindow.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="NativeMethods.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="Views\Windows\SplashScreenPage.xaml" />
+    <AdditionalFiles Include="NativeMethods.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="NativeMethods.txt" />
+    <None Remove="UserControls\TrayMenuControl.xaml" />
+    <None Remove="Views\Pages\HomePage.xaml" />
+    <None Remove="Views\Pages\NavShellPage.xaml" />
+    <None Remove="Views\Pages\SettingsPage.xaml" />
+    <None Remove="Views\Pages\SplashScreenPage.xaml" />
+    <None Remove="Views\Windows\MainWindow.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -124,12 +121,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Views\Pages\SplashScreenPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Update="UserControls\TrayMenuControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -140,6 +131,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Pages\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Views\Pages\SplashScreenPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Views\Windows\MainWindow.xaml">
