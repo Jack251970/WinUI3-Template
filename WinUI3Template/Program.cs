@@ -39,6 +39,7 @@ public class Program
         {
             instance.Activated += OnActivated;
         }
+#if SINGLE_INSTANCE
         else
         {
             // Redirect activation to the existing instance
@@ -49,6 +50,7 @@ public class Program
 
             return;
         }
+#endif
 
         Application.Start((p) => {
             var context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
@@ -70,6 +72,7 @@ public class Program
         }
     }
 
+#if SINGLE_INSTANCE
     /// <summary>
     /// Redirects the activation to the main process.
     /// </summary>
@@ -95,6 +98,8 @@ public class Program
             [new(eventHandle.DangerousGetHandle())],
             out var handleIndex);
     }
+#endif
+
 }
 
 #endif

@@ -9,6 +9,8 @@
 * Tray Icon
 * Window Creation
 * Multi-thread Window
+* Custom Program
+* Single Instance
 
 ## Coding
 

@@ -35,7 +35,7 @@ public partial class App : Application
 
     public static MainWindow MainWindow { get; set; } = null!;
 
-#if !DISABLE_XAML_GENERATED_MAIN
+#if !DISABLE_XAML_GENERATED_MAIN && SINGLE_INSTANCE
     private static bool IsExistWindow { get; set; } = false;
 #endif
 
@@ -47,7 +47,7 @@ public partial class App : Application
 
     public App()
     {
-#if !DISABLE_XAML_GENERATED_MAIN
+#if !DISABLE_XAML_GENERATED_MAIN && SINGLE_INSTANCE
         // Check if app is already running
         if (SystemHelper.IsWindowExist(null, ConstantHelper.AppDisplayName, true))
         {
@@ -174,7 +174,7 @@ public partial class App : Application
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
-#if !DISABLE_XAML_GENERATED_MAIN
+#if !DISABLE_XAML_GENERATED_MAIN && SINGLE_INSTANCE
         if (IsExistWindow)
         {
             return;
