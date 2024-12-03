@@ -4,3 +4,6 @@ SetEvent
 CoWaitForMultipleObjects
 CWMO_FLAGS
 INFINITE
+
+// MainWindow
+IsIconic

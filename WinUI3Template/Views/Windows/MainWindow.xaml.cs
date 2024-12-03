@@ -1,5 +1,8 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System.Runtime.InteropServices;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Windows.Graphics;
+using Windows.Win32;
 
 namespace WinUI3Template.Views.Windows;
 
@@ -26,6 +29,8 @@ public sealed partial class MainWindow : WindowEx
     public UIElement? TitleBar { get; set; }
 
     public UIElement? TitleBarText { get; set; }
+
+    public UIElement? Shell { get; set; }
 
     public new bool Visible { get; set; } = false;
 
@@ -93,6 +98,7 @@ public sealed partial class MainWindow : WindowEx
     {
         if (App.CanCloseWindow)
         {
+            Closed -= WindowEx_Closed;
             App.Exit();
         }
         else
@@ -103,12 +109,92 @@ public sealed partial class MainWindow : WindowEx
         }
     }
 
+    public void ShowSplashScreen()
+    {
+        var rootFrame = EnsureWindowIsInitialized(true);
+
+        rootFrame?.Navigate(typeof(SplashScreenPage));
+    }
+
     public async Task InitializeApplicationAsync(object activatedEventArgs)
     {
-        App.MainWindow.Visible = true;
-        App.MainWindow.Activate();
+        var rootFrame = EnsureWindowIsInitialized(false);
+
+        if (rootFrame is null)
+        {
+            return;
+        }
+
+        // Show window
+        if (!Visible)
+        {
+            // When resuming the cached instance
+            AppWindow.Show();
+            Visible = true;
+            Activate();
+
+            // Bring to front
+            BringToFront();
+        }
+
+        // Restore window if minimized
+        if (PInvoke.IsIconic(new(WindowHandle)))
+        {
+            this.Restore();
+        }
 
         await Task.CompletedTask;
+    }
+
+    private Frame? EnsureWindowIsInitialized(bool splash)
+    {
+        try
+        {
+            if (splash)
+            {
+                if (Content is not Frame splashFrame)
+                {
+                    // Create a Frame to act as the navigation context and navigate to the first page
+                    splashFrame = new() { CacheSize = 1 };
+                    splashFrame.NavigationFailed += (s, e) =>
+                    {
+                        throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+                    };
+
+                    // Place the frame in the current Window
+                    Content = splashFrame;
+                }
+
+                return splashFrame;
+            }
+            else
+            {
+                if (Content is not NavShellPage shell)
+                {
+                    shell = DependencyExtensions.GetRequiredService<NavShellPage>();
+                    if (shell == null)
+                    {
+                        var frame = new Frame();
+                        Content = frame;
+                        return frame;
+                    }
+                    else
+                    {
+                        Shell = shell;
+                        Content = shell;
+                        return shell.ShellFrame;
+                    }
+                }
+                else
+                {
+                    return shell.ShellFrame;
+                }
+            }
+        }
+        catch (COMException)
+        {
+            return null;
+        }
     }
 
     #endregion

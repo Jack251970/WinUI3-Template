@@ -6,7 +6,7 @@ SendMessage
 WM_SHOWWINDOW
 SHOW_WINDOW_STATUS
 
-// Monitor Info
+// MonitorInfo
 GetSystemMetrics
 EnumDisplayMonitors
 MonitorFromWindow

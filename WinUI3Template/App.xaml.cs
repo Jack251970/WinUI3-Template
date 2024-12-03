@@ -6,6 +6,9 @@ using Microsoft.Windows.AppLifecycle;
 
 namespace WinUI3Template;
 
+/// <summary>
+/// Represents the entry point of UI for the app.
+/// </summary>
 public partial class App : Application
 {
     private static string ClassName => typeof(App).Name;
@@ -46,6 +49,12 @@ public partial class App : Application
     #region Tray Icon
 
     public static TrayMenuControl TrayIcon { get; set; } = null!;
+
+    #endregion
+
+    #region Splash Screen
+
+    public static TaskCompletionSource? SplashScreenLoadingTCS { get; private set; }
 
     #endregion
 
@@ -174,12 +183,17 @@ public partial class App : Application
         AppLanguageHelper.Initialize();
     }
 
-#endregion
+    #endregion
 
     #region App Lifecycle
 
-    protected async override void OnLaunched(LaunchActivatedEventArgs args)
+    /// <summary>
+    /// Gets invoked when the application is launched normally by the end user.
+    /// </summary>
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
+        base.OnLaunched(args);
+
 #if !DISABLE_XAML_GENERATED_MAIN && SINGLE_INSTANCE
         if (IsExistWindow)
         {
@@ -187,24 +201,46 @@ public partial class App : Application
         }
 #endif
 
-        base.OnLaunched(args);
-
         // Ensure the current window is active
         if (MainWindow != null)
         {
             return;
         }
 
-        Debug.WriteLine($"App launched. Launch args type: {args.GetType().Name}.");
+        _ = ActivateAsync();
 
-        var a = DisplayMonitor.GetPrimaryMonitorInfo();
+        async Task ActivateAsync()
+        {
+            // Get AppActivationArguments
+            var appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
+            var isStartupTask = appActivationArguments.Data is Windows.ApplicationModel.Activation.IStartupTaskActivatedEventArgs;
 
-        // Create main window
-        MainWindow = new MainWindow();
-        await GetService<IActivationService>().ActivateMainWindowAsync(args);
+            if (!isStartupTask)
+            {
+                // Initialize the window
+                MainWindow = new MainWindow();
 
-        // Initialize dialog service
-        GetService<IDialogService>().Initialize();
+                // Wait for the window to initialize
+                await Task.Delay(10);
+
+                // Show the splash screen
+                SplashScreenLoadingTCS = new TaskCompletionSource();
+                await GetService<IActivationService>().LaunchMainWindowAsync(appActivationArguments);
+
+                // Activate the window
+                MainWindow.Activate();
+            }
+
+            Debug.WriteLine($"App launched. Launch args type: {args.GetType().Name}.");
+
+            // Initialize dialog service
+            GetService<IDialogService>().Initialize();
+
+            // TODO: Initialize others things
+            await Task.Delay(5000);
+
+            await GetService<IActivationService>().ActivateMainWindowAsync(args);
+        }
     }
 
     private static void HandleAppUnhandledException(Exception? ex, bool showToastNotification)
@@ -225,12 +261,9 @@ public partial class App : Application
 
     public async Task OnActivatedAsync(AppActivationArguments activatedEventArgs)
     {
-        var activatedEventArgsData = activatedEventArgs.Data;
+        Debug.WriteLine($"The app is being activated. Activation type: {activatedEventArgs.Data.GetType().Name}");
 
-        Debug.WriteLine($"The app is being activated. Activation type: {activatedEventArgsData.GetType().Name}");
-
-        // InitializeApplication accesses UI, needs to be called on UI thread
-        await MainWindow.EnqueueOrInvokeAsync((window) => window.InitializeApplicationAsync(activatedEventArgsData));
+        await GetService<IActivationService>().ActivateMainWindowAsync(activatedEventArgs);
     }
 
     public static async new void Exit()

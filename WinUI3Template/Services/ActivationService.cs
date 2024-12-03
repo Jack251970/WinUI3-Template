@@ -1,5 +1,4 @@
 ﻿using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 
 namespace WinUI3Template.Services;
 
@@ -10,25 +9,32 @@ internal class ActivationService(ActivationHandler<LaunchActivatedEventArgs> def
     private readonly IAppSettingsService _appSettingsService = appSettingsService;
     private readonly IBackdropSelectorService _backdropSelectorService = backdropSelectorService;
     private readonly IThemeSelectorService _themeSelectorService = themeSelectorService;
-    private UIElement? _shell = null;
+
+    public async Task LaunchMainWindowAsync(object activationArgs)
+    {
+        // Execute tasks before activation.
+        await InitializeAsync();
+
+        // Show splash screen in the MainWindow
+        App.MainWindow.ShowSplashScreen();
+
+        // Handle activation via ActivationHandlers.
+        await HandleActivationAsync(activationArgs);
+
+        // Execute tasks after activation.
+        await StartupAsync(App.MainWindow);
+    }
 
     public async Task ActivateMainWindowAsync(object activationArgs)
     {
         // Execute tasks before activation.
         await InitializeAsync();
 
-        // Set the MainWindow Content.
-        if (App.MainWindow.Content == null)
-        {
-            _shell = DependencyExtensions.GetRequiredService<NavShellPage>();
-            App.MainWindow.Content = _shell ?? new Frame();
-        }
+        // Activate the MainWindow
+        await App.MainWindow.InitializeApplicationAsync(activationArgs);
 
         // Handle activation via ActivationHandlers.
         await HandleActivationAsync(activationArgs);
-
-        // Activate the MainWindow
-        await App.MainWindow.InitializeApplicationAsync(activationArgs);
 
         // Execute tasks after activation.
         await StartupAsync(App.MainWindow);
