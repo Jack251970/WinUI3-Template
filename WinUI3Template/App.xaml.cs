@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using Microsoft.Windows.AppLifecycle;
 
 namespace WinUI3Template;
 
@@ -34,7 +35,10 @@ public partial class App : Application
 
     public static MainWindow MainWindow { get; set; } = null!;
 
+#if !DISABLE_XAML_GENERATED_MAIN
     private static bool IsExistWindow { get; set; } = false;
+#endif
+
     public static bool CanCloseWindow { get; set; } = false;
 
     #endregion
@@ -43,6 +47,7 @@ public partial class App : Application
 
     public App()
     {
+#if !DISABLE_XAML_GENERATED_MAIN
         // Check if app is already running
         if (SystemHelper.IsWindowExist(null, ConstantHelper.AppDisplayName, true))
         {
@@ -50,6 +55,7 @@ public partial class App : Application
             Current.Exit();
             return;
         }
+#endif
 
         // Initialize the component
         InitializeComponent();
@@ -162,16 +168,18 @@ public partial class App : Application
         AppLanguageHelper.Initialize();
     }
 
-    #endregion
+#endregion
 
     #region App Lifecycle
 
     protected async override void OnLaunched(LaunchActivatedEventArgs args)
     {
+#if !DISABLE_XAML_GENERATED_MAIN
         if (IsExistWindow)
         {
             return;
         }
+#endif
 
         base.OnLaunched(args);
 
@@ -205,6 +213,16 @@ public partial class App : Application
                 string.Format("AppNotificationUnhandledExceptionPayload".GetLocalizedString(),
                 $"{ex?.ToString()}{Environment.NewLine}"));
         }
+    }
+
+    public async Task OnActivatedAsync(AppActivationArguments activatedEventArgs)
+    {
+        var activatedEventArgsData = activatedEventArgs.Data;
+
+        Debug.WriteLine($"The app is being activated. Activation type: {activatedEventArgsData.GetType().Name}");
+
+        // InitializeApplication accesses UI, needs to be called on UI thread
+        await MainWindow.EnqueueOrInvokeAsync((window) => window.InitializeApplicationAsync(activatedEventArgsData));
     }
 
     public static async new void Exit()

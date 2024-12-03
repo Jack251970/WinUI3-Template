@@ -2,6 +2,12 @@
 
 public static class Constants
 {
+    #region Program
+
+    public const string WinUI3Template = "WinUI3Template";
+
+    #endregion
+
     #region Startup
 
     public const string StartupRegistryKey = "WinUI3 Template";

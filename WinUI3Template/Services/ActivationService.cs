@@ -28,8 +28,7 @@ internal class ActivationService(ActivationHandler<LaunchActivatedEventArgs> def
         await HandleActivationAsync(activationArgs);
 
         // Activate the MainWindow
-        App.MainWindow.Visible = true;
-        App.MainWindow.Activate();
+        await App.MainWindow.InitializeApplicationAsync(activationArgs);
 
         // Execute tasks after activation.
         await StartupAsync(App.MainWindow);

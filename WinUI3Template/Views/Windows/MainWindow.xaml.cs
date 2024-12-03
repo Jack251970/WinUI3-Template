@@ -103,5 +103,13 @@ public sealed partial class MainWindow : WindowEx
         }
     }
 
+    public async Task InitializeApplicationAsync(object activatedEventArgs)
+    {
+        App.MainWindow.Visible = true;
+        App.MainWindow.Activate();
+
+        await Task.CompletedTask;
+    }
+
     #endregion
 }
