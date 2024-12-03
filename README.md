@@ -6,11 +6,12 @@
 
 * Navigation View
 * Setting Page
-* Tray Icon
+* Tray Icon (Enable/Disable)
 * Window Creation
 * Multi-thread Window
-* Custom Program
-* Single Instance
+* Custom Program (Enable/Disable)
+* Single Instance (Enable/Disable)
+* Splash Screen (Enable/Disable)
 
 ## Coding
 

@@ -6,9 +6,6 @@ using Microsoft.Windows.AppLifecycle;
 
 namespace WinUI3Template;
 
-/// <summary>
-/// Represents the entry point of UI for the app.
-/// </summary>
 public partial class App : Application
 {
     private static string ClassName => typeof(App).Name;
@@ -191,9 +188,6 @@ public partial class App : Application
 
     #region App Lifecycle
 
-    /// <summary>
-    /// Gets invoked when the application is launched normally by the end user.
-    /// </summary>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
@@ -217,23 +211,18 @@ public partial class App : Application
         {
             // Get AppActivationArguments
             var appActivationArguments = AppInstance.GetCurrent().GetActivatedEventArgs();
-            var isStartupTask = appActivationArguments.Data is Windows.ApplicationModel.Activation.IStartupTaskActivatedEventArgs;
 
-            if (!isStartupTask)
-            {
-                // Initialize the window
-                MainWindow = new MainWindow();
+            // Initialize the window
+            MainWindow = new MainWindow();
 
-                // Wait for the window to initialize
-                await Task.Delay(10);
+#if SPLASH_SCREEN
+            // Show the splash screen
+            SplashScreenLoadingTCS = new TaskCompletionSource();
+            await GetService<IActivationService>().LaunchMainWindowAsync(appActivationArguments);
 
-                // Show the splash screen
-                SplashScreenLoadingTCS = new TaskCompletionSource();
-                await GetService<IActivationService>().LaunchMainWindowAsync(appActivationArguments);
-
-                // Activate the window
-                MainWindow.Activate();
-            }
+            // Activate the window
+            MainWindow.Activate();
+#endif
 
             Debug.WriteLine($"App launched. Launch args type: {args.GetType().Name}.");
 
@@ -241,7 +230,6 @@ public partial class App : Application
             GetService<IDialogService>().Initialize();
 
             // TODO: Initialize others things
-            await Task.Delay(5000);
 
             await GetService<IActivationService>().ActivateMainWindowAsync(args);
         }
