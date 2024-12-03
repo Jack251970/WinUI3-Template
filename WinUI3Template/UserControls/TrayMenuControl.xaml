@@ -15,8 +15,8 @@
         IconSource="ms-appx:///Assets/Icon.ico"
         MenuActivation="RightClick"
         NoLeftClickDelay="True"
-        ToolTipService.ToolTip="{x:Bind TrayIconToolTip, Mode=OneTime}"
-        ToolTipText="{x:Bind TrayIconToolTip, Mode=OneTime}">
+        ToolTipService.ToolTip="{x:Bind TrayIconToolTip, Mode=OneWay}"
+        ToolTipText="{x:Bind TrayIconToolTip, Mode=OneWay}">
         <tb:TaskbarIcon.ContextFlyout>
             <MenuFlyout>
                 <MenuFlyoutItem x:Uid="TrayMenu_MenuFlyoutItem_ShowWindow" Command="{x:Bind ShowWindowCommand}" />
