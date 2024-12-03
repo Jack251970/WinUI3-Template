@@ -21,7 +21,8 @@ public sealed partial class TrayMenuControl : UserControl
     [RelayCommand]
     private void ShowWindow()
     {
-        App.ShowMainWindow(false);
+        App.MainWindow.Show();
+        App.MainWindow.BringToFront();
     }
 #pragma warning restore CA1822 // Mark members as static
 

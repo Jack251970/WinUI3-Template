@@ -37,15 +37,6 @@ public partial class App : Application
     private static bool IsExistWindow { get; set; } = false;
     public static bool CanCloseWindow { get; set; } = false;
 
-    public static void ShowMainWindow(bool front)
-    {
-        MainWindow.Show();
-        if (front)
-        {
-            MainWindow.BringToFront();
-        }
-    }
-
     #endregion
 
     #region Constructor
@@ -103,7 +94,7 @@ public partial class App : Application
 
                 // Main window: Allow access to the main window
                 // from anywhere in the application.
-                services.AddSingleton(_ => MainWindow);
+                services.AddSingleton(_ => (Window)MainWindow);
 
                 // DispatcherQueue: Allow access to the DispatcherQueue for
                 // the main window for general purpose UI thread access.
