@@ -44,6 +44,7 @@
     <!-- Custom Settings -->
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants><!-- Custom Program -->
     <DefineConstants>SINGLE_INSTANCE;$(DefineConstants)</DefineConstants><!-- Single Instance -->
+    <DefineConstants>TRAY_ICON;$(DefineConstants)</DefineConstants><!-- Tray Icon -->
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(BuildingInsideVisualStudio)'!='True'">

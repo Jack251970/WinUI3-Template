@@ -96,17 +96,16 @@ public sealed partial class MainWindow : WindowEx
     // this enables the app to continue running in background after clicking close button
     private void WindowEx_Closed(object sender, WindowEventArgs args)
     {
-        if (App.CanCloseWindow)
+#if TRAY_ICON
+        if (!App.CanCloseWindow)
         {
-            Closed -= WindowEx_Closed;
-            App.Exit();
-        }
-        else
-        {
-            args.Handled = true;
             Hide();
-            Visible = false;
+            args.Handled = true;
+            return;
         }
+#endif
+        Closed -= WindowEx_Closed;
+        App.Exit();
     }
 
     public void ShowSplashScreen()
@@ -197,5 +196,5 @@ public sealed partial class MainWindow : WindowEx
         }
     }
 
-    #endregion
+#endregion
 }

@@ -30,7 +30,9 @@ public sealed partial class TrayMenuControl : UserControl
     private void ExitApp()
     {
         DisposeTrayIconControl();
+#if TRAY_ICON
         App.CanCloseWindow = true;
+#endif
         App.MainWindow.Close();
     }
 

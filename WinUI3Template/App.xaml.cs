@@ -42,13 +42,17 @@ public partial class App : Application
     private static bool IsExistWindow { get; set; } = false;
 #endif
 
+#if TRAY_ICON
     public static bool CanCloseWindow { get; set; } = false;
+#endif
 
     #endregion
 
     #region Tray Icon
 
+#if TRAY_ICON
     public static TrayMenuControl TrayIcon { get; set; } = null!;
+#endif
 
     #endregion
 
@@ -294,10 +298,12 @@ public partial class App : Application
             });
 
             // exit the current application
+#if TRAY_ICON
             CanCloseWindow = true;
+#endif
             MainWindow.Close();
         }
     }
 
-    #endregion
+#endregion
 }
