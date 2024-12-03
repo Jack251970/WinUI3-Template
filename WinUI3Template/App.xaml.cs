@@ -147,7 +147,9 @@ public partial class App : Application
             .Build();
 
         // Configure exception handlers
-        UnhandledException += App_UnhandledException;
+        UnhandledException += (sender, e) => HandleAppUnhandledException(e.Exception, true);
+        AppDomain.CurrentDomain.UnhandledException += (sender, e) => HandleAppUnhandledException(e.ExceptionObject as Exception, false);
+        TaskScheduler.UnobservedTaskException += (sender, e) => HandleAppUnhandledException(e.Exception, false);
 
         // Initialize core extensions after services
         DependencyExtensions.Initialize(GetService<IDependencyService>());
@@ -189,18 +191,20 @@ public partial class App : Application
         GetService<IDialogService>().Initialize();
     }
 
-    private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
+    private static void HandleAppUnhandledException(Exception? ex, bool showToastNotification)
     {
-        var ex = e.Exception;
         var exceptionString = ExceptionFormatter.FormatExcpetion(ex);
 
         Debugger.Break();
 
         Debug.WriteLine($"An unhandled error occurred : {exceptionString}");
 
-        GetService<IAppNotificationService>().TryShow(
-            string.Format("AppNotificationUnhandledExceptionPayload".GetLocalizedString(),
-            $"{ex?.ToString()}{Environment.NewLine}"));
+        if (showToastNotification)
+        {
+            GetService<IAppNotificationService>().TryShow(
+                string.Format("AppNotificationUnhandledExceptionPayload".GetLocalizedString(),
+                $"{ex?.ToString()}{Environment.NewLine}"));
+        }
     }
 
     public static async new void Exit()
