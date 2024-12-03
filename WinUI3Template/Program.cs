@@ -1,7 +1,9 @@
-﻿using System.Runtime.InteropServices;
-using Microsoft.UI.Dispatching;
+﻿using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
+using Windows.Win32;
+using Windows.Win32.Security;
+using Windows.Win32.System.Com;
 
 namespace WinUI3Template;
 
@@ -20,9 +22,6 @@ public class Program
 #else
     private const string AppInstanceKey = $"{Constants.WinUI3Template}-RELEASE";
 #endif
-
-    private const uint CWMO_DEFAULT = 0;
-    private const uint INFINITE = 0xFFFFFFFF;
 
     /// <summary>
     /// Initializes the process; the entry point of the process.
@@ -80,49 +79,22 @@ public class Program
     public static void RedirectActivationTo(AppInstance keyInstance, AppActivationArguments args)
     {
         // Create an event for activation synchronization
-        var eventHandle = CreateEvent(IntPtr.Zero, true, false, null!);
+        var eventHandle = PInvoke.CreateEvent((SECURITY_ATTRIBUTES?)null, true, false, null!);
 
         // Redirect activation asynchronously
         Task.Run(() =>
         {
             keyInstance.RedirectActivationToAsync(args).AsTask().Wait();
-            SetEvent(eventHandle);
+            PInvoke.SetEvent(eventHandle);
         });
 
         // Wait for the activation redirection to complete
-        _ = CoWaitForMultipleObjects(
-            CWMO_DEFAULT,
-            INFINITE,
-            1,
-            [eventHandle],
+        _ = PInvoke.CoWaitForMultipleObjects(
+            (uint)CWMO_FLAGS.CWMO_DEFAULT,
+            PInvoke.INFINITE,
+            [new(eventHandle.DangerousGetHandle())],
             out var handleIndex);
     }
-
-    #region Win32
-
-    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-    public static extern IntPtr CreateEvent(
-        IntPtr lpEventAttributes,
-        bool bManualReset,
-        bool bInitialState,
-        string lpName
-    );
-
-    [DllImport("kernel32.dll")]
-    public static extern bool SetEvent(
-        IntPtr hEvent
-    );
-
-    [DllImport("ole32.dll")]
-    public static extern uint CoWaitForMultipleObjects(
-        uint dwFlags,
-        uint dwMilliseconds,
-        ulong nHandles,
-        IntPtr[] pHandles,
-        out uint dwIndex
-    );
-
-    #endregion
 }
 
 #endif

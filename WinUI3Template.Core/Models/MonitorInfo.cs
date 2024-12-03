@@ -113,13 +113,9 @@ internal class MonitorInfo
     {
         fixed (MONITORINFOEXW* lpmiLocal = &lpmi)
         {
-            var __result = GetMonitorInfo(hMonitor, lpmiLocal);
+            var lpmiBase = (MONITORINFO*)lpmiLocal;
+            var __result = PInvoke.GetMonitorInfo(hMonitor, lpmiBase);
             return __result;
         }
     }
-
-#pragma warning disable SYSLIB1054  // Use LibraryImportAttribute instead of DllImportAttribute to generate p/invoke marshalling code at compile time
-    [DllImport("User32", ExactSpelling = true, EntryPoint = "GetMonitorInfoW")]
-    [DefaultDllImportSearchPaths(DllImportSearchPath.System32)] private static extern unsafe bool GetMonitorInfo(HMONITOR hMonitor, MONITORINFOEXW* lpmi);
-#pragma warning restore SYSLIB1054  // Use LibraryImportAttribute instead of DllImportAttribute to generate p/invoke marshalling code at compile time
 }

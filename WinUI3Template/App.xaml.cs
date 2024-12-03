@@ -191,6 +191,8 @@ public partial class App : Application
 
         Debug.WriteLine($"App launched. Launch args type: {args.GetType().Name}.");
 
+        var a = DisplayMonitor.GetPrimaryMonitorInfo();
+
         // Create main window
         MainWindow = new MainWindow();
         await GetService<IActivationService>().ActivateMainWindowAsync(args);
