@@ -226,6 +226,20 @@ public partial class App : Application
 
             Debug.WriteLine($"App launched. Launch args type: {args.GetType().Name}.");
 
+#if SPLASH_SCREEN
+            static async Task WithTimeoutAsync(Task task, TimeSpan timeout)
+            {
+                if (task == await Task.WhenAny(task, Task.Delay(timeout)))
+                {
+                    await task;
+                }
+            }
+
+            // Wait for the UI to update
+            await WithTimeoutAsync(SplashScreenLoadingTCS!.Task, TimeSpan.FromMilliseconds(500));
+            SplashScreenLoadingTCS = null;
+#endif
+
             // Initialize dialog service
             GetService<IDialogService>().Initialize();
 
