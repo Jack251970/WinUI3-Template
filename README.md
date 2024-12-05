@@ -1,17 +1,21 @@
 # WinUI3 Template
 
-**A template for WinUI 3.**
+**A template for WinUI 3, with support of tray icon, multi-thread window, splash screen, etc.**
 
 ## Features
 
 * Navigation View
 * Setting Page
-* Tray Icon (Enable/Disable)
+	* Language
+	* Startup
+	* Theme
+	* Backdrop
+* Tray Icon
 * Window Creation
 * Multi-thread Window
-* Custom Program (Enable/Disable)
-* Single Instance (Enable/Disable)
-* Splash Screen (Enable/Disable)
+* Custom Program
+* Single Instance
+* Splash Screen
 
 ## Coding
 
