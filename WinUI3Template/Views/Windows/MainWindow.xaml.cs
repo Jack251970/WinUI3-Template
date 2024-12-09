@@ -1,13 +1,19 @@
 ﻿using System.Runtime.InteropServices;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Graphics;
+using Windows.UI.ViewManagement;
 using Windows.Win32;
 
 namespace WinUI3Template.Views.Windows;
 
 public sealed partial class MainWindow : WindowEx
 {
+    private readonly DispatcherQueue dispatcherQueue;
+
+    private readonly UISettings settings;
+
     #region Position & Size
 
     public PointInt32 Position
@@ -55,7 +61,10 @@ public sealed partial class MainWindow : WindowEx
         Title = ConstantHelper.AppDisplayName;
         Content = null;
 
-        Closed += MainWindow_Closed;
+        // Theme change code picked from https://github.com/microsoft/WinUI-Gallery/pull/1239
+        dispatcherQueue = DispatcherQueue;
+        settings = new UISettings();
+        settings.ColorValuesChanged += Settings_ColorValuesChanged; // cannot use FrameworkElement.ActualThemeChanged event
     }
 
     #region Hide & Show & Activate
@@ -75,8 +84,16 @@ public sealed partial class MainWindow : WindowEx
         }
         else
         {
-            WindowExtensions.Show(this);
+            AppWindow.Show();
         }
+
+        if (PInvoke.IsIconic(new(WindowHandle)))
+        {
+            this.Restore();
+        }
+
+        // This handles updating the caption button colors correctly when windows system theme is changed while the app is shown
+        TitleBarHelper.ApplySystemThemeToCaptionButtons(this, TitleBarText);
     }
 
     public new void Activate()
@@ -89,6 +106,22 @@ public sealed partial class MainWindow : WindowEx
 
     #region Events
 
+    // This handles updating the caption button colors correctly when windows system theme is changed while the app is open
+    private void Settings_ColorValuesChanged(UISettings sender, object args)
+    {
+        // This calls comes off-thread, hence we will need to dispatch it to current app's thread
+        dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High, () => TitleBarHelper.ApplySystemThemeToCaptionButtons(this, TitleBarText));
+    }
+
+    // This handles updating the caption button colors correctly when windows system theme is changed while the visibility of the app is changed
+    private void MainWindow_VisibilityChanged(object sender, WindowVisibilityChangedEventArgs args)
+    {
+        if (args.Visible)
+        {
+            dispatcherQueue.TryEnqueue(DispatcherQueuePriority.High, () => TitleBarHelper.ApplySystemThemeToCaptionButtons(this, TitleBarText));
+        }
+    }
+
     // this enables the app to continue running in background after clicking close button
     private void MainWindow_Closed(object sender, WindowEventArgs args)
     {
@@ -100,6 +133,8 @@ public sealed partial class MainWindow : WindowEx
             return;
         }
 #endif
+        settings.ColorValuesChanged -= Settings_ColorValuesChanged;
+        VisibilityChanged -= MainWindow_VisibilityChanged;
         Closed -= MainWindow_Closed;
         App.Exit();
     }

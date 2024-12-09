@@ -6,6 +6,13 @@ SendMessage
 WM_SHOWWINDOW
 SHOW_WINDOW_STATUS
 
+// TitleBarHelper
+GetActiveWindow
+WA_INACTIVE
+WA_ACTIVE
+WM_ACTIVATE
+DwmSetWindowAttribute
+
 // MonitorInfo
 GetSystemMetrics
 EnumDisplayMonitors

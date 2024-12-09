@@ -44,6 +44,9 @@
 	* Initialize others things in `async Task ActivateAsync()` of `App.xaml.cs`.
 	* Add the languages supported by the unpackaged app in `public static void Initialize()` of `AppLanguageHelper.cs`.
 
+* Add a new window
+	* Refer to `WindowsExtensions.cs` for more information.
+
 ## Building
 
 Build the solution in Visual Studio or run `dotnet build` from the command line.

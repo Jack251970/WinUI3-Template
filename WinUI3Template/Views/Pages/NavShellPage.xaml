@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:WinUI3Template.ViewModels.Pages"
     d:DataContext="{d:DesignInstance Type=viewmodels:NavShellViewModel}"
+    Loaded="Page_Loaded"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
     <!--  Do not try to add DataContext!  -->

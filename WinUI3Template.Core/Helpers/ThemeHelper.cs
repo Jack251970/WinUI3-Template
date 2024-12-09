@@ -12,6 +12,8 @@ public class ThemeHelper
         if (window.Content is FrameworkElement rootElement)
         {
             rootElement.RequestedTheme = theme;
+
+            TitleBarHelper.UpdateTitleBar(window, theme);
         }
     }
 }

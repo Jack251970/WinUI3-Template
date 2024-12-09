@@ -7,5 +7,7 @@
     xmlns:windowex="using:WinUIEx"
     Width="1024"
     Height="768"
+    Closed="MainWindow_Closed"
     PersistenceId="MainWindow"
+    VisibilityChanged="MainWindow_VisibilityChanged"
     mc:Ignorable="d" />
