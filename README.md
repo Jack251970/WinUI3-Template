@@ -32,6 +32,18 @@
 * Rename file names (PowerToys: Rename with PowerRename)
 	* rename `WinUI3Template` with your own project root name.
 
+* Setup project custom settings in the core project `csproj` file
+	* Custom program: `<DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>`
+	* Single instance: `<DefineConstants>SINGLE_INSTANCE;$(DefineConstants)</DefineConstants>`
+	* Tray icon: `<DefineConstants>TRAY_ICON;$(DefineConstants)</DefineConstants>`
+	* Splash screen: `<DefineConstants>SPLASH_SCREEN;$(DefineConstants)</DefineConstants>`
+
+> If you don not need some features, you can remove the corresponding define constants.
+
+* Implement TODOs
+	* Initialize others things in `async Task ActivateAsync()` of `App.xaml.cs`.
+	* Add the languages supported by the unpackaged app in `public static void Initialize()` of `AppLanguageHelper.cs`.
+
 ## Building
 
 Build the solution in Visual Studio or run `dotnet build` from the command line.
