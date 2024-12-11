@@ -4,6 +4,7 @@
 
 ## Features
 
+* Package / Unpackaged App
 * Navigation View
 * Setting Page
 	* Language
