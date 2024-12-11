@@ -265,12 +265,14 @@ public partial class App : Application
         }
     }
 
+#if DISABLE_XAML_GENERATED_MAIN
     public async Task OnActivatedAsync(AppActivationArguments activatedEventArgs)
     {
         Debug.WriteLine($"The app is being activated. Activation type: {activatedEventArgs.Data.GetType().Name}");
 
         await MainWindow.EnqueueOrInvokeAsync(async (_) => await GetService<IActivationService>().ActivateMainWindowAsync(activatedEventArgs));
     }
+#endif
 
     public static async new void Exit()
     {
@@ -287,6 +289,8 @@ public partial class App : Application
 
     public static void RestartApplication(string? param = null, bool admin = false)
     {
+        Debug.WriteLine("Restart current application.");
+
         // Get the path to the executable
         var exePath = Process.GetCurrentProcess().MainModule?.FileName;
 
@@ -302,13 +306,10 @@ public partial class App : Application
                 Verb = admin ? "runas" : string.Empty
             });
 
-            // exit the current application
-#if TRAY_ICON
-            CanCloseWindow = true;
-#endif
-            MainWindow.Close();
+            // kill the current process
+            Process.GetCurrentProcess().Kill();
         }
     }
 
-    #endregion
+#endregion
 }
