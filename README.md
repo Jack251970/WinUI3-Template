@@ -17,6 +17,7 @@
 * Custom Program
 * Single Instance
 * Splash Screen
+* Serilog Logging
 
 ## Coding
 
