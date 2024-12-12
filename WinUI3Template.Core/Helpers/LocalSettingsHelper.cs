@@ -18,8 +18,8 @@ public class LocalSettingsHelper
         }
         else
         {
-            var localAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            applicationDataPath = Path.Combine(localAppDataPath, Constants.LocalAppDataFolder, Constants.ApplicationDataFolder);
+            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            applicationDataPath = Path.Combine(appDataPath, Constants.WinUI3Template, Constants.ApplicationDataFolder);
         }
     }
 }

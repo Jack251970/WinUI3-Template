@@ -24,7 +24,7 @@ public class LocalSettingsService : ILocalSettingsService
 
         _localsettingsFile = Constants.SettingsFile;
 
-        _localSettingsPath = Path.Combine(LocalSettingsHelper.ApplicationDataPath, Constants.LocalSettingsFolder);
+        _localSettingsPath = Path.Combine(LocalSettingsHelper.ApplicationDataPath, Constants.SettingsFolder);
 
         if (!Directory.Exists(_localSettingsPath))
         {

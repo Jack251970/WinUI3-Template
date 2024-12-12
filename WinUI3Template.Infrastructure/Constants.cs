@@ -24,9 +24,7 @@ public static class Constants
 
     #endregion
 
-    #region Local Settings
-
-    public const string LocalAppDataFolder = "WinUI3 Template";
+    #region Settings
 
 #if DEBUG
     public const string ApplicationDataFolder = "ApplicationData(Debug)";
@@ -34,9 +32,9 @@ public static class Constants
     public const string ApplicationDataFolder = "ApplicationData";
 #endif
 
-    public const string LocalSettingsFolder = "Settings";
+    public const string SettingsFolder = "Settings";
     
-    public const string SettingsFile = "LocalSettings.json";
+    public const string SettingsFile = "Settings.json";
 
     #endregion
 }
