@@ -1,5 +1,5 @@
 ﻿// Copyright (c) 2024 Jack251970
-// Licensed under the GPL License. See the LICENSE.
+// Licensed under the MIT License. See the LICENSE.
 
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;

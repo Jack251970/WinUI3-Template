@@ -1,10 +1,12 @@
-﻿using System.Diagnostics;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using Serilog;
 
 namespace WinUI3Template.Infrastructure.Services;
 
 public class FileService : IFileService
 {
+    private static readonly ILogger _log = Log.ForContext("SourceContext", nameof(FileService));
+
     private readonly SemaphoreSlim semaphoreSlim = new(1, 1);
 
     public T Read<T>(string folderPath, string fileName, JsonSerializerSettings? jsonSerializerSettings = null)
@@ -19,7 +21,7 @@ public class FileService : IFileService
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e, $"Reading file {path} failed : {ExceptionFormatter.FormatExcpetion(e)}");
+                _log.Error(e, $"Reading file {path} failed : {ExceptionFormatter.FormatExcpetion(e)}");
             }
         }
 
@@ -44,7 +46,7 @@ public class FileService : IFileService
         }
         catch (Exception e)
         {
-            Debug.WriteLine(e, $"Writing file {path} failed : {ExceptionFormatter.FormatExcpetion(e)}");
+            _log.Error(e, $"Writing file {path} failed : {ExceptionFormatter.FormatExcpetion(e)}");
         }
         finally
         {
@@ -65,7 +67,7 @@ public class FileService : IFileService
             }
             catch (Exception e)
             {
-                Debug.WriteLine($"Deleting file {path} failed : {ExceptionFormatter.FormatExcpetion(e)}");
+                _log.Error(e, $"Deleting file {path} failed : {ExceptionFormatter.FormatExcpetion(e)}");
             }
             return true;
         }

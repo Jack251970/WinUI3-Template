@@ -22,4 +22,17 @@ public class LocalSettingsHelper
             applicationDataPath = Path.Combine(appDataPath, Constants.WinUI3Template, Constants.ApplicationDataFolder);
         }
     }
+
+    public static string LogDirectory
+    {
+        get
+        {
+            var logDirectory = Path.Combine(ApplicationDataPath, Constants.LogsFolder);
+            if (!Directory.Exists(logDirectory))
+            {
+                Directory.CreateDirectory(logDirectory);
+            }
+            return logDirectory;
+        }
+    }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.UI.Dispatching;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
+using Serilog;
 using Windows.Win32;
 using Windows.Win32.Security;
 using Windows.Win32.System.Com;
@@ -23,6 +25,8 @@ public class Program
     private const string AppInstanceKey = $"{Constants.WinUI3Template}-RELEASE";
 #endif
 
+    private static readonly ILogger _log = Log.ForContext("SourceContext", nameof(Program));
+
     /// <summary>
     /// Initializes the process; the entry point of the process.
     /// </summary>
@@ -30,8 +34,22 @@ public class Program
     /// <see cref="Main"/> cannot be declared to be async because this prevents Narrator from reading XAML elements in a WinUI app.
     /// </remarks>
     [STAThread]
-    private static void Main()
+    private static void Main(string[] args)
     {
+        // Initialize core helpers
+        LocalSettingsHelper.Initialize();
+
+        // Set up Logging
+        Environment.SetEnvironmentVariable("LOGGING_ROOT", Path.Combine(LocalSettingsHelper.LogDirectory, InfoHelper.GetVersion().ToString()));
+        var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(configuration)
+            .CreateLogger();
+
+        _log.Information($"Program launched with args: {string.Join(' ', [.. args])}");
+
         WinRT.ComWrappersSupport.InitializeComWrappers();
 
         var instance = AppInstance.FindOrRegisterForKey(AppInstanceKey);
@@ -53,11 +71,14 @@ public class Program
 #endif
 
         Application.Start((p) => {
-            var context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
+            var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            var context = new DispatcherQueueSynchronizationContext(dispatcherQueue);
             SynchronizationContext.SetSynchronizationContext(context);
-
             _ = new App();
         });
+
+        _log.Information("Program terminated");
+        Log.CloseAndFlush();
     }
 
     /// <summary>

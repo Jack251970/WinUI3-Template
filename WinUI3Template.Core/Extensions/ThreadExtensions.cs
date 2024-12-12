@@ -1,11 +1,11 @@
 ﻿// Copyright (c) 2024 Jack251970
-// Licensed under the GPL License. See the LICENSE.
+// Licensed under the MIT License. See the LICENSE.
 
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
+using Serilog;
 
 namespace WinUI3Template.Core.Extensions;
 
@@ -15,6 +15,8 @@ namespace WinUI3Template.Core.Extensions;
 /// </summary>
 public static class ThreadExtensions
 {
+    private static readonly ILogger _log = Log.ForContext("SourceContext", nameof(ThreadExtensions));
+
     private static readonly Dictionary<Window, int> WindowsAndDispatcherThreads = [];
 
     #region register & unregister
@@ -150,7 +152,7 @@ public static class ThreadExtensions
         {
             if (exceptionToIgnore is null || exceptionToIgnore.IsAssignableFrom(ex.GetType()))
             {
-                Debug.WriteLine($"{ExceptionFormatter.FormatExcpetion(ex)}");
+                _log.Error(ex, $"{ExceptionFormatter.FormatExcpetion(ex)}");
 
                 return false;
             }
@@ -171,7 +173,7 @@ public static class ThreadExtensions
         {
             if (exceptionToIgnore is null || exceptionToIgnore.IsAssignableFrom(ex.GetType()))
             {
-                Debug.WriteLine($"{ExceptionFormatter.FormatExcpetion(ex)}");
+                _log.Error(ex, $"{ExceptionFormatter.FormatExcpetion(ex)}");
 
                 return default;
             }

@@ -2,7 +2,8 @@
   
   <PropertyGroup>
     <!-- General Properties -->
-    <OutputType>WinExe</OutputType>
+    <OutputType Condition="'$(Configuration)' != 'Release'">Exe</OutputType><!-- Console App -->
+    <OutputType Condition="'$(Configuration)' == 'Release'">WinExe</OutputType><!-- Windows App -->
     <Title>WinUI3 Template</Title>
     <ApplicationIcon Condition="'$(Configuration)'=='Debug'">Assets\Debug\Icon.ico</ApplicationIcon>
     <ApplicationIcon Condition="'$(Configuration)'=='Release'">Assets\Release\Icon.ico</ApplicationIcon>
@@ -85,6 +86,12 @@
 
   <ItemGroup>
     <AdditionalFiles Include="NativeMethods.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

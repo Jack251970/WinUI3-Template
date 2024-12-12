@@ -62,5 +62,6 @@ Build the solution in Visual Studio or run `dotnet build` from the command line.
 * Template Studio for WinUI (C#): https://github.com/microsoft/TemplateStudio
 * terminal: https://github.com/microsoft/terminal
 * WinUI3Windows: https://github.com/smourier/WinUI3Windows
+* WinUI3-Template: https://github.com/Jack251970/WinUI3-Template
 * Windows Community Toolkit: https://github.com/CommunityToolkit/WindowsCommunityToolkit
 * WinUIEx: https://github.com/dotMorten/WinUIEx

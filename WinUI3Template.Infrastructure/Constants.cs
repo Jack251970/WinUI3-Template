@@ -24,7 +24,7 @@ public static class Constants
 
     #endregion
 
-    #region Settings
+    #region Settings & Logs
 
 #if DEBUG
     public const string ApplicationDataFolder = "ApplicationData(Debug)";
@@ -35,6 +35,8 @@ public static class Constants
     public const string SettingsFolder = "Settings";
     
     public const string SettingsFile = "Settings.json";
+
+    public const string LogsFolder = "Logs";
 
     #endregion
 }
