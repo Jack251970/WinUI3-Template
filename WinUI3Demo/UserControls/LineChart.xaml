@@ -7,19 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:win2d="using:Microsoft.Graphics.Canvas.UI.Xaml"
     d:DataContext="{d:DesignInstance Type=controls:LineChart}"
-    Background="Transparent"
     mc:Ignorable="d">
-    <Grid x:Name="MainGrid" Background="Transparent">
-        <Canvas
-            x:Name="ChartCanvas"
-            Width="{Binding ElementName=this, Path=Axis.ChartWidth}"
-            Height="{Binding ElementName=this, Path=Axis.ChartHeight}"
-            Background="Transparent" />
+    <Grid x:Name="MainGrid">
         <win2d:CanvasControl
-            x:Name="ChartCanvasControl"
+            x:Name="CanvasControlAxisTickGrid"
             Width="{Binding ElementName=this, Path=Axis.ChartWidth}"
             Height="{Binding ElementName=this, Path=Axis.ChartHeight}"
-            Background="Transparent"
-            Draw="ChartCanvasControl_Draw" />
+            Draw="CanvasControlAxisTickGrid_Draw" />
+        <win2d:CanvasControl
+            x:Name="CanvasControlData"
+            Width="{Binding ElementName=this, Path=Axis.ChartWidth}"
+            Height="{Binding ElementName=this, Path=Axis.ChartHeight}"
+            Draw="CanvasControlData_Draw" />
     </Grid>
 </UserControl>

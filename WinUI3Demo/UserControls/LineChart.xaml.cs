@@ -5,8 +5,6 @@ using Microsoft.Graphics.Canvas.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Shapes;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -58,24 +56,24 @@ public sealed partial class LineChart : UserControl
         DependencyProperty.Register(nameof(ItemsSource), typeof(List<Vector2>), typeof(LineChart), new PropertyMetadata(null, OnItemsSourceChanged));
 
     public static readonly DependencyProperty XAxisMinProperty =
-        DependencyProperty.Register(nameof(XAxisMin), typeof(float?), typeof(LineChart), new PropertyMetadata(null, OnAppearanceChanged));
+        DependencyProperty.Register(nameof(XAxisMin), typeof(float?), typeof(LineChart), new PropertyMetadata(null, OnAxisRangeChanged));
 
     public static readonly DependencyProperty XAxisMaxProperty =
-        DependencyProperty.Register(nameof(XAxisMax), typeof(float?), typeof(LineChart), new PropertyMetadata(null, OnAppearanceChanged));
+        DependencyProperty.Register(nameof(XAxisMax), typeof(float?), typeof(LineChart), new PropertyMetadata(null, OnAxisRangeChanged));
 
     public static readonly DependencyProperty YAxisMinProperty =
-        DependencyProperty.Register(nameof(YAxisMin), typeof(float?), typeof(LineChart), new PropertyMetadata(null, OnAppearanceChanged));
+        DependencyProperty.Register(nameof(YAxisMin), typeof(float?), typeof(LineChart), new PropertyMetadata(null, OnAxisRangeChanged));
 
     public static readonly DependencyProperty YAxisMaxProperty =
-        DependencyProperty.Register(nameof(YAxisMax), typeof(float?), typeof(LineChart), new PropertyMetadata(null, OnAppearanceChanged));
+        DependencyProperty.Register(nameof(YAxisMax), typeof(float?), typeof(LineChart), new PropertyMetadata(null, OnAxisRangeChanged));
 
     private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var chart = d as LineChart;
-        chart?.UpdateChart();
+        chart?.UpdateChart(updateAxisTickGrid: false);
     }
 
-    private static void OnAppearanceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnAxisRangeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var chart = d as LineChart;
         chart?.UpdateChart();
@@ -83,8 +81,8 @@ public sealed partial class LineChart : UserControl
 
     #endregion
 
-    private readonly Canvas _canvas;
-    private readonly CanvasControl _canvasControl;
+    private readonly CanvasControl _canvasControlAxisTickGrid;
+    private readonly CanvasControl _canvasControlData;
 
     public LineChart()
     {
@@ -95,8 +93,8 @@ public sealed partial class LineChart : UserControl
         InitializeComponent();
 
         // ui elemtns
-        _canvas = ChartCanvas;
-        _canvasControl = ChartCanvasControl;
+        _canvasControlAxisTickGrid = CanvasControlAxisTickGrid;
+        _canvasControlData = CanvasControlData;
 
         // events
         ActualThemeChanged += LineChart_ActualThemeChanged;
@@ -107,11 +105,9 @@ public sealed partial class LineChart : UserControl
 
     #region Resources
 
-    // TODO: Use SurfaceStrokeColorFlyoutBrush.
+    private Color TextFillColorPrimaryColor;
 
-    private SolidColorBrush TextFillColorPrimaryBrush = null!;
-
-    private SolidColorBrush GridLineBrush = null!;
+    private Color GridLineColor;
 
     private const float DataLineThickness = 3.5f;
 
@@ -125,7 +121,7 @@ public sealed partial class LineChart : UserControl
 
     private const float DataPointInnerSizeDragged = 4f;
 
-    private Color DataPointEdgeColor;
+    private Color DataPointEdgeColor => SurfaceStrokeColorFlyout;
 
     private Color DataPointOutterColor;
 
@@ -139,33 +135,31 @@ public sealed partial class LineChart : UserControl
 
     private readonly float ToolTipRectangleBorderThickness = 1f;
 
-    private SolidColorBrush ToolTipRectangleBrush = null!;
+    private Color ToolTipRectangleColor;
 
-    private SolidColorBrush ToolTipRectangleBorderBrush = null!;
+    private Color SurfaceStrokeColorFlyout;
 
     private void InitializeResource(ElementTheme theme)
     {
         if (theme == ElementTheme.Light)
         {
-            TextFillColorPrimaryBrush = new SolidColorBrush(Color.FromArgb(255, 26, 26, 26));
-            GridLineBrush = new SolidColorBrush(Color.FromArgb(255, 126, 126, 126));
+            TextFillColorPrimaryColor = Color.FromArgb(255, 26, 26, 26);
+            GridLineColor = Color.FromArgb(255, 126, 126, 126);
             DataLineColor = Color.FromArgb(255, 14, 106, 186);
-            DataPointEdgeColor = Color.FromArgb(255, 232, 232, 232);
             DataPointOutterColor = Color.FromArgb(255, 255, 255, 255);
             DataPointInnerColor = Color.FromArgb(255, 26, 118, 198);
-            ToolTipRectangleBrush = new SolidColorBrush(Color.FromArgb(255, 246, 246, 246));
-            ToolTipRectangleBorderBrush = new SolidColorBrush(Color.FromArgb(255, 214, 214, 214));
+            ToolTipRectangleColor = Color.FromArgb(255, 246, 246, 246);
+            SurfaceStrokeColorFlyout = Color.FromArgb(15, 0, 0, 0);
         }
         else
         {
-            TextFillColorPrimaryBrush = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255));
-            GridLineBrush = new SolidColorBrush(Color.FromArgb(255, 155, 155, 155));
+            TextFillColorPrimaryColor = Color.FromArgb(255, 255, 255, 255);
+            GridLineColor = Color.FromArgb(255, 155, 155, 155);
             DataLineColor = Color.FromArgb(255, 84, 190, 245);
-            DataPointEdgeColor = Color.FromArgb(255, 52, 52, 52);
             DataPointOutterColor = Color.FromArgb(255, 71, 71, 71);
             DataPointInnerColor = Color.FromArgb(255, 75, 180, 236);
-            ToolTipRectangleBrush = new SolidColorBrush(Color.FromArgb(255, 50, 50, 50));
-            ToolTipRectangleBorderBrush = new SolidColorBrush(Color.FromArgb(255, 30, 30, 30));
+            ToolTipRectangleColor = Color.FromArgb(255, 50, 50, 50);
+            SurfaceStrokeColorFlyout = Color.FromArgb(63, 0, 0, 0);
         }
     }
 
@@ -176,20 +170,20 @@ public sealed partial class LineChart : UserControl
     private void LineChart_Loaded(object sender, RoutedEventArgs e)
     {
         UpdateChart();
-        _canvasControl.PointerEntered += ChartCanvasControl_PointerEntered;
-        _canvasControl.PointerExited += ChartCanvasControl_PointerExited;
-        _canvasControl.PointerPressed += ChartCanvasControl_PointerPressed;
-        _canvasControl.PointerMoved += ChartCanvasControl_PointerMoved;
-        _canvasControl.PointerReleased += ChartCanvasControl_PointerReleased;
+        _canvasControlData.PointerEntered += ChartCanvasControl_PointerEntered;
+        _canvasControlData.PointerExited += ChartCanvasControl_PointerExited;
+        _canvasControlData.PointerPressed += ChartCanvasControl_PointerPressed;
+        _canvasControlData.PointerMoved += ChartCanvasControl_PointerMoved;
+        _canvasControlData.PointerReleased += ChartCanvasControl_PointerReleased;
     }
 
     private void LineChart_Unloaded(object sender, RoutedEventArgs e)
     {
-        _canvasControl.PointerEntered -= ChartCanvasControl_PointerEntered;
-        _canvasControl.PointerExited -= ChartCanvasControl_PointerExited;
-        _canvasControl.PointerPressed -= ChartCanvasControl_PointerPressed;
-        _canvasControl.PointerMoved -= ChartCanvasControl_PointerMoved;
-        _canvasControl.PointerReleased -= ChartCanvasControl_PointerReleased;
+        _canvasControlData.PointerEntered -= ChartCanvasControl_PointerEntered;
+        _canvasControlData.PointerExited -= ChartCanvasControl_PointerExited;
+        _canvasControlData.PointerPressed -= ChartCanvasControl_PointerPressed;
+        _canvasControlData.PointerMoved -= ChartCanvasControl_PointerMoved;
+        _canvasControlData.PointerReleased -= ChartCanvasControl_PointerReleased;
     }
 
     private void LineChart_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -200,6 +194,31 @@ public sealed partial class LineChart : UserControl
     private void LineChart_ActualThemeChanged(FrameworkElement sender, object args)
     {
         UpdateChart();
+    }
+
+    #endregion
+
+    #region Canvas Control Draw Events
+
+    private void CanvasControlAxisTickGrid_Draw(CanvasControl sender, CanvasDrawEventArgs args)
+    {
+        // Get chart size
+        _chartWidth = _canvasControlData.ActualWidth;
+        _chartHeight = _canvasControlData.ActualHeight;
+
+        // Draw chart
+        DrawXAxis(args.DrawingSession);
+        DrawYAxis(args.DrawingSession);
+    }
+
+    private void CanvasControlData_Draw(CanvasControl sender, CanvasDrawEventArgs args)
+    {
+        // Get chart size
+        _chartWidth = _canvasControlData.ActualWidth;
+        _chartHeight = _canvasControlData.ActualHeight;
+
+        // Draw chart
+        DrawData(args.DrawingSession);
     }
 
     #endregion
@@ -225,7 +244,7 @@ public sealed partial class LineChart : UserControl
 
     private void ChartCanvasControl_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
-        var pointerPos = e.GetCurrentPoint(_canvasControl).Position;
+        var pointerPos = e.GetCurrentPoint(_canvasControlData).Position;
         var x = pointerPos.X;
         var y = pointerPos.Y;
 
@@ -240,7 +259,7 @@ public sealed partial class LineChart : UserControl
                 _enteringPointIndex = i;
                 _enteringPointerX = x;
                 _enteringPointerY = y;
-                _canvasControl.Invalidate();
+                _canvasControlData.Invalidate();
                 return;
             }
         }
@@ -250,7 +269,7 @@ public sealed partial class LineChart : UserControl
 
     private void ChartCanvasControl_PointerPressed(object sender, PointerRoutedEventArgs e)
     {
-        var pointerPos = e.GetCurrentPoint(_canvasControl).Position;
+        var pointerPos = e.GetCurrentPoint(_canvasControlData).Position;
         var x = pointerPos.X;
         var y = pointerPos.Y;
 
@@ -273,7 +292,7 @@ public sealed partial class LineChart : UserControl
 
     private void ChartCanvasControl_PointerMoved(object sender, PointerRoutedEventArgs e)
     {
-        var pointerPos = e.GetCurrentPoint(_canvasControl).Position;
+        var pointerPos = e.GetCurrentPoint(_canvasControlData).Position;
         var x = pointerPos.X;
         var y = pointerPos.Y;
 
@@ -373,7 +392,7 @@ public sealed partial class LineChart : UserControl
 
         if (needRedraw)
         {
-            _canvasControl.Invalidate();
+            _canvasControlData.Invalidate();
         }
     }
 
@@ -383,26 +402,25 @@ public sealed partial class LineChart : UserControl
         {
             _isDragging = false;
             _draggingPointIndex = -1;
-            _canvasControl.Invalidate();
+            _canvasControlData.Invalidate();
             SetValue(ItemsSourceProperty, _itemSource);
         }
     }
 
     #endregion
 
-    #region Draw Chart
+    #region Update Chart
 
     private const float ToolTipMargin = 40;
 
     private bool _isInitialized;
-    private bool _axisInitialized;
 
-    public void ForceUpdateChart()
+    public void UpdateChar(bool updateAxisTickGrid = true, bool updateData = true)
     {
-        UpdateChart(true);
+        UpdateChart(updateAxisTickGrid, updateData, true);
     }
 
-    private void UpdateChart(bool force = false)
+    private void UpdateChart(bool updateAxisTickGrid = true, bool updateData = true, bool force = false)
     {
         if (!force)
         {
@@ -432,39 +450,16 @@ public sealed partial class LineChart : UserControl
             // Initialize resources
             InitializeResource(ActualTheme);
 
-            // Draw chart
-            _canvasControl.Invalidate();
+            // Update chart
+            if (updateAxisTickGrid)
+            {
+                _canvasControlAxisTickGrid.Invalidate();
+            }
+            if (updateData)
+            {
+                _canvasControlData.Invalidate();
+            }
         }
-    }
-
-    private void ChartCanvasControl_Draw(CanvasControl sender, CanvasDrawEventArgs args)
-    {
-        DrawChart(args.DrawingSession);
-    }
-
-    private void DrawChart(CanvasDrawingSession session)
-    {
-        // Get chart size
-        _chartWidth = _canvasControl.ActualWidth;
-        _chartHeight = _canvasControl.ActualHeight;
-
-        // Draw axis
-        // Note: We should only draw axises once so that they will not be blurred.
-        if (!_axisInitialized)
-        {
-            DrawAxis();
-
-            _axisInitialized = true;
-        }
-
-        // Draw data
-        DrawData(session);
-    }
-
-    private void DrawAxis()
-    {
-        DrawXAxis();
-        DrawYAxis();
     }
 
     private void DrawData(CanvasDrawingSession session)
@@ -501,8 +496,6 @@ public sealed partial class LineChart : UserControl
             // Create tooltip
             var tooltipItem = _itemSource[_enteringPointIndex];
             var tooltip = $"{tooltipItem.X}, {tooltipItem.Y}";
-
-            // Calculate position: center in the entering pointer
             var textFormat = new CanvasTextFormat
             {
                 FontSize = (float)ToolTipContentThemeFontSize
@@ -565,15 +558,15 @@ public sealed partial class LineChart : UserControl
 
             // Draw border rectangle
             var borderRect = new Rect(borderRectX, borderRectY, borderRectWidth, borderRectHeight);
-            session.FillRoundedRectangle(borderRect, ToolTipRectangleCornerRadius, ToolTipRectangleCornerRadius, ToolTipRectangleBorderBrush.Color);
+            session.FillRoundedRectangle(borderRect, ToolTipRectangleCornerRadius, ToolTipRectangleCornerRadius, SurfaceStrokeColorFlyout);
 
             // Draw rectangle
             var rect = new Rect(rectX, rectY, rectWidth, rectHeight);
-            session.FillRoundedRectangle(rect, ToolTipRectangleCornerRadius, ToolTipRectangleCornerRadius, ToolTipRectangleBrush.Color);
+            session.FillRoundedRectangle(rect, ToolTipRectangleCornerRadius, ToolTipRectangleCornerRadius, ToolTipRectangleColor);
 
             // Draw text
             var tooltipVector = new Vector2((float)textX, (float)textY);
-            session.DrawText(tooltip, tooltipVector, TextFillColorPrimaryBrush.Color, textFormat);
+            session.DrawText(tooltip, tooltipVector, TextFillColorPrimaryColor, textFormat);
         }
     }
 
@@ -594,161 +587,145 @@ public sealed partial class LineChart : UserControl
     private const double _topPadding = 30;
     private const double _bottomPadding = 30;
 
-    private const double LineThickness = 2.0;
-    private const double GridLineThinkness = 1.0;
+    private const float LineThickness = 2f;
+    private const float GridLineThinkness = 1f;
     private const double TickLength = 5.0;
     private const double XTickLabelInterval = 2.0;
     private const double YTickLabelInterval = 10.0;
 
     #region Draw Axis
 
-    private void DrawXAxis()
+    private void DrawXAxis(CanvasDrawingSession session)
     {
-        // get steps
+        // Get steps
         var xSteps = CalculateAxisSteps(_xMin, _xMax, _chartWidth - _leftPadding - _rightPadding);
         if (xSteps[^1] != _xMax)
         {
             xSteps[^1] = _xMax;
         }
 
-        // draw grid line
+        // Draw grid line
         foreach (var step in xSteps.Skip(1))
         {
-            DrawGridLine(ScaleX(step), _topPadding, ScaleX(step), _chartHeight - _bottomPadding);
+            DrawGridLine(session, ScaleX(step), _topPadding, ScaleX(step), _chartHeight - _bottomPadding);
         }
 
-        // draw axis line
-        DrawAxisLine(_leftPadding, _chartHeight - _bottomPadding, _chartWidth - _rightPadding, _chartHeight - _bottomPadding);
+        // Draw axis line
+        DrawAxisLine(session, _leftPadding, _chartHeight - _bottomPadding, _chartWidth - _rightPadding, _chartHeight - _bottomPadding);
 
-        // draw axis ticks & labels
-        DrawXAxisTicksAndLabels(xSteps);
+        // Draw axis ticks & labels
+        DrawXAxisTicksAndLabels(session, xSteps);
     }
 
-    private void DrawYAxis()
+    private void DrawYAxis(CanvasDrawingSession session)
     {
-        // get steps
+        // Get steps
         var ySteps = CalculateAxisSteps(_yMin, _yMax, _chartHeight - _topPadding - _bottomPadding);
         if (ySteps[^1] != _yMax)
         {
             ySteps[^1] = _yMax;
         }
 
-        // draw grid line
+        // Draw grid line
         foreach (var step in ySteps.Skip(1))
         {
-            DrawGridLine(_leftPadding, ScaleY(step), _chartWidth - _rightPadding, ScaleY(step));
+            DrawGridLine(session, _leftPadding, ScaleY(step), _chartWidth - _rightPadding, ScaleY(step));
         }
 
-        // draw axis line
-        DrawAxisLine(_leftPadding, _topPadding, _leftPadding, _chartHeight - _bottomPadding);
+        // Draw axis line
+        DrawAxisLine(session, _leftPadding, _topPadding, _leftPadding, _chartHeight - _bottomPadding);
 
-        // draw axis ticks & labels
-        DrawYAxisTicksAndLabels(ySteps);
+        // Draw axis ticks & labels
+        DrawYAxisTicksAndLabels(session, ySteps);
     }
 
-    private void DrawAxisLine(double x1, double y1, double x2, double y2)
+    private void DrawAxisLine(CanvasDrawingSession session, double x1, double y1, double x2, double y2)
     {
-        var axis = new Line
-        {
-            X1 = x1,
-            Y1 = y1,
-            X2 = x2,
-            Y2 = y2,
-            Stroke = TextFillColorPrimaryBrush,
-            StrokeThickness = LineThickness
-        };
-        _canvas.Children.Add(axis);
+        session.DrawLine((float)x1, (float)y1, (float)x2, (float)y2, TextFillColorPrimaryColor, LineThickness);
     }
 
-    private void DrawGridLine(double x1, double y1, double x2, double y2)
+    private void DrawGridLine(CanvasDrawingSession session, double x1, double y1, double x2, double y2)
     {
-        var grid = new Line
-        {
-            X1 = x1,
-            Y1 = y1,
-            X2 = x2,
-            Y2 = y2,
-            Stroke = GridLineBrush,
-            StrokeThickness = GridLineThinkness
-        };
-        _canvas.Children.Add(grid);
+        session.DrawLine((float)x1, (float)y1, (float)x2, (float)y2, GridLineColor, GridLineThinkness);
     }
 
-    private void DrawXAxisTicksAndLabels(List<float> steps)
+    private void DrawXAxisTicksAndLabels(CanvasDrawingSession session, List<float> steps)
     {
         foreach (var step in steps)
         {
             var pos = ScaleX(step);
             if (pos >= _leftPadding && pos <= _chartWidth - _rightPadding)
             {
-                // draw tick line
-                var tickLine = new Line
-                {
-                    X1 = pos,
-                    Y1 = _chartHeight - _bottomPadding,
-                    X2 = pos,
-                    Y2 = _chartHeight - _bottomPadding + TickLength,
-                    Stroke = TextFillColorPrimaryBrush,
-                    StrokeThickness = LineThickness
-                };
-                _canvas.Children.Add(tickLine);
+                // Draw tick line
+                session.DrawLine(
+                    (float)pos,
+                    (float)(_chartHeight - _bottomPadding),
+                    (float)pos,
+                    (float)(_chartHeight - _bottomPadding + TickLength),
+                    TextFillColorPrimaryColor,
+                    LineThickness);
 
-                // draw tick label
-                var label = new TextBlock
+                // Draw tick label
+                var text = FormatAxisLabel(step);
+                var textFormat = new CanvasTextFormat
                 {
-                    Text = FormatAxisLabel(step),
-                    FontSize = 10
+                    FontSize = (float)ToolTipContentThemeFontSize
                 };
 
-                label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                var labelDesiredWidth = label.DesiredSize.Width;
-                var labelLeft = Math.Max(0, Math.Min(_chartWidth - labelDesiredWidth, pos - labelDesiredWidth / 2));
+                // Measure text layout
+                using var textLayout = new CanvasTextLayout(session, text, textFormat, (float)_chartWidth, (float)_chartHeight);
+                var textWidth = textLayout.LayoutBounds.Width;
+                var textHeight = textLayout.LayoutBounds.Height;
 
-                Canvas.SetLeft(label, labelLeft);
-                Canvas.SetTop(label, _chartHeight - _bottomPadding + TickLength + XTickLabelInterval);
+                // Calculate text position
+                var textX = Math.Max(0, Math.Min(_chartWidth - textWidth, pos - textWidth / 2));
+                var textY = _chartHeight - _bottomPadding + TickLength + XTickLabelInterval;
 
-                _canvas.Children.Add(label);
+                // Draw text
+                session.DrawText(text, (float)textX, (float)textY, TextFillColorPrimaryColor, textFormat);
             }
         }
     }
 
-    private void DrawYAxisTicksAndLabels(List<float> steps)
+    private void DrawYAxisTicksAndLabels(CanvasDrawingSession session, List<float> steps)
     {
         foreach (var step in steps)
         {
             var pos = ScaleY(step);
             if (pos >= 0 && pos <= _chartHeight - _bottomPadding)
             {
-                // draw tick line
-                var tickLine = new Line
-                {
-                    X1 = _leftPadding,
-                    Y1 = pos,
-                    X2 = _leftPadding - TickLength,
-                    Y2 = pos,
-                    Stroke = TextFillColorPrimaryBrush,
-                    StrokeThickness = LineThickness
-                };
-                _canvas.Children.Add(tickLine);
+                // Draw tick line
+                session.DrawLine(
+                    (float)_leftPadding,
+                    (float)pos,
+                    (float)(_leftPadding - TickLength),
+                    (float)pos,
+                    TextFillColorPrimaryColor,
+                    LineThickness);
 
-                // draw tick label
-                var label = new TextBlock
+                // Draw tick label
+                var text = FormatAxisLabel(step);
+                var textFormat = new CanvasTextFormat
                 {
-                    Text = FormatAxisLabel(step),
-                    FontSize = 10
+                    FontSize = (float)ToolTipContentThemeFontSize
                 };
 
-                label.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
-                var labelDesiredHeight = label.DesiredSize.Height;
-                var labelTop = Math.Max(0, Math.Min(_chartHeight - labelDesiredHeight, pos - labelDesiredHeight / 2));
+                // Measure text layout
+                using var textLayout = new CanvasTextLayout(session, text, textFormat, (float)_chartWidth, (float)_chartHeight);
+                var textWidth = textLayout.LayoutBounds.Width;
+                var textHeight = textLayout.LayoutBounds.Height;
 
-                Canvas.SetLeft(label, _leftPadding - TickLength - label.DesiredSize.Width - YTickLabelInterval);
-                Canvas.SetTop(label, labelTop);
+                // Calculate text position
+                var textX = _leftPadding - TickLength - textWidth - YTickLabelInterval;
+                var textY = Math.Max(0, Math.Min(_chartHeight - textHeight, pos - textHeight / 2));
 
-                _canvas.Children.Add(label);
+                // Draw text
+                session.DrawText(text, (float)textX, (float)textY, TextFillColorPrimaryColor, textFormat);
             }
         }
     }
+
+    #region Helper Methods
 
     private static List<float> CalculateAxisSteps(float min, float max, double chartSize)
     {
@@ -867,6 +844,8 @@ public sealed partial class LineChart : UserControl
             return ((double)value).ToString("G4");
         }
     }
+
+    #endregion
 
     #endregion
 
