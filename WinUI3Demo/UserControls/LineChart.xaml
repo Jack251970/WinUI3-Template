@@ -1,0 +1,25 @@
+<UserControl
+    x:Class="WinUI3Demo.UserControls.LineChart"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:WinUI3Demo.UserControls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:win2d="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    d:DataContext="{d:DesignInstance Type=controls:LineChart}"
+    Background="Transparent"
+    mc:Ignorable="d">
+    <Grid x:Name="MainGrid" Background="Transparent">
+        <Canvas
+            x:Name="ChartCanvas"
+            Width="{Binding ElementName=this, Path=Axis.ChartWidth}"
+            Height="{Binding ElementName=this, Path=Axis.ChartHeight}"
+            Background="Transparent" />
+        <win2d:CanvasControl
+            x:Name="ChartCanvasControl"
+            Width="{Binding ElementName=this, Path=Axis.ChartWidth}"
+            Height="{Binding ElementName=this, Path=Axis.ChartHeight}"
+            Background="Transparent"
+            Draw="ChartCanvasControl_Draw" />
+    </Grid>
+</UserControl>

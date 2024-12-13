@@ -1,4 +1,4 @@
-# WinUI3 Template
+# WinUI3 Demo
 
 **A template for WinUI 3, with support of tray icon, multi-thread window, splash screen, etc.**
 
@@ -22,17 +22,17 @@
 ## Coding
 
 * Replace in files (VSCode: Ctrl + Shift + S)
-	* replace `WinUI3Template` with your own root namespace.
-	* replace `WinUI3 Template` with your own app name.
+	* replace `WinUI3Demo` with your own root namespace.
+	* replace `WinUI3 Demo` with your own app name.
 	* replace `A template for WinUI 3.` with your own description.
 	* replace `AuthorName` with your own name.
 	* replace `Settings_Repository_NavigateUri` with your own repository.
 	* replace `Settings_LicenseLink_NavigateUri` with your own license link.
-	* replace `8f256a41-5ee3-4218-97c6-12e1f8d5c234` with your own GUID (PhoneProductId).
-	* replace `445ab065-101e-45ff-80ab-45efcdf5dae5` with your own GUID (ToastActivatorCLSID).
+	* replace `7bfab498-4524-42e4-8295-bb4febfe43fb` with your own GUID (PhoneProductId).
+	* replace `0b5bcfa6-a702-410b-bd1f-76a5d605af3f` with your own GUID (ToastActivatorCLSID).
 
 * Rename file names (PowerToys: Rename with PowerRename)
-	* rename `WinUI3Template` with your own project root name.
+	* rename `WinUI3Demo` with your own project root name.
 
 * Setup project custom settings in the core project `csproj` file
 	* Custom program: `<DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>`
