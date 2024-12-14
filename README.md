@@ -1,10 +1,15 @@
-# WinUI3 Template
+<div style="display: flex; align-items: center; justify-content: center;">
+    <img src="./WinUI3Template/Assets/Release/PackageIcon.png" width="90px" style="margin-right: 30px;">
+    <h1>
+    	WinUI3 Template
+	</h1>
+</div>
 
 **A template for WinUI 3, with support of tray icon, multi-thread window, splash screen, etc.**
 
-## Features
+## 🎁 Features
 
-* Package / Unpackaged App
+* Package / Unpackaged Mode
 * Navigation View
 * Setting Page
 	* Language
@@ -19,9 +24,9 @@
 * Splash Screen
 * Serilog Logging
 
-## Coding
+## 🚗 Getting Started
 
-* Replace in files (VSCode: Ctrl + Shift + S)
+* Replace in files
 	* replace `WinUI3Template` with your own root namespace.
 	* replace `WinUI3 Template` with your own app name.
 	* replace `A template for WinUI 3.` with your own description.
@@ -31,15 +36,22 @@
 	* replace `8f256a41-5ee3-4218-97c6-12e1f8d5c234` with your own GUID (PhoneProductId).
 	* replace `445ab065-101e-45ff-80ab-45efcdf5dae5` with your own GUID (ToastActivatorCLSID).
 
-* Rename file names (PowerToys: Rename with PowerRename)
+> [!TIP]
+> You can use `VSCode` to execute replace. Use Ctrl + Shift + S.
+
+* Rename file names
 	* rename `WinUI3Template` with your own project root name.
 
-* Setup project custom settings in the core project `csproj` file
+> [!TIP]
+> You can use `PowerRename` module in `PowerToys` to execute replace.
+
+* Custom project settings in the core project `csproj` file
 	* Custom program: `<DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants>`
 	* Single instance: `<DefineConstants>SINGLE_INSTANCE;$(DefineConstants)</DefineConstants>`
 	* Tray icon: `<DefineConstants>TRAY_ICON;$(DefineConstants)</DefineConstants>`
 	* Splash screen: `<DefineConstants>SPLASH_SCREEN;$(DefineConstants)</DefineConstants>`
 
+> [!TIP]
 > If you don not need some features, you can remove the corresponding define constants.
 
 * Implement TODOs
@@ -49,11 +61,12 @@
 * Add a new window
 	* Refer to `WindowsExtensions.cs` for more information.
 
-## Building
+## 🪧 Building
 
-Build the solution in Visual Studio or run `dotnet build` from the command line.
+* Select the package / unpackaged mode.
+* Build the solution in Visual Studio or run `dotnet build` from the command line.
 
-## Reference
+## 📚 Reference
 
 * Files: https://github.com/files-community/Files
 * fluentui-system-icons: https://github.com/microsoft/fluentui-system-icons
