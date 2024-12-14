@@ -1,6 +1,6 @@
-<div style="text-align: center;">
-    <img src="./WinUI3Template/Assets/Release/PackageIcon.png" width="90">
-</div>
+<p align="center">
+  <img src="./WinUI3Template/Assets/Release/PackageIcon.png" width="90">
+</p>
 
 <h1>
 	WinUI3 Template
