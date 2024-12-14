@@ -1,9 +1,10 @@
-<div style="display: flex; align-items: center; justify-content: center;">
+<div style="text-align: center;">
     <img src="./WinUI3Template/Assets/Release/PackageIcon.png" width="90">
-    <h1>
-    	WinUI3 Template
-	</h1>
 </div>
+
+<h1>
+	WinUI3 Template
+</h1>
 
 **A template for WinUI 3, with support of tray icon, multi-thread window, splash screen, etc.**
 
