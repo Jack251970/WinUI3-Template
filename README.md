@@ -15,6 +15,8 @@
 ### 3. Setting Page
 1. Language
 2. Startup
+	1. Startup Entry
+	2. Logon Task
 3. Theme
 4. Backdrop
 ### 4. Tray Icon

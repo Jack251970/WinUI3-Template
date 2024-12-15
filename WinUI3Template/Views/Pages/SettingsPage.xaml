@@ -60,12 +60,24 @@
                     </StackPanel>
                 </TeachingTip>
 
-                <controls:SettingsCard x:Uid="Settings_RunStartup_Card">
+                <controls:SettingsCard x:Uid="Settings_RunStartup_Expander" Visibility="{x:Bind ViewModel.NonlogonTaskCardVisibility, Mode=OneTime}">
                     <controls:SettingsCard.HeaderIcon>
                         <FontIcon Glyph="&#xE7B5;" />
                     </controls:SettingsCard.HeaderIcon>
                     <ToggleSwitch IsOn="{x:Bind ViewModel.RunStartup, Mode=TwoWay}" />
                 </controls:SettingsCard>
+
+                <controls:SettingsExpander x:Uid="Settings_RunStartup_Expander" Visibility="{x:Bind ViewModel.LogonTaskExpanderVisibility, Mode=OneTime}">
+                    <controls:SettingsExpander.HeaderIcon>
+                        <FontIcon Glyph="&#xE7B5;" />
+                    </controls:SettingsExpander.HeaderIcon>
+                    <ToggleSwitch IsOn="{x:Bind ViewModel.RunStartup, Mode=TwoWay}" />
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard x:Uid="Settings_RunStartup_Expander_Card">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.LogonTask, Mode=TwoWay}" />
+                        </controls:SettingsCard>
+                    </controls:SettingsExpander.Items>
+                </controls:SettingsExpander>
 
                 <!--  Apperance  -->
                 <TextBlock x:Uid="Settings_Appearance" Style="{ThemeResource SettingsSectionHeaderTextBlockStyle}" />

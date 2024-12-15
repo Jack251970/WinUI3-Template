@@ -28,6 +28,12 @@ public class RuntimeHelper
         }
     }
 
+    public static bool IsCurrentUserIsAdmin()
+    {
+        var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+        return principal.IsInRole(WindowsBuiltInRole.Administrator);
+    }
+
     public static bool IsCurrentProcessRunningAsAdmin()
     {
         var identity = WindowsIdentity.GetCurrent();

@@ -1,4 +1,6 @@
-﻿using Microsoft.Win32;
+﻿using System.Security.Principal;
+using Microsoft.Win32;
+using Microsoft.Win32.TaskScheduler;
 using Windows.ApplicationModel;
 
 namespace WinUI3Template.Infrastructure.Helpers;
@@ -10,6 +12,13 @@ namespace WinUI3Template.Infrastructure.Helpers;
 /// </summary>
 public class StartupHelper
 {
+    public const string NonMsixStartupTag = "/startup";
+
+    private const string MsixTaskId = Constants.StartupTaskId;
+    private const string NonMsixRegistryKey = Constants.StartupRegistryKey;
+    private const string NonMsixLogonTaskName = Constants.StartupLogonTaskName;
+    private const string NonMsixLogonTaskDesc = Constants.StartupLogonTaskDesc;
+
     private const string RegistryPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
     private const string ApprovalPath = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run";
 
@@ -19,11 +28,11 @@ public class StartupHelper
     /// <summary>
     /// Set application startup or not.
     /// </summary>
-    public static async Task<bool> SetStartupAsync(string taskId, string registryKey, bool startup, bool currentUser = true)
+    public static async Task<bool> SetStartupAsync(bool startup, bool logon = false, bool currentUser = true)
     {
         if (RuntimeHelper.IsMSIX)
         {
-            var startupTask = await StartupTask.GetAsync(taskId);
+            var startupTask = await StartupTask.GetAsync(MsixTaskId);
             switch (startupTask.State)
             {
                 case StartupTaskState.Disabled:
@@ -61,14 +70,28 @@ public class StartupHelper
         }
         else
         {
-            var state = await GetStartup(taskId, registryKey, currentUser);
-            if (!state && startup)
+            var state = await GetStartupAsync(logon, currentUser);
+            if (logon)
             {
-                return SetStartupRegistryKey(registryKey, startup, currentUser);
+                if (!state && startup)
+                {
+                    return ScheduleLogonTask();
+                }
+                else if (state && !startup)
+                {
+                    return UnScheduleLogonTask();
+                }
             }
-            else if (state && !startup)
+            else
             {
-                return SetStartupRegistryKey(registryKey, startup, currentUser);
+                if (!state && startup)
+                {
+                    return SetStartupRegistryKey(startup, currentUser);
+                }
+                else if (state && !startup)
+                {
+                    return SetStartupRegistryKey(startup, currentUser);
+                }
             }
         }
         return true;
@@ -77,97 +100,161 @@ public class StartupHelper
     /// <summary>
     /// Get application startup or not by checking register keys.
     /// </summary>
-    public static async Task<bool> GetStartup(string taskId, string registryKey, bool currentUser = true)
+    public static async Task<bool> GetStartupAsync(bool logon = false, bool currentUser = true)
     {
         if (RuntimeHelper.IsMSIX)
         {
-            var startupTask = await StartupTask.GetAsync(taskId);
+            var startupTask = await StartupTask.GetAsync(MsixTaskId);
             return startupTask.State == StartupTaskState.Enabled || startupTask.State == StartupTaskState.EnabledByPolicy;
         }
         else
         {
-            var appPath = Environment.ProcessPath!;
-            var root = currentUser ? Registry.CurrentUser : Registry.LocalMachine;
-            try
+            if (logon)
             {
-                var startup = false;
-                var path = root.OpenSubKey(RegistryPath, true);
-                if (path == null)
+                using var taskService = new TaskService();
+                return taskService.RootFolder.AllTasks.Any(t => t.Name == NonMsixLogonTaskName);
+            }
+            else
+            {
+                var appPath = Environment.ProcessPath!;
+                var root = currentUser ? Registry.CurrentUser : Registry.LocalMachine;
+                try
                 {
-                    var key2 = root.CreateSubKey("SOFTWARE");
-                    var key3 = key2.CreateSubKey("Microsoft");
-                    var key4 = key3.CreateSubKey("Windows");
-                    var key5 = key4.CreateSubKey("CurrentVersion");
-                    var key6 = key5.CreateSubKey("Run");
-                    path = key6;
-                }
-                var keyNames = path.GetValueNames();
-                // check if the startup register key exists
-                foreach (var keyName in keyNames)
-                {
-                    if (keyName.Equals(registryKey, StringComparison.CurrentCultureIgnoreCase))
+                    var startup = false;
+                    var path = root.OpenSubKey(RegistryPath, true);
+                    if (path == null)
                     {
-                        startup = true;
-                        // check if the startup register value is valid
-                        if (startup)
-                        {
-                            var value = path.GetValue(keyName)!.ToString()!;
-                            if (!value.Contains(@appPath, StringComparison.CurrentCultureIgnoreCase))
-                            {
-                                startup = false;
-                                path.DeleteValue(registryKey);
-                                path.Close();
-                                path = root.OpenSubKey(ApprovalPath, true);
-                                if (path != null)
-                                {
-                                    path.DeleteValue(registryKey);
-                                    path.Close();
-                                }
-                            }
-                        }
-                        break;
+                        var key2 = root.CreateSubKey("SOFTWARE");
+                        var key3 = key2.CreateSubKey("Microsoft");
+                        var key4 = key3.CreateSubKey("Windows");
+                        var key5 = key4.CreateSubKey("CurrentVersion");
+                        var key6 = key5.CreateSubKey("Run");
+                        path = key6;
                     }
-                }
-                // check if the startup register key is approved
-                if (startup)
-                {
-                    path?.Close();
-                    path = root.OpenSubKey(ApprovalPath, false);
-                    if (path != null)
+                    var keyNames = path.GetValueNames();
+                    // check if the startup register key exists
+                    foreach (var keyName in keyNames)
                     {
-                        keyNames = path.GetValueNames();
-                        foreach (var keyName in keyNames)
+                        if (keyName.Equals(NonMsixRegistryKey, StringComparison.CurrentCultureIgnoreCase))
                         {
-                            if (keyName.Equals(registryKey, StringComparison.CurrentCultureIgnoreCase))
+                            startup = true;
+                            // check if the startup register value is valid
+                            if (startup)
                             {
-                                var value = (byte[])path.GetValue(keyName)!;
-                                if (!(value.SequenceEqual(ApprovalValue1) || value.SequenceEqual(ApprovalValue2)))
+                                var value = path.GetValue(keyName)!.ToString()!;
+                                if (!value.Contains(@appPath, StringComparison.CurrentCultureIgnoreCase))
                                 {
                                     startup = false;
+                                    path.DeleteValue(NonMsixRegistryKey);
+                                    path.Close();
+                                    path = root.OpenSubKey(ApprovalPath, true);
+                                    if (path != null)
+                                    {
+                                        path.DeleteValue(NonMsixRegistryKey);
+                                        path.Close();
+                                    }
                                 }
-                                break;
+                            }
+                            break;
+                        }
+                    }
+                    // check if the startup register key is approved
+                    if (startup)
+                    {
+                        path?.Close();
+                        path = root.OpenSubKey(ApprovalPath, false);
+                        if (path != null)
+                        {
+                            keyNames = path.GetValueNames();
+                            foreach (var keyName in keyNames)
+                            {
+                                if (keyName.Equals(NonMsixRegistryKey, StringComparison.CurrentCultureIgnoreCase))
+                                {
+                                    var value = (byte[])path.GetValue(keyName)!;
+                                    if (!(value.SequenceEqual(ApprovalValue1) || value.SequenceEqual(ApprovalValue2)))
+                                    {
+                                        startup = false;
+                                    }
+                                    break;
+                                }
                             }
                         }
                     }
+                    path?.Close();
+                    return startup;
                 }
-                path?.Close();
-                return startup;
+                catch
+                {
+                    return false;
+                }
             }
-            catch
-            {
-                return false;
-            }
+        }
+    }
+
+    /// <summary>
+    /// Schedule the logon task.
+    /// </summary>
+    public static bool ScheduleLogonTask()
+    {
+        if (Environment.ProcessPath is not string appPath)
+        {
+            return false;
+        }
+
+        using var td = TaskService.Instance.NewTask();
+        td.RegistrationInfo.Description = NonMsixLogonTaskDesc;
+        td.Triggers.Add(new LogonTrigger { UserId = WindowsIdentity.GetCurrent().Name, Delay = TimeSpan.FromSeconds(2) });
+        td.Actions.Add(appPath, NonMsixStartupTag);
+
+        if (RuntimeHelper.IsCurrentUserIsAdmin())
+        {
+            td.Principal.RunLevel = TaskRunLevel.Highest;
+        }
+
+        td.Settings.StopIfGoingOnBatteries = false;
+        td.Settings.DisallowStartIfOnBatteries = false;
+        td.Settings.ExecutionTimeLimit = TimeSpan.Zero;
+
+        try
+        {
+            TaskService.Instance.RootFolder.RegisterTaskDefinition(NonMsixLogonTaskName, td);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Unschedule the logon task.
+    /// </summary>
+    public static bool UnScheduleLogonTask()
+    {
+        using var taskService = new TaskService();
+        try
+        {
+            taskService.RootFolder.DeleteTask(NonMsixLogonTaskName);
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
         }
     }
 
     /// <summary>
     /// Add or delete the startup register key.
     /// </summary>
-    private static bool SetStartupRegistryKey(string registryKey, bool startup, bool currentUser = true)
+    private static bool SetStartupRegistryKey(bool startup, bool currentUser = true)
     {
-        var appPath = Environment.ProcessPath!;
+        if (Environment.ProcessPath is not string appPath)
+        {
+            return false;
+        }
+
         var root = currentUser ? Registry.CurrentUser : Registry.LocalMachine;
-        var value = $@"""{@appPath}"" /startup";
+        var value = GetStartupValue(appPath);
         try
         {
             var path = root.OpenSubKey(RegistryPath, true);
@@ -183,13 +270,13 @@ public class StartupHelper
             // add the startup register key
             if (startup)
             {
-                path.SetValue(registryKey, value);
+                path.SetValue(NonMsixRegistryKey, value);
                 path.Close();
                 // set the startup approval key to approval status
                 path = root.OpenSubKey(ApprovalPath, true);
                 if (path != null)
                 {
-                    path.SetValue(registryKey, ApprovalValue1);
+                    path.SetValue(NonMsixRegistryKey, ApprovalValue1);
                     path.Close();
                 }
             }
@@ -199,9 +286,9 @@ public class StartupHelper
                 var keyNames = path.GetValueNames();
                 foreach (var keyName in keyNames)
                 {
-                    if (keyName.Equals(registryKey, StringComparison.CurrentCultureIgnoreCase))
+                    if (keyName.Equals(NonMsixRegistryKey, StringComparison.CurrentCultureIgnoreCase))
                     {
-                        path.DeleteValue(registryKey);
+                        path.DeleteValue(NonMsixRegistryKey);
                         path.Close();
                         break;
                     }
@@ -210,7 +297,7 @@ public class StartupHelper
                 path = root.OpenSubKey(ApprovalPath, true);
                 if (path != null)
                 {
-                    path.DeleteValue(registryKey);
+                    path.DeleteValue(NonMsixRegistryKey);
                     path.Close();
                 }
             }
@@ -222,4 +309,6 @@ public class StartupHelper
         }
         return true;
     }
+
+    private static string GetStartupValue(string appPath) => $@"""{@appPath}"" {NonMsixStartupTag}";
 }

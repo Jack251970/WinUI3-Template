@@ -10,12 +10,16 @@ public static class Constants
 
     #region Startup
 
-    public const string StartupRegistryKey = "WinUI3 Template";
-
     public const string StartupTaskId = "StartAppOnLoginTask";
 
+    public const string StartupRegistryKey = WinUI3Template;
+
+    public const string StartupLogonTaskName = $"{WinUI3Template} Startup";
+
+    public const string StartupLogonTaskDesc = $"{WinUI3Template} Auto Startup";
+
     #endregion
-    
+
     #region Resources
 
     public const string DefaultResourceFileName = "Resources";
