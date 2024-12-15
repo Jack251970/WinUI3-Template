@@ -30,7 +30,8 @@ public class RuntimeHelper
 
     public static bool IsCurrentUserIsAdmin()
     {
-        var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+        var identity = WindowsIdentity.GetCurrent();
+        var principal = new WindowsPrincipal(identity);
         return principal.IsInRole(WindowsBuiltInRole.Administrator);
     }
 

@@ -194,7 +194,7 @@ public class StartupHelper
     /// <summary>
     /// Schedule the logon task.
     /// </summary>
-    public static bool ScheduleLogonTask()
+    private static bool ScheduleLogonTask()
     {
         if (Environment.ProcessPath is not string appPath)
         {
@@ -229,7 +229,7 @@ public class StartupHelper
     /// <summary>
     /// Unschedule the logon task.
     /// </summary>
-    public static bool UnScheduleLogonTask()
+    private static bool UnScheduleLogonTask()
     {
         using var taskService = new TaskService();
         try
@@ -254,7 +254,7 @@ public class StartupHelper
         }
 
         var root = currentUser ? Registry.CurrentUser : Registry.LocalMachine;
-        var value = GetStartupValue(appPath);
+        var value = $@"""{@appPath}"" {NonMsixStartupTag}";
         try
         {
             var path = root.OpenSubKey(RegistryPath, true);
@@ -309,6 +309,4 @@ public class StartupHelper
         }
         return true;
     }
-
-    private static string GetStartupValue(string appPath) => $@"""{@appPath}"" {NonMsixStartupTag}";
 }
