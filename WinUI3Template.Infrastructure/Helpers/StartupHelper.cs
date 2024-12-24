@@ -122,9 +122,9 @@ public class StartupHelper
     }
 
     /// <summary>
-    /// Check and fix the startup task.
+    /// Check and fix the startup.
     /// </summary>
-    public static async Task<bool> CheckStartupTask(bool currentUser = true)
+    public static async Task<bool> CheckStartup(bool currentUser = true)
     {
         if (RuntimeHelper.IsMSIX)
         {

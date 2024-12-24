@@ -267,7 +267,7 @@ public partial class App : Application
             GetService<IDialogService>().Initialize();
 
             // Check startup
-            _ = StartupHelper.CheckStartupTask();
+            _ = StartupHelper.CheckStartup();
 
             // TODO: Initialize others things
 
