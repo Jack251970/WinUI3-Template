@@ -124,23 +124,18 @@ public class StartupHelper
     /// <summary>
     /// Check and fix the startup task.
     /// </summary>
-    public static async Task<bool> CheckStartupTask(bool logon = false, bool currentUser = true)
+    public static async Task<bool> CheckStartupTask(bool currentUser = true)
     {
         if (RuntimeHelper.IsMSIX)
         {
             // Have checked but cannot do anything with MSIX package.
-            return await GetStartupAsync(logon, currentUser);
+            return await GetStartupAsync(false, currentUser);
         }
         else
         {
-            if (logon)
-            {
-                return CheckLogonTask();
-            }
-            else
-            {
-                return CheckAndGetStartupRegistryKey(currentUser);
-            }
+            var check1 = CheckLogonTask();
+            var check2 = CheckAndGetStartupRegistryKey(currentUser);
+            return check1 || check2;
         }
     }
 
