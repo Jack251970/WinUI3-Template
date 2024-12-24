@@ -266,6 +266,9 @@ public partial class App : Application
             // Initialize dialog service
             GetService<IDialogService>().Initialize();
 
+            // Check startup
+            _ = StartupHelper.CheckStartupTask();
+
             // TODO: Initialize others things
 
             await GetService<IActivationService>().ActivateMainWindowAsync(args);
