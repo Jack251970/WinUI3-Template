@@ -78,10 +78,10 @@
 ### 5. Add a new window
 * Refer to `WindowsExtensions.cs` for more information.
 
-## 🪧 Building
+### 6. Building
 
-1. Select the package / unpackaged mode.
-2. Build the solution in Visual Studio or run `dotnet build` from the command line.
+* Select the package / unpackaged mode.
+* Build the solution in Visual Studio or run `dotnet build` from the command line.
 
 ## 📚 Reference
 
@@ -96,3 +96,7 @@
 * WinUI3-Template: https://github.com/Jack251970/WinUI3-Template
 * Windows Community Toolkit: https://github.com/CommunityToolkit/WindowsCommunityToolkit
 * WinUIEx: https://github.com/dotMorten/WinUIEx
+
+## 📄 License
+
+[MIT License](LICENSE)
