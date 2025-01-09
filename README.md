@@ -8,7 +8,7 @@
 
 **A template for WinUI 3, with support of tray icon, multi-thread window, splash screen, etc.**
 
-## 🎁 Features
+## ⭐ Features
 
 ### 1. Package / Unpackaged Mode
 ### 2. Navigation View
@@ -27,7 +27,21 @@
 ### 9. Splash Screen
 ### 10. Serilog Logging
 
-## 🚗 Getting Started
+## 🖼️ Screenshots
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./images/Screenshot1-Dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./images/Screenshot1.png">
+  <img alt="Screenshot 1" src="./images/Screenshot1.png">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./images/Screenshot2-Dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./images/Screenshot2.png">
+  <img alt="Screenshot 2" src="./images/Screenshot2.png">
+</picture>
+
+## 🚀 Getting Started
 
 ### 1. Replace in files
 * replace `WinUI3Template` with your own root namespace.
