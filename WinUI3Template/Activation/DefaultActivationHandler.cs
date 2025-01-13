@@ -15,7 +15,7 @@ internal class DefaultActivationHandler(INavigationService navigationService) : 
     protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
         // Initialize to home page.
-        _navigationService.NavigateTo(typeof(HomeViewModel).FullName!, args.Arguments);
+        _navigationService.NavigateTo(typeof(HomePageViewModel).FullName!, args.Arguments);
 
         await Task.CompletedTask;
     }

@@ -2,9 +2,7 @@
   <img src="./WinUI3Template/Assets/Release/PackageIcon.png" width="90">
 </p>
 
-<h1>
-	WinUI3 Template
-</h1>
+# WinUI3 Template
 
 **A template for WinUI 3, with support of tray icon, multi-thread window, splash screen, etc.**
 

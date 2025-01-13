@@ -49,7 +49,7 @@ internal class NavigationViewService(INavigationService navigationService, IPage
     {
         if (args.IsSettingsInvoked)
         {
-            _navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
+            _navigationService.NavigateTo(typeof(SettingsPageViewModel).FullName!);
         }
         else
         {

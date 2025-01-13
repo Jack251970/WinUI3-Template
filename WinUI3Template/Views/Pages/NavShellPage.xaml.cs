@@ -5,13 +5,13 @@ namespace WinUI3Template.Views.Pages;
 
 public sealed partial class NavShellPage : Page
 {
-    public NavShellViewModel ViewModel { get; }
+    public NavShellPageViewModel ViewModel { get; }
 
     public Frame ShellFrame => NavigationFrame;
 
     public NavShellPage()
     {
-        ViewModel = DependencyExtensions.GetRequiredService<NavShellViewModel>();
+        ViewModel = DependencyExtensions.GetRequiredService<NavShellPageViewModel>();
         InitializeComponent();
 
 #if TRAY_ICON

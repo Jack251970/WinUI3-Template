@@ -2,12 +2,12 @@
 
 namespace WinUI3Template.ViewModels.Pages;
 
-public partial class HomeViewModel : ObservableRecipient
+public partial class HomePageViewModel : ObservableRecipient
 {
     [ObservableProperty]
     private string _appDisplayName = ConstantHelper.AppDisplayName;
 
-    public HomeViewModel()
+    public HomePageViewModel()
     {
 
     }

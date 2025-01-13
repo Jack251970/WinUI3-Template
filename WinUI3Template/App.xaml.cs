@@ -171,11 +171,11 @@ public partial class App : Application
                 #region Views & ViewModels
 
                 // Main Window Pages
-                services.AddTransient<NavShellViewModel>();
+                services.AddTransient<NavShellPageViewModel>();
                 services.AddTransient<NavShellPage>();
-                services.AddTransient<HomeViewModel>();
+                services.AddTransient<HomePageViewModel>();
                 services.AddTransient<HomePage>();
-                services.AddTransient<SettingsViewModel>();
+                services.AddTransient<SettingsPageViewModel>();
                 services.AddTransient<SettingsPage>();
 
                 #endregion

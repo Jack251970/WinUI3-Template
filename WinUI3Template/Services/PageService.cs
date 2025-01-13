@@ -11,8 +11,8 @@ internal class PageService : IPageService
     public PageService()
     {
         // Main Window Pages
-        Configure<HomeViewModel, HomePage>();
-        Configure<SettingsViewModel, SettingsPage>();
+        Configure<HomePageViewModel, HomePage>();
+        Configure<SettingsPageViewModel, SettingsPage>();
     }
 
     public Type GetPageType(string viewModel)

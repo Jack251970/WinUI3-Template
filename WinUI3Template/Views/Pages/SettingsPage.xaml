@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:pages="using:WinUI3Template.ViewModels.Pages"
     behaviors:NavigationViewHeaderBehavior.HeaderContext="Shell_Settings.Content"
-    d:DataContext="{d:DesignInstance Type=pages:SettingsViewModel}"
+    d:DataContext="{d:DesignInstance Type=pages:SettingsPageViewModel}"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
