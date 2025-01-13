@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.
 
 using System.Collections.Concurrent;
+using System.Globalization;
 using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace WinUI3Template.Core.Extensions;
@@ -35,12 +36,12 @@ public static class ResourceExtensions
     }
 
     /// <summary>
-    /// Add resource file of a extension project.
+    /// Add resource file of a inner project.
     /// </summary>
     /// <param name="projectName">
-    /// The project name of the extension project.
+    /// The project name of the inner project.
     /// </param>
-    public static void AddExternalResource(string projectName)
+    public static void AddInnerResource(string projectName)
     {
         var resourcePath = Path.Combine(AppContext.BaseDirectory, $"{projectName}.pri");
         var resourceMap = new ResourceManager(resourcePath).MainResourceMap.TryGetSubtree($"{projectName}/{Constants.DefaultResourceFileName}");
@@ -63,7 +64,17 @@ public static class ResourceExtensions
 
     #region extension methods
 
-    public static string GetLocalizedString(this string resourceKey, string resourceFileName = Constants.DefaultResourceFileName)
+    /// <summary>
+    /// Gets the localized string of a resource key.
+    /// </summary>
+    /// <param name="resourceKey">Resource key.</param>
+    /// <param name="resourceFileName">
+    /// Resource file name. It can be the resource file name of the host project, 
+    /// the project name of the inner project, or the assembly name of the extension project.
+    /// </param>
+    /// <param name="args">Placeholder arguments.</param>
+    /// <returns>Localized value, or resource key if the value is empty or an exception occurred.</returns>
+    public static string GetLocalizedString(this string resourceKey, string resourceFileName = Constants.DefaultResourceFileName, params object[] args)
     {
         // Fix resource key
         resourceKey = resourceKey.Replace(".", "/");
@@ -72,15 +83,34 @@ public static class ResourceExtensions
         var cachedResourceKey = $"{resourceFileName}/{resourceKey}";
         if (cachedResources.TryGetValue(cachedResourceKey, out var value))
         {
-            return value;
+            return GetLocalizedString(value, args);
         }
 
         // Get resource value
         var resourcesTree = resourcesTrees[resourceFileName];
         value = resourcesTree.TryGetValue(resourceKey)?.ValueAsString;
 
-        // Return empty string if the resource key is not found.
-        return cachedResources[cachedResourceKey] = value ?? string.Empty;
+        // Return empty string if the resource key is not found
+        var returnValue = cachedResources[cachedResourceKey] = value ?? string.Empty;
+        return GetLocalizedString(returnValue, args);
+    }
+
+    private static string GetLocalizedString(string value, params object[] args)
+    {
+        try
+        {
+            // only replace the placeholders if args is not empty
+            if (args.Length > 0)
+            {
+                value = string.Format(CultureInfo.CurrentCulture, value, args);
+            }
+        }
+        catch
+        {
+            value = string.Empty;
+        }
+
+        return value;
     }
 
     #endregion
