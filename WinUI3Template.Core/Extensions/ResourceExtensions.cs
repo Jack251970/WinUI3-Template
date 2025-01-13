@@ -35,6 +35,19 @@ public static class ResourceExtensions
     }
 
     /// <summary>
+    /// Add resource file of a extension project.
+    /// </summary>
+    /// <param name="projectName">
+    /// The project name of the extension project.
+    /// </param>
+    public static void AddExternalResource(string projectName)
+    {
+        var resourcePath = Path.Combine(AppContext.BaseDirectory, $"{projectName}.pri");
+        var resourceMap = new ResourceManager(resourcePath).MainResourceMap.TryGetSubtree($"{projectName}/{Constants.DefaultResourceFileName}");
+        resourcesTrees.Add(projectName, resourceMap);
+    }
+
+    /// <summary>
     /// Get resource map by resource file name.
     /// </summary>
     /// <param name="resourceFileName">
