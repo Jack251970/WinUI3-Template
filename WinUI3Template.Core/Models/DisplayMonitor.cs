@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
-using WinUIEx;
 using Windows.Foundation;
+using WinUIEx;
 
 namespace WinUI3Template.Core.Models;
 
