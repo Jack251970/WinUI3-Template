@@ -13,6 +13,7 @@
     mc:Ignorable="d">
 
     <StackPanel x:Name="ContentArea" Orientation="Vertical">
+        <TextBlock x:Uid="Test" />
         <TextBlock
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -31,5 +32,12 @@
             Grid.Row="1"
             Command="{x:Bind ViewModel.RestoreCommand}"
             Content="Restore" />
+        <Slider
+            x:Name="Slider"
+            Grid.Row="2"
+            KeyUp="Slider_KeyUp"
+            Maximum="100"
+            Minimum="10"
+            Value="{x:Bind ViewModel.SSS, Mode=TwoWay}" />
     </StackPanel>
 </Page>
