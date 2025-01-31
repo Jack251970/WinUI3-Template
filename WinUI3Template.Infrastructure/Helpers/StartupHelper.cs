@@ -161,13 +161,16 @@ public class StartupHelper
                     UnscheduleLogonTask();
                     ScheduleLogonTask();
                 }
+
+                return true;
             }
             catch (Exception)
             {
-                return false;
+
             }
         }
-        return true;
+
+        return false;
     }
 
     /// <summary>
