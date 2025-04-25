@@ -156,7 +156,7 @@ public class StartupHelper
             try
             {
                 var action = task.Definition.Actions.FirstOrDefault()!.ToString().Trim();
-                if (!appPath.Equals(action, StringComparison.OrdinalIgnoreCase) && !File.Exists(action))
+                if (!appPath.Equals(action, StringComparison.OrdinalIgnoreCase))
                 {
                     UnscheduleLogonTask();
                     ScheduleLogonTask();
