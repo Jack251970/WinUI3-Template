@@ -29,6 +29,7 @@ public sealed partial class TrayMenuControl : UserControl
     [RelayCommand]
     private void ExitApp()
     {
+        App.MainWindow.Hide();
         DisposeTrayIconControl();
 #if TRAY_ICON
         App.CanCloseWindow = true;
