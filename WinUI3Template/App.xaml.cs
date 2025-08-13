@@ -305,14 +305,21 @@ public partial class App : Application
         if (!string.IsNullOrEmpty(exePath) && File.Exists(exePath))
         {
             // Start a new instance of the application
-            Process.Start(new ProcessStartInfo
+            try
             {
-                FileName = exePath,
-                UseShellExecute = true,
-                WorkingDirectory = Environment.CurrentDirectory,
-                Arguments = param,
-                Verb = admin ? "runas" : string.Empty
-            });
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = exePath,
+                    UseShellExecute = true,
+                    WorkingDirectory = Environment.CurrentDirectory,
+                    Arguments = param,
+                    Verb = admin ? "runas" : string.Empty
+                });
+            }
+            catch (Exception)
+            {
+                // Ignore any exceptions that occur while starting the new process
+            }
 
             // Close the log
             Log.CloseAndFlush();
