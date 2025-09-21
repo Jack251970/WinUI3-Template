@@ -1,0 +1,76 @@
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - '*.md'
+  pull_request:
+    paths-ignore:
+      - '*.md'
+
+jobs:
+
+  build:
+    
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+        platform: [arm64, x64, x86]
+
+    env:
+      SOLUTION_PATH: WinUI3Template.sln
+      PACKAGE_PROJECT_PATH: WinUI3Template\WinUI3Template.csproj
+      CONFIGURATION: ${{ matrix.configuration }}
+      ARCHITECTURE: ${{ matrix.platform }}
+
+    steps:
+
+      # Checkout codes
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # Setup MSBuild
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v2
+
+      # Setup NuGet
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
+
+      # Setup .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            9.0.x
+
+      # Restore solution dependencies
+      - name: Restore project
+        shell: pwsh
+        run: |
+          msbuild $env:SOLUTION_PATH `
+            -t:Restore `
+            -p:Platform=$env:ARCHITECTURE `
+            -p:Configuration=$env:CONFIGURATION `
+            -p:PublishReadyToRun=true `
+            -v:quiet
+
+      # Build project
+      - name: Build project
+        run: |
+          msbuild `
+            $env:PACKAGE_PROJECT_PATH `
+            -t:Build `
+            -p:Configuration=$env:CONFIGURATION `
+            -p:Platform=$env:ARCHITECTURE `
+            -p:AppxBundle=Never `
+            -v:quiet
