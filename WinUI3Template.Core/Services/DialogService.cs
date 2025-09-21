@@ -1,100 +1,94 @@
-﻿using Windows.UI.Popups;
-using WinUIEx;
+﻿using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using SuGarToolkit.Controls.Dialogs;
 
 namespace WinUI3Template.Core.Services;
 
 public class DialogService : IDialogService
 {
-    private DialogScreenWindow DialogScreen = null!;
-
     private readonly string Ok = "ButtonOk.Content".GetLocalizedString();
     private readonly string Cancel = "ButtonCancel.Content".GetLocalizedString();
 
-    public void Initialize()
-    {
-        DialogScreen = WindowsExtensions.CreateWindow<DialogScreenWindow>();
-    }
-
-    #region WindowEx Dialog
+    #region Window Dialog
 
     #region Public
 
-    public async Task ShowOneButtonDialogAsync(WindowEx window, string title, string context)
+    public async Task ShowOneButtonDialogAsync(Window window, string title, string context)
     {
-        await ShowMessageDialogAsync(window, context, null, title: title);
+        var dialog = new ContentDialog()
+        {
+            Title = title,
+            Content = context,
+            PrimaryButtonText = Ok,
+            DefaultButton = ContentDialogButton.Primary
+        };
+        await dialog.ShowAsync();
     }
 
-    public async Task<WidgetDialogResult> ShowTwoButtonDialogAsync(WindowEx window, string title, string context, string leftButton = null!, string rightButton = null!)
+    public async Task<WidgetDialogResult> ShowTwoButtonDialogAsync(Window window, string title, string context, string leftButton = null!, string rightButton = null!)
     {
-        leftButton = leftButton is null ? Ok : leftButton;
-        rightButton = rightButton is null ? Cancel : rightButton;
-        var commands = new List<IUICommand>
+        leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
+        rightButton = string.IsNullOrWhiteSpace(rightButton) ? Cancel : rightButton;
+        
+        var dialog = new ContentDialog()
         {
-            new UICommand(leftButton),
-            new UICommand(rightButton)
+            Title = title,
+            Content = context,
+            PrimaryButtonText = leftButton,
+            SecondaryButtonText = rightButton
         };
+        var result = await dialog.ShowAsync();
 
-        var result = await ShowMessageDialogAsync(window, context, commands, title: title);
-
-        if (result == null)
-        {
-            return WidgetDialogResult.Unknown;
-        }
-
-        if (result.Label == leftButton)
+        if (result == ContentDialogResult.Primary)
         {
             return WidgetDialogResult.Left;
         }
-        else
+        else if (result == ContentDialogResult.Secondary)
         {
             return WidgetDialogResult.Right;
         }
+        else
+        {
+            return WidgetDialogResult.Unknown;
+        }
     }
 
-    public async Task<WidgetDialogResult> ShowThreeButtonDialogAsync(WindowEx window, string title, string context, string leftButton = null!, string centerButton = null!, string rightButton = null!)
+    public async Task<WidgetDialogResult> ShowThreeButtonDialogAsync(Window window, string title, string context, string leftButton = null!, string centerButton = null!, string rightButton = null!)
     {
-        if (centerButton is null)
+        if (string.IsNullOrWhiteSpace(centerButton))
         {
             return await ShowTwoButtonDialogAsync(window, title, context, leftButton, rightButton);
         }
 
-        leftButton = leftButton is null ? Ok : leftButton;
-        rightButton = rightButton is null ? Cancel : rightButton;
-        var commands = new List<IUICommand>
+        leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
+        rightButton = string.IsNullOrWhiteSpace(rightButton) ? Cancel : rightButton;
+
+        var dialog = new ContentDialog()
         {
-            new UICommand(leftButton),
-            new UICommand(centerButton),
-            new UICommand(rightButton)
+            Title = title,
+            Content = context,
+            PrimaryButtonText = leftButton,
+            SecondaryButtonText = centerButton,
+            CloseButtonText = rightButton
         };
+        var result = await dialog.ShowAsync();
 
-        var result = await ShowMessageDialogAsync(window, context, commands, title: title);
-
-        if (result == null)
-        {
-            return WidgetDialogResult.Unknown;
-        }
-
-        if (result.Label == leftButton)
+        if (result == ContentDialogResult.Primary)
         {
             return WidgetDialogResult.Left;
         }
-        else if (result.Label == centerButton)
-        {
-            return WidgetDialogResult.Center;
-        }
-        else
+        else if (result == ContentDialogResult.Secondary)
         {
             return WidgetDialogResult.Right;
         }
-    }
-
-    #endregion
-
-    #region Private
-
-    private static async Task<IUICommand?> ShowMessageDialogAsync(WindowEx window, string content, IList<IUICommand>? commands, uint defaultCommandIndex = 0u, uint cancelCommandIndex = 1u, string title = "")
-    {
-        return await window.ShowMessageDialogAsync(content, commands, defaultCommandIndex, cancelCommandIndex, title);
+        else if (result == ContentDialogResult.None)
+        {
+            return WidgetDialogResult.Right;
+        }
+        else
+        {
+            return WidgetDialogResult.Unknown;
+        }
     }
 
     #endregion
@@ -107,166 +101,88 @@ public class DialogService : IDialogService
 
     public async Task ShowFullScreenOneButtonDialogAsync(string title, string context)
     {
-        await ShowFullScreenMessageDialogAsync(context, null, title: title);
-    }
-
-    public async Task ShowFullScreenTwoButtonDialogAsync(string title, string context, string leftButton = null!, string rightButton = null!, Action<WidgetDialogResult>? func = null)
-    {
-        leftButton = leftButton is null ? Ok : leftButton;
-        rightButton = rightButton is null ? Cancel : rightButton;
-        var commands = new List<IUICommand>
+        var dialog = new WindowedContentDialog()
         {
-            new UICommand(leftButton),
-            new UICommand(rightButton)
+            WindowTitle = title,
+            Title = title,
+            Content = context,
+            OwnerWindow = null,
+            PrimaryButtonText = Ok,
+            IsTitleBarVisible = false
         };
-
-        await ShowFullScreenMessageDialogAsync(context, leftButton, null, rightButton, commands, title: title, func: func);
+        await dialog.ShowAsync();
     }
 
-    public async Task ShowFullScreenTwoButtonDialogAsync(string title, string context, string leftButton = null!, string rightButton = null!, Func<WidgetDialogResult, Task>? func = null)
+    public async Task<WidgetDialogResult> ShowFullScreenTwoButtonDialogAsync(string title, string context, string leftButton = null!, string rightButton = null!)
     {
-        leftButton = leftButton is null ? Ok : leftButton;
-        rightButton = rightButton is null ? Cancel : rightButton;
-        var commands = new List<IUICommand>
+        leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
+        rightButton = string.IsNullOrWhiteSpace(rightButton) ? Cancel : rightButton;
+
+        var dialog = new WindowedContentDialog()
         {
-            new UICommand(leftButton),
-            new UICommand(rightButton)
+            WindowTitle = title,
+            Title = title,
+            Content = context,
+            OwnerWindow = null,
+            PrimaryButtonText = leftButton,
+            SecondaryButtonText = rightButton,
+            IsTitleBarVisible = false
         };
+        var result = await dialog.ShowAsync();
 
-        await ShowFullScreenMessageDialogAsync(context, leftButton, null, rightButton, commands, title: title, func: func);
+        if (result == ContentDialogResult.Primary)
+        {
+            return WidgetDialogResult.Left;
+        }
+        else if (result == ContentDialogResult.Secondary)
+        {
+            return WidgetDialogResult.Right;
+        }
+        else
+        {
+            return WidgetDialogResult.Unknown;
+        }
     }
 
-    public async Task ShowFullScreenThreeButtonDialogAsync(string title, string context, string leftButton = null!, string centerButton = null!, string rightButton = null!, Action<WidgetDialogResult>? func = null)
+    public async Task<WidgetDialogResult> ShowFullScreenThreeButtonDialogAsync(string title, string context, string leftButton = null!, string centerButton = null!, string rightButton = null!)
     {
-        if (centerButton is null)
+        if (string.IsNullOrWhiteSpace(centerButton))
         {
-            await ShowFullScreenTwoButtonDialogAsync(title, context, leftButton, rightButton, func);
+            return await ShowFullScreenTwoButtonDialogAsync(title, context, leftButton, rightButton);
         }
 
-        leftButton = leftButton is null ? Ok : leftButton;
-        rightButton = rightButton is null ? Cancel : rightButton;
-        var commands = new List<IUICommand>
+        leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
+        rightButton = string.IsNullOrWhiteSpace(rightButton) ? Cancel : rightButton;
+
+        var dialog = new WindowedContentDialog()
         {
-            new UICommand(leftButton),
-            new UICommand(centerButton),
-            new UICommand(rightButton)
+            WindowTitle = title,
+            Title = title,
+            Content = context,
+            OwnerWindow = null,
+            PrimaryButtonText = leftButton,
+            SecondaryButtonText = centerButton,
+            CloseButtonText = rightButton,
+            IsTitleBarVisible = false
         };
+        var result = await dialog.ShowAsync();
 
-        await ShowFullScreenMessageDialogAsync(context, leftButton, centerButton, rightButton, commands, title: title, func: func);
-    }
-
-    public async Task ShowFullScreenThreeButtonDialogAsync(string title, string context, string leftButton = null!, string centerButton = null!, string rightButton = null!, Func<WidgetDialogResult, Task>? func = null)
-    {
-        if (centerButton is null)
+        if (result == ContentDialogResult.Primary)
         {
-            await ShowFullScreenTwoButtonDialogAsync(title, context, leftButton, rightButton, func);
+            return WidgetDialogResult.Left;
         }
-
-        leftButton = leftButton is null ? Ok : leftButton;
-        rightButton = rightButton is null ? Cancel : rightButton;
-        var commands = new List<IUICommand>
+        else if (result == ContentDialogResult.Secondary)
         {
-            new UICommand(leftButton),
-            new UICommand(centerButton),
-            new UICommand(rightButton)
-        };
-
-        await ShowFullScreenMessageDialogAsync(context, leftButton, centerButton, rightButton, commands, title: title, func: func);
-    }
-
-    #endregion
-
-    #region Private
-
-    private async Task ShowFullScreenMessageDialogAsync(string content, IList<IUICommand>? commands, uint defaultCommandIndex = 0u, uint cancelCommandIndex = 1u, string title = "")
-    {
-        await DialogScreen.EnqueueOrInvokeAsync(async (window) =>
+            return WidgetDialogResult.Right;
+        }
+        else if (result == ContentDialogResult.None)
         {
-            window.Show();
-            if (window.Visible)
-            {
-                await window.ShowMessageDialogAsync(content, commands, defaultCommandIndex, cancelCommandIndex, title);
-                window.Hide();
-            }
-        });
-    }
-
-    private async Task ShowFullScreenMessageDialogAsync(string content, string leftButton, string? centerButton, string rightButton, IList<IUICommand>? commands, uint defaultCommandIndex = 0u, uint cancelCommandIndex = 1u, string title = "", Action<WidgetDialogResult>? func = null)
-    {
-        await DialogScreen.EnqueueOrInvokeAsync(async (window) =>
+            return WidgetDialogResult.Right;
+        }
+        else
         {
-            window.Show();
-            if (window.Visible)
-            {
-                // get result
-                var result = await window.ShowMessageDialogAsync(content, commands, defaultCommandIndex, cancelCommandIndex, title);
-                window.Hide();
-
-                // invoke function
-                if (func != null)
-                {
-                    if (result == null)
-                    {
-                        func.Invoke(WidgetDialogResult.Unknown);
-                    }
-                    else if (result.Label == leftButton)
-                    {
-                        func.Invoke(WidgetDialogResult.Left);
-                    }
-                    else if (result.Label == rightButton)
-                    {
-                        func.Invoke(WidgetDialogResult.Right);
-                    }
-                    else if (centerButton != null)
-                    {
-                        func.Invoke(WidgetDialogResult.Center);
-                    }
-                    else
-                    {
-                        func.Invoke(WidgetDialogResult.Unknown);
-                    }
-                }
-            }
-        });
-    }
-
-    private async Task ShowFullScreenMessageDialogAsync(string content, string leftButton, string? centerButton, string rightButton, IList<IUICommand>? commands, uint defaultCommandIndex = 0u, uint cancelCommandIndex = 1u, string title = "", Func<WidgetDialogResult, Task>? func = null)
-    {
-        await DialogScreen.EnqueueOrInvokeAsync(async (window) =>
-        {
-            window.Show();
-            if (window.Visible)
-            {
-                // get result
-                var result = await window.ShowMessageDialogAsync(content, commands, defaultCommandIndex, cancelCommandIndex, title);
-                window.Hide();
-
-                // invoke function
-                if (func != null)
-                {
-                    if (result == null)
-                    {
-                        await func.Invoke(WidgetDialogResult.Unknown);
-                    }
-                    else if (result.Label == leftButton)
-                    {
-                        await func.Invoke(WidgetDialogResult.Left);
-                    }
-                    else if (result.Label == rightButton)
-                    {
-                        await func.Invoke(WidgetDialogResult.Right);
-                    }
-                    else if (centerButton != null)
-                    {
-                        await func.Invoke(WidgetDialogResult.Center);
-                    }
-                    else
-                    {
-                        await func.Invoke(WidgetDialogResult.Unknown);
-                    }
-                }
-            }
-        });
+            return WidgetDialogResult.Unknown;
+        }
     }
 
     #endregion

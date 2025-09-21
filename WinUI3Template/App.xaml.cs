@@ -237,9 +237,6 @@ public partial class App : Application
             SplashScreenLoadingTCS = null;
 #endif
 
-            // Initialize dialog service
-            DependencyExtensions.GetRequiredService<IDialogService>().Initialize();
-
             // Check startup
             _ = StartupHelper.CheckStartup();
 
