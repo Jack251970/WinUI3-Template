@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -202,7 +203,7 @@ public sealed partial class MainWindow : WindowEx
             {
                 if (Content is not NavShellPage shell)
                 {
-                    shell = DependencyExtensions.GetRequiredService<NavShellPage>();
+                    shell = Ioc.Default.GetRequiredService<NavShellPage>();
                     if (shell == null)
                     {
                         var frame = new Frame();

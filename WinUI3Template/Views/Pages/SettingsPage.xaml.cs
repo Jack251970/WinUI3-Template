@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml.Controls;
 
 namespace WinUI3Template.Views.Pages;
 
@@ -8,7 +9,7 @@ public sealed partial class SettingsPage : Page
 
     public SettingsPage()
     {
-        ViewModel = DependencyExtensions.GetRequiredService<SettingsPageViewModel>();
+        ViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
         InitializeComponent();
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using CommunityToolkit.Mvvm.DependencyInjection;
+
 #if !DISABLE_XAML_GENERATED_MAIN
 using Microsoft.Extensions.Configuration;
 #endif
@@ -164,7 +166,7 @@ public partial class App : Application
                 #endregion
             })
             .Build();
-        DependencyExtensions.ConfigureServices(host.Services);
+        Ioc.Default.ConfigureServices(host.Services);
 
         // Configure exception handlers
         UnhandledException += (sender, e) => HandleAppUnhandledException(e.Exception, true);
@@ -172,8 +174,8 @@ public partial class App : Application
         TaskScheduler.UnobservedTaskException += (sender, e) => HandleAppUnhandledException(e.Exception, false);
 
         // Initialize core services
-        DependencyExtensions.GetRequiredService<IAppSettingsService>().Initialize();
-        DependencyExtensions.GetRequiredService<IAppNotificationService>().Initialize();
+        Ioc.Default.GetRequiredService<IAppSettingsService>().Initialize();
+        Ioc.Default.GetRequiredService<IAppNotificationService>().Initialize();
 
         // Initialize core helpers after services
         AppLanguageHelper.Initialize();
@@ -215,7 +217,7 @@ public partial class App : Application
 #if SPLASH_SCREEN
             // Show the splash screen
             SplashScreenLoadingTCS = new TaskCompletionSource();
-            await DependencyExtensions.GetRequiredService<IActivationService>().LaunchMainWindowAsync(appActivationArguments);
+            await Ioc.Default.GetRequiredService<IActivationService>().LaunchMainWindowAsync(appActivationArguments);
 
             // Activate the window
             MainWindow.Activate();
@@ -242,7 +244,7 @@ public partial class App : Application
 
             // TODO: Initialize others things
 
-            await DependencyExtensions.GetRequiredService<IActivationService>().ActivateMainWindowAsync(args);
+            await Ioc.Default.GetRequiredService<IActivationService>().ActivateMainWindowAsync(args);
         }
     }
 
@@ -261,7 +263,7 @@ public partial class App : Application
         // Try to show a notification
         if (showToastNotification)
         {
-            DependencyExtensions.GetRequiredService<IAppNotificationService>().TryShow(
+            Ioc.Default.GetRequiredService<IAppNotificationService>().TryShow(
                 string.Format("AppNotificationUnhandledExceptionPayload".GetLocalizedString(),
                 $"{ex?.ToString()}{Environment.NewLine}"));
         }
@@ -275,7 +277,7 @@ public partial class App : Application
     {
         _log.Information($"App is activated. Activation type: {activatedEventArgs.Data.GetType().Name}");
 
-        await MainWindow.EnqueueOrInvokeAsync(async (_) => await DependencyExtensions.GetRequiredService<IActivationService>().ActivateMainWindowAsync(activatedEventArgs));
+        await MainWindow.EnqueueOrInvokeAsync(async (_) => await Ioc.Default.GetRequiredService<IActivationService>().ActivateMainWindowAsync(activatedEventArgs));
     }
 #endif
 
@@ -284,7 +286,7 @@ public partial class App : Application
         _log.Information("Exiting current application");
 
         // Unregister app notification service
-        DependencyExtensions.GetRequiredService<IAppNotificationService>().Unregister();
+        Ioc.Default.GetRequiredService<IAppNotificationService>().Unregister();
 
         // Close all windows
         await WindowsExtensions.CloseAllWindowsAsync();

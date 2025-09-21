@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Xaml.Interactivity;
@@ -54,7 +55,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     {
         base.OnAttached();
 
-        var navigationService = DependencyExtensions.GetRequiredService<INavigationService>();
+        var navigationService = Ioc.Default.GetRequiredService<INavigationService>();
         navigationService.Navigated += OnNavigated;
 
         _current = this;
@@ -64,7 +65,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     {
         base.OnDetaching();
 
-        var navigationService = DependencyExtensions.GetRequiredService<INavigationService>();
+        var navigationService = Ioc.Default.GetRequiredService<INavigationService>();
         navigationService.Navigated -= OnNavigated;
     }
 

@@ -3,8 +3,9 @@
 
 using System.Collections.ObjectModel;
 using System.Globalization;
-using WinGlobalization = Windows.Globalization;  // For packaged apps
+using CommunityToolkit.Mvvm.DependencyInjection;
 using MicGlobalization = Microsoft.Windows.Globalization;  // For unpackaged apps
+using WinGlobalization = Windows.Globalization;  // For packaged apps
 
 namespace WinUI3Template.Helpers.Application;
 
@@ -97,7 +98,7 @@ public static class AppLanguageHelper
         }
         else
         {
-            var primaryLanguageOverride = DependencyExtensions.GetRequiredService<IAppSettingsService>().Language;
+            var primaryLanguageOverride = Ioc.Default.GetRequiredService<IAppSettingsService>().Language;
             TryChange(primaryLanguageOverride);
         }
     }

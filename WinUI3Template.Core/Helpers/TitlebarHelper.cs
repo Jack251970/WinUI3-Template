@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Windows.UI;
@@ -17,8 +18,8 @@ public class TitleBarHelper
 {
     public static unsafe void UpdateTitleBar(Window? window = null, ElementTheme? theme = null)
     {
-        window ??= DependencyExtensions.GetRequiredService<Window>();
-        theme ??= DependencyExtensions.GetRequiredService<IThemeSelectorService>().GetActualTheme();
+        window ??= Ioc.Default.GetRequiredService<Window>();
+        theme ??= Ioc.Default.GetRequiredService<IThemeSelectorService>().GetActualTheme();
 
         if (window.ExtendsContentIntoTitleBar)
         {

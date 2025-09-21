@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace WinUI3Template.Views.Pages;
@@ -11,7 +12,7 @@ public sealed partial class NavShellPage : Page
 
     public NavShellPage()
     {
-        ViewModel = DependencyExtensions.GetRequiredService<NavShellPageViewModel>();
+        ViewModel = Ioc.Default.GetRequiredService<NavShellPageViewModel>();
         InitializeComponent();
 
 #if TRAY_ICON

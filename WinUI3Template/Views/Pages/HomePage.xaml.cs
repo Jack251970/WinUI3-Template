@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Controls;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml.Controls;
 
 namespace WinUI3Template.Views.Pages;
 
@@ -8,7 +9,7 @@ public sealed partial class HomePage : Page
 
     public HomePage()
     {
-        ViewModel = DependencyExtensions.GetRequiredService<HomePageViewModel>();
+        ViewModel = Ioc.Default.GetRequiredService<HomePageViewModel>();
         InitializeComponent();
     }
 }
