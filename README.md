@@ -92,6 +92,7 @@
 * terminal: https://github.com/microsoft/terminal
 * WinUI3Windows: https://github.com/smourier/WinUI3Windows
 * WinUI3-Template: https://github.com/Jack251970/WinUI3-Template
+* WindowedContentDialog: https://github.com/SuGar0218/WindowedContentDialog
 * Windows Community Toolkit: https://github.com/CommunityToolkit/WindowsCommunityToolkit
 * WinUIEx: https://github.com/dotMorten/WinUIEx
 

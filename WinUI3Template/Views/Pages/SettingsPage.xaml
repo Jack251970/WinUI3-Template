@@ -138,6 +138,7 @@
                                 <HyperlinkButton Content="terminal" NavigateUri="https://github.com/microsoft/terminal" />
                                 <HyperlinkButton Content="WinUI3Windows" NavigateUri="https://github.com/smourier/WinUI3Windows" />
                                 <HyperlinkButton Content="WinUI3-Template" NavigateUri="https://github.com/Jack251970/WinUI3-Template" />
+                                <HyperlinkButton Content="WindowedContentDialog" NavigateUri="https://github.com/SuGar0218/WindowedContentDialog" />
                                 <HyperlinkButton Content="Windows Community Toolkit" NavigateUri="https://github.com/CommunityToolkit/WindowsCommunityToolkit" />
                                 <HyperlinkButton Content="WinUIEx" NavigateUri="https://github.com/dotMorten/WinUIEx" />
                             </StackPanel>
