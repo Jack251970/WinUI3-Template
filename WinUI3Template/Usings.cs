@@ -23,7 +23,6 @@ global using WinUI3Template.Core.Extensions;
 global using WinUI3Template.Core.Helpers;
 global using WinUI3Template.Core.Models;
 global using WinUI3Template.Core.Services;
-global using WinUI3Template.Core.Views.Windows;
 
 // WinUI3Template.Infrastructure
 global using WinUI3Template.Infrastructure;
