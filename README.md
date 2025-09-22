@@ -87,7 +87,6 @@
 * fluentui-system-icons: https://github.com/microsoft/fluentui-system-icons
 * H.NotifyIcon: https://github.com/HavenDV/H.NotifyIcon
 * ICONS8: https://icons8.com/icons
-* Newtonsoft.Json: https://github.com/JamesNK/Newtonsoft.Json
 * Template Studio for WinUI (C#): https://github.com/microsoft/TemplateStudio
 * terminal: https://github.com/microsoft/terminal
 * WinUI3Windows: https://github.com/smourier/WinUI3Windows

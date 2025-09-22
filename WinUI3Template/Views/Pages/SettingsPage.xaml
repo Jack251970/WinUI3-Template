@@ -133,7 +133,6 @@
                                 <HyperlinkButton Content="fluentui-system-icons" NavigateUri="https://github.com/microsoft/fluentui-system-icons" />
                                 <HyperlinkButton Content="H.NotifyIcon" NavigateUri="https://github.com/HavenDV/H.NotifyIcon" />
                                 <HyperlinkButton Content="ICONS8" NavigateUri="https://icons8.com/icons" />
-                                <HyperlinkButton Content="Newtonsoft.Json" NavigateUri="https://github.com/JamesNK/Newtonsoft.Json" />
                                 <HyperlinkButton Content="Template Studio for WinUI (C#)" NavigateUri="https://github.com/microsoft/TemplateStudio" />
                                 <HyperlinkButton Content="terminal" NavigateUri="https://github.com/microsoft/terminal" />
                                 <HyperlinkButton Content="WinUI3Windows" NavigateUri="https://github.com/smourier/WinUI3Windows" />
