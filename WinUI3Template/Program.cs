@@ -70,7 +70,8 @@ public class Program
         }
 #endif
 
-        Application.Start((p) => {
+        Application.Start((p) =>
+        {
             var dispatcherQueue = DispatcherQueue.GetForCurrentThread();
             var context = new DispatcherQueueSynchronizationContext(dispatcherQueue);
             SynchronizationContext.SetSynchronizationContext(context);

@@ -15,7 +15,7 @@ internal class ThemeSelectorService(IAppSettingsService appSettingsService) : IT
         await SetRequestedThemeAsync(App.MainWindow, theme);
 
         await WindowsExtensions.GetAllWindows().EnqueueOrInvokeAsync(
-            async (window) => await SetRequestedThemeAsync(window, theme), 
+            async (window) => await SetRequestedThemeAsync(window, theme),
             Microsoft.UI.Dispatching.DispatcherQueuePriority.High);
 
         ThemeChanged?.Invoke(this, Theme);

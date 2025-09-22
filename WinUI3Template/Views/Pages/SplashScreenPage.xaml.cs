@@ -12,19 +12,19 @@ public sealed partial class SplashScreenPage : Page
     private readonly string AppDisplayName = ConstantHelper.AppDisplayName;
 
     public SplashScreenPage()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
 
         App.MainWindow.ExtendsContentIntoTitleBar = true;
     }
 
-	private void Image_ImageOpened(object sender, RoutedEventArgs e)
-	{
-		App.SplashScreenLoadingTCS?.TrySetResult();
-	}
+    private void Image_ImageOpened(object sender, RoutedEventArgs e)
+    {
+        App.SplashScreenLoadingTCS?.TrySetResult();
+    }
 
-	private void Image_ImageFailed(object sender, RoutedEventArgs e)
-	{
-		App.SplashScreenLoadingTCS?.TrySetResult();
-	}
+    private void Image_ImageFailed(object sender, RoutedEventArgs e)
+    {
+        App.SplashScreenLoadingTCS?.TrySetResult();
+    }
 }

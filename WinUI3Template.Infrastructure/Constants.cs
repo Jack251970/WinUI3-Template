@@ -37,7 +37,7 @@ public static class Constants
 #endif
 
     public const string SettingsFolder = "Settings";
-    
+
     public const string SettingsFile = "Settings.json";
 
     public const string LogsFolder = "Logs";

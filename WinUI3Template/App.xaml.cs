@@ -183,7 +183,7 @@ public partial class App : Application
         _log.Information($"App initialized. Language: {AppLanguageHelper.PreferredLanguage}.");
     }
 
-#endregion
+    #endregion
 
     #region App Lifecycle
 
@@ -328,5 +328,5 @@ public partial class App : Application
         }
     }
 
-#endregion
+    #endregion
 }

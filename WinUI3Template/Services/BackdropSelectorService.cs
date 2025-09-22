@@ -15,7 +15,7 @@ internal class BackdropSelectorService(IAppSettingsService appSettingsService) :
         await SetRequestedBackdropTypeAsync(App.MainWindow, type);
 
         await WindowsExtensions.GetAllWindows().EnqueueOrInvokeAsync(
-            async (window) => await SetRequestedBackdropTypeAsync(window, type), 
+            async (window) => await SetRequestedBackdropTypeAsync(window, type),
             Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal);
 
         BackdropTypeChanged?.Invoke(this, type);

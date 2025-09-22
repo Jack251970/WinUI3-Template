@@ -27,7 +27,7 @@ public class DialogService : IDialogService
     {
         leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
         rightButton = string.IsNullOrWhiteSpace(rightButton) ? Cancel : rightButton;
-        
+
         var dialog = new ContentDialog()
         {
             Title = title,
