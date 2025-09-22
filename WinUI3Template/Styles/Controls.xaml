@@ -82,7 +82,7 @@
         BasedOn="{StaticResource BodyStrongTextBlockStyle}"
         TargetType="TextBlock">
         <Style.Setters>
-            <Setter Property="Margin" Value="1,10,0,5" />
+            <Setter Property="Margin" Value="1 10 0 5" />
         </Style.Setters>
     </Style>
 

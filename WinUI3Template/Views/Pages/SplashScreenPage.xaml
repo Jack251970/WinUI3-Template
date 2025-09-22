@@ -27,7 +27,7 @@
         <!--  Branch Label  -->
         <TextBlock
             x:Name="SplashScreenBranchLabel"
-            Margin="0,164,0,0"
+            Margin="0 164 0 0"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="20"
@@ -38,7 +38,7 @@
         <!--  Loading Indicator  -->
         <ProgressRing
             x:Name="SplashScreenLoadingProgressRing"
-            Margin="0,0,0,48"
+            Margin="0 0 0 48"
             VerticalAlignment="Bottom"
             IsIndeterminate="True" />
 

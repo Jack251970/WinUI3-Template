@@ -44,7 +44,7 @@
                     IsOpen="{x:Bind ViewModel.ShowRestartTip, Mode=TwoWay}"
                     Target="{x:Bind AppLanguagesComboBox}">
                     <StackPanel
-                        Padding="0,8,0,0"
+                        Padding="0 8 0 0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
                         Spacing="8">
@@ -128,7 +128,7 @@
                             x:Uid="Settings_Dependencies_Card"
                             HorizontalContentAlignment="Left"
                             ContentAlignment="Vertical">
-                            <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
+                            <StackPanel Margin="-12 0 0 0" Orientation="Vertical">
                                 <HyperlinkButton Content="Files" NavigateUri="https://github.com/files-community/Files" />
                                 <HyperlinkButton Content="fluentui-system-icons" NavigateUri="https://github.com/microsoft/fluentui-system-icons" />
                                 <HyperlinkButton Content="H.NotifyIcon" NavigateUri="https://github.com/HavenDV/H.NotifyIcon" />
@@ -146,7 +146,7 @@
                             HorizontalContentAlignment="Left"
                             ContentAlignment="Vertical"
                             Description="{x:Bind ViewModel.CopyRight, Mode=OneTime}">
-                            <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
+                            <StackPanel Margin="-12 0 0 0" Orientation="Vertical">
                                 <HyperlinkButton x:Uid="Settings_LicenseLink" NavigateUri="Settings_LicenseLink_NavigateUri" />
                             </StackPanel>
                         </controls:SettingsCard>
