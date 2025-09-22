@@ -4,7 +4,7 @@
 
 # WinUI3 Template
 
-**A template for WinUI 3, with support of tray icon, multi-thread window, splash screen, etc.**
+**📟 A template for WinUI 3, with support of tray icon, multi-thread window, splash screen, etc.**
 
 ## ⭐ Features
 
