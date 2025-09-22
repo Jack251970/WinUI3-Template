@@ -11,21 +11,19 @@ public class DialogService : IDialogService
 
     #region Window Dialog
 
-    #region Public
-
-    public async Task ShowOneButtonDialogAsync(Window window, string title, string context)
+    public async Task ShowOneButtonDialogAsync(Window window, string title, string content)
     {
         var dialog = new ContentDialog()
         {
             Title = title,
-            Content = context,
+            Content = content,
             PrimaryButtonText = Ok,
             DefaultButton = ContentDialogButton.Primary
         };
         await dialog.ShowAsync();
     }
 
-    public async Task<WidgetDialogResult> ShowTwoButtonDialogAsync(Window window, string title, string context, string leftButton = null!, string rightButton = null!)
+    public async Task<WidgetDialogResult> ShowTwoButtonDialogAsync(Window window, string title, string content, string leftButton = null!, string rightButton = null!)
     {
         leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
         rightButton = string.IsNullOrWhiteSpace(rightButton) ? Cancel : rightButton;
@@ -33,7 +31,7 @@ public class DialogService : IDialogService
         var dialog = new ContentDialog()
         {
             Title = title,
-            Content = context,
+            Content = content,
             PrimaryButtonText = leftButton,
             SecondaryButtonText = rightButton
         };
@@ -53,11 +51,11 @@ public class DialogService : IDialogService
         }
     }
 
-    public async Task<WidgetDialogResult> ShowThreeButtonDialogAsync(Window window, string title, string context, string leftButton = null!, string centerButton = null!, string rightButton = null!)
+    public async Task<WidgetDialogResult> ShowThreeButtonDialogAsync(Window window, string title, string content, string leftButton = null!, string centerButton = null!, string rightButton = null!)
     {
         if (string.IsNullOrWhiteSpace(centerButton))
         {
-            return await ShowTwoButtonDialogAsync(window, title, context, leftButton, rightButton);
+            return await ShowTwoButtonDialogAsync(window, title, content, leftButton, rightButton);
         }
 
         leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
@@ -66,7 +64,7 @@ public class DialogService : IDialogService
         var dialog = new ContentDialog()
         {
             Title = title,
-            Content = context,
+            Content = content,
             PrimaryButtonText = leftButton,
             SecondaryButtonText = centerButton,
             CloseButtonText = rightButton
@@ -93,19 +91,15 @@ public class DialogService : IDialogService
 
     #endregion
 
-    #endregion
-
     #region Full Screen Dialog
 
-    #region Public
-
-    public async Task ShowFullScreenOneButtonDialogAsync(string title, string context)
+    public async Task ShowFullScreenOneButtonDialogAsync(string title, string content)
     {
         var dialog = new WindowedContentDialog()
         {
             WindowTitle = title,
             Title = title,
-            Content = context,
+            Content = content,
             OwnerWindow = null,
             PrimaryButtonText = Ok,
             IsTitleBarVisible = false
@@ -113,7 +107,7 @@ public class DialogService : IDialogService
         await dialog.ShowAsync();
     }
 
-    public async Task<WidgetDialogResult> ShowFullScreenTwoButtonDialogAsync(string title, string context, string leftButton = null!, string rightButton = null!)
+    public async Task<WidgetDialogResult> ShowFullScreenTwoButtonDialogAsync(string title, string content, string leftButton = null!, string rightButton = null!)
     {
         leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
         rightButton = string.IsNullOrWhiteSpace(rightButton) ? Cancel : rightButton;
@@ -122,7 +116,7 @@ public class DialogService : IDialogService
         {
             WindowTitle = title,
             Title = title,
-            Content = context,
+            Content = content,
             OwnerWindow = null,
             PrimaryButtonText = leftButton,
             SecondaryButtonText = rightButton,
@@ -144,11 +138,11 @@ public class DialogService : IDialogService
         }
     }
 
-    public async Task<WidgetDialogResult> ShowFullScreenThreeButtonDialogAsync(string title, string context, string leftButton = null!, string centerButton = null!, string rightButton = null!)
+    public async Task<WidgetDialogResult> ShowFullScreenThreeButtonDialogAsync(string title, string content, string leftButton = null!, string centerButton = null!, string rightButton = null!)
     {
         if (string.IsNullOrWhiteSpace(centerButton))
         {
-            return await ShowFullScreenTwoButtonDialogAsync(title, context, leftButton, rightButton);
+            return await ShowFullScreenTwoButtonDialogAsync(title, content, leftButton, rightButton);
         }
 
         leftButton = string.IsNullOrWhiteSpace(leftButton) ? Ok : leftButton;
@@ -158,7 +152,7 @@ public class DialogService : IDialogService
         {
             WindowTitle = title,
             Title = title,
-            Content = context,
+            Content = content,
             OwnerWindow = null,
             PrimaryButtonText = leftButton,
             SecondaryButtonText = centerButton,
@@ -184,8 +178,6 @@ public class DialogService : IDialogService
             return WidgetDialogResult.Unknown;
         }
     }
-
-    #endregion
 
     #endregion
 }
