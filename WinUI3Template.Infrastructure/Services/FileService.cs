@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using Serilog;
 
 namespace WinUI3Template.Infrastructure.Services;
@@ -8,8 +8,10 @@ public class FileService : IFileService
     private static readonly ILogger _log = Log.ForContext("SourceContext", nameof(FileService));
 
     private readonly SemaphoreSlim semaphoreSlim = new(1, 1);
+    private readonly JsonSerializerOptions IndentedOption = new() { WriteIndented = true };
+    private readonly JsonSerializerOptions UnindentedOption = new() { WriteIndented = false };
 
-    public T Read<T>(string folderPath, string fileName, JsonSerializerSettings? jsonSerializerSettings = null)
+    public T? Read<T>(string folderPath, string fileName, JsonSerializerOptions? jsonSerializerSettings = null)
     {
         var path = GetPath(folderPath, fileName);
         if (File.Exists(path))
@@ -17,7 +19,7 @@ public class FileService : IFileService
             try
             {
                 var json = File.ReadAllText(path);
-                return JsonConvert.DeserializeObject<T>(json, jsonSerializerSettings)!;
+                return JsonSerializer.Deserialize<T>(json, jsonSerializerSettings)!;
             }
             catch (Exception e)
             {
@@ -28,7 +30,7 @@ public class FileService : IFileService
         return default!;
     }
 
-    public async Task<T> ReadAsync<T>(string folderPath, string fileName, JsonSerializerSettings? jsonSerializerSettings = null)
+    public async Task<T?> ReadAsync<T>(string folderPath, string fileName, JsonSerializerOptions? jsonSerializerSettings = null)
     {
         return await Task.Run(() => Read<T>(folderPath, fileName, jsonSerializerSettings));
     }
@@ -39,7 +41,7 @@ public class FileService : IFileService
 
         await semaphoreSlim.WaitAsync();
 
-        var fileContent = JsonConvert.SerializeObject(content, indent ? Formatting.Indented : Formatting.None);
+        var fileContent = JsonSerializer.Serialize(content, indent ? IndentedOption : UnindentedOption);
         try
         {
             File.WriteAllText(path, fileContent, System.Text.Encoding.UTF8);

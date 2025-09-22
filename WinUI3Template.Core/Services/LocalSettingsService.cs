@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 using Windows.Storage;
 
 namespace WinUI3Template.Core.Services;
@@ -45,7 +45,7 @@ public class LocalSettingsService : ILocalSettingsService
         {
             if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
             {
-                return JsonHelper.ToObject<T>((string)obj);
+                return JsonHelper.ToObject<T>(JsonHelper.ConvertToString(obj));
             }
         }
         else
@@ -54,7 +54,7 @@ public class LocalSettingsService : ILocalSettingsService
 
             if (_settings != null && _settings.TryGetValue(key, out var obj))
             {
-                return JsonHelper.ToObject<T>((string)obj);
+                return JsonHelper.ToObject<T>(JsonHelper.ConvertToString(obj));
             }
         }
 
@@ -72,7 +72,7 @@ public class LocalSettingsService : ILocalSettingsService
         {
             if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj))
             {
-                return await JsonHelper.ToObjectAsync<T>((string)obj);
+                return await JsonHelper.ToObjectAsync<T>(JsonHelper.ConvertToString(obj));
             }
         }
         else
@@ -81,7 +81,7 @@ public class LocalSettingsService : ILocalSettingsService
 
             if (_settings != null && _settings.TryGetValue(key, out var obj))
             {
-                return await JsonHelper.ToObjectAsync<T>((string)obj);
+                return await JsonHelper.ToObjectAsync<T>(JsonHelper.ConvertToString(obj));
             }
         }
 
@@ -94,7 +94,8 @@ public class LocalSettingsService : ILocalSettingsService
 
         if (RuntimeHelper.IsMSIX)
         {
-            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj) && ((string)obj) == stringValue)
+            if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out var obj) &&
+                JsonHelper.ConvertToString(obj) == stringValue)
             {
                 return;
             }
@@ -105,7 +106,8 @@ public class LocalSettingsService : ILocalSettingsService
         {
             await InitializeSettingsAsync();
 
-            if (_settings != null && _settings.TryGetValue(key, out var obj) && (string)obj == stringValue)
+            if (_settings != null && _settings.TryGetValue(key, out var obj) &&
+                JsonHelper.ConvertToString(obj) == stringValue)
             {
                 return;
             }
@@ -140,12 +142,12 @@ public class LocalSettingsService : ILocalSettingsService
 
     #region Json Files
 
-    public T? ReadJsonFile<T>(string fileName, JsonSerializerSettings? jsonSerializerSettings = null)
+    public T? ReadJsonFile<T>(string fileName, JsonSerializerOptions? jsonSerializerSettings = null)
     {
         return _fileService.Read<T>(_localSettingsPath, fileName, jsonSerializerSettings) ?? default;
     }
 
-    public async Task<T?> ReadJsonFileAsync<T>(string fileName, JsonSerializerSettings? jsonSerializerSettings = null)
+    public async Task<T?> ReadJsonFileAsync<T>(string fileName, JsonSerializerOptions? jsonSerializerSettings = null)
     {
         return await _fileService.ReadAsync<T>(_localSettingsPath, fileName, jsonSerializerSettings) ?? default;
     }

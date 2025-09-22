@@ -1,24 +1,40 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
 namespace WinUI3Template.Infrastructure.Helpers;
 
 public static class JsonHelper
 {
-    public static T ToObject<T>(string value)
+    public static string ConvertToString(object value)
     {
-        return JsonConvert.DeserializeObject<T>(value)!;
+        if (value is not JsonElement jsonElement)
+        {
+            return value.ToString() ?? string.Empty;
+        }
+
+        if (jsonElement.ValueKind == JsonValueKind.String)
+        {
+            return jsonElement.GetString() ?? string.Empty;
+        }
+        ;
+
+        return string.Empty;
+    }
+
+    public static T? ToObject<T>(string value)
+    {
+        return JsonSerializer.Deserialize<T>(value);
     }
 
     public static string Stringify(object value)
     {
-        return JsonConvert.SerializeObject(value);
+        return JsonSerializer.Serialize(value);
     }
 
-    public static async Task<T> ToObjectAsync<T>(string value)
+    public static async Task<T?> ToObjectAsync<T>(string value)
     {
         return await Task.Run(() =>
         {
-            return JsonConvert.DeserializeObject<T>(value)!;
+            return JsonSerializer.Deserialize<T>(value);
         });
     }
 
@@ -26,7 +42,7 @@ public static class JsonHelper
     {
         return await Task.Run(() =>
         {
-            return JsonConvert.SerializeObject(value);
+            return JsonSerializer.Serialize(value);
         });
     }
 }
