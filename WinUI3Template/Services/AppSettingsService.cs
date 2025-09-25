@@ -56,7 +56,7 @@ internal class AppSettingsService(ILocalSettingsService localSettingsService, IO
 
     #region Theme
 
-    private ElementTheme theme;
+    private ElementTheme theme = DefaultTheme;
     public ElementTheme Theme
     {
         get => theme;
@@ -87,7 +87,7 @@ internal class AppSettingsService(ILocalSettingsService localSettingsService, IO
 
     #region Backdrop
 
-    private BackdropType backdropType;
+    private BackdropType backdropType = DefaultBackdropType;
     public BackdropType BackdropType
     {
         get => backdropType;
