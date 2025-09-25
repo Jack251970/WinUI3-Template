@@ -142,14 +142,14 @@ public class LocalSettingsService : ILocalSettingsService
 
     #region Json Files
 
-    public T? ReadJsonFile<T>(string fileName, JsonSerializerOptions? jsonSerializerSettings = null)
+    public T? ReadJsonFile<T>(string fileName, T defaultValue, JsonSerializerOptions? jsonSerializerSettings = null)
     {
-        return _fileService.Read<T>(_localSettingsPath, fileName, jsonSerializerSettings) ?? default;
+        return _fileService.Read<T>(_localSettingsPath, fileName, jsonSerializerSettings) ?? defaultValue;
     }
 
-    public async Task<T?> ReadJsonFileAsync<T>(string fileName, JsonSerializerOptions? jsonSerializerSettings = null)
+    public async Task<T?> ReadJsonFileAsync<T>(string fileName, T defaultValue, JsonSerializerOptions? jsonSerializerSettings = null)
     {
-        return await _fileService.ReadAsync<T>(_localSettingsPath, fileName, jsonSerializerSettings) ?? default;
+        return await _fileService.ReadAsync<T>(_localSettingsPath, fileName, jsonSerializerSettings) ?? defaultValue;
     }
 
     public async Task SaveJsonFileAsync<T>(string fileName, T value)
