@@ -25,7 +25,7 @@ internal class AppSettingsService(ILocalSettingsService localSettingsService, IO
 
     #region Language
 
-    private string language = null!;
+    private string language = DefaultLanguage;
     public string Language
     {
         get => language;
@@ -38,9 +38,11 @@ internal class AppSettingsService(ILocalSettingsService localSettingsService, IO
         }
     }
 
+    private static readonly string DefaultLanguage = AppLanguageHelper.DefaultCode;
+
     private string GetLanguage()
     {
-        var data = GetDataFromSettings(_localSettingsKeys.LanguageKey, AppLanguageHelper.DefaultCode);
+        var data = GetDataFromSettings(_localSettingsKeys.LanguageKey, DefaultLanguage);
         return data;
     }
 
