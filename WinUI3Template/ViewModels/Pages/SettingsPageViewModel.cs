@@ -119,7 +119,7 @@ public partial class SettingsPageViewModel : ObservableRecipient, INavigationAwa
             else
             {
                 // No need to set PrimaryLanguageOverride in unpackaged app - it will be set by the app in the next launch
-                _appSettingsService.SaveLanguageInSettingsAsync(AppLanguageHelper.GetLanguageCode(value));
+                _appSettingsService.SetLanguageAsync(AppLanguageHelper.GetLanguageCode(value));
             }
 
             ShowRestartTip = true;

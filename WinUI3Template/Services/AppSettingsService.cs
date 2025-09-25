@@ -46,7 +46,7 @@ internal class AppSettingsService(ILocalSettingsService localSettingsService, IO
         return data;
     }
 
-    public async Task SaveLanguageInSettingsAsync(string language)
+    public async Task SetLanguageAsync(string language)
     {
         await SaveDataInSettingsAsync(_localSettingsKeys.LanguageKey, language);
         Language = language;
@@ -77,7 +77,7 @@ internal class AppSettingsService(ILocalSettingsService localSettingsService, IO
         return data;
     }
 
-    public async Task SaveThemeInSettingsAsync(ElementTheme theme)
+    public async Task SetThemeAsync(ElementTheme theme)
     {
         await SaveDataInSettingsAsync(_localSettingsKeys.ThemeKey, theme);
         Theme = theme;
@@ -108,7 +108,7 @@ internal class AppSettingsService(ILocalSettingsService localSettingsService, IO
         return data;
     }
 
-    public async Task SaveBackdropTypeInSettingsAsync(BackdropType type)
+    public async Task SetBackdropAsync(BackdropType type)
     {
         await SaveDataInSettingsAsync(_localSettingsKeys.BackdropTypeKey, type);
         BackdropType = type;

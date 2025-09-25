@@ -8,13 +8,13 @@ public interface IAppSettingsService
 
     string Language { get; }
 
-    Task SaveLanguageInSettingsAsync(string language);
+    Task SetLanguageAsync(string language);
 
     ElementTheme Theme { get; }
 
-    Task SaveThemeInSettingsAsync(ElementTheme theme);
+    Task SetThemeAsync(ElementTheme theme);
 
     BackdropType BackdropType { get; }
 
-    Task SaveBackdropTypeInSettingsAsync(BackdropType type);
+    Task SetBackdropAsync(BackdropType type);
 }

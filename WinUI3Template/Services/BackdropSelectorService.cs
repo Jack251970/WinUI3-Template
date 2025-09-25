@@ -20,7 +20,7 @@ internal class BackdropSelectorService(IAppSettingsService appSettingsService) :
 
         BackdropTypeChanged?.Invoke(this, type);
 
-        await _appSettingsService.SaveBackdropTypeInSettingsAsync(type);
+        await _appSettingsService.SetBackdropAsync(type);
     }
 
     public async Task SetRequestedBackdropTypeAsync(Window window)

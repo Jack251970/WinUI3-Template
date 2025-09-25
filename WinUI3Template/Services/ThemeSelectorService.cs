@@ -20,7 +20,7 @@ internal class ThemeSelectorService(IAppSettingsService appSettingsService) : IT
 
         ThemeChanged?.Invoke(this, Theme);
 
-        await _appSettingsService.SaveThemeInSettingsAsync(theme);
+        await _appSettingsService.SetThemeAsync(theme);
     }
 
     public async Task SetRequestedThemeAsync(Window window)
