@@ -11,6 +11,8 @@
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
 		<!-- WinUI Properties -->
     <UseWinUI>true</UseWinUI>
+    <!-- AOT Settings -->
+    <IsAotCompatible>true</IsAotCompatible>
     <!-- Other Settings -->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ImplicitUsings>enable</ImplicitUsings>

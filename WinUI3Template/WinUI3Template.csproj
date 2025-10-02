@@ -37,6 +37,8 @@
     <!-- WinUI Properties -->
     <UseWinUI>true</UseWinUI>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <!-- AOT Settings -->
+    <IsAotCompatible>true</IsAotCompatible>
     <!-- Other Settings -->
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ImplicitUsings>enable</ImplicitUsings>
