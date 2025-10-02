@@ -15,31 +15,31 @@ public partial class SettingsPageViewModel : ObservableRecipient, INavigationAwa
     public Visibility LogonTaskExpanderVisibility = RuntimeHelper.IsMSIX ? Visibility.Collapsed : Visibility.Visible;
 
     [ObservableProperty]
-    private int _languageIndex;
+    public partial int LanguageIndex { get; set; }
 
     [ObservableProperty]
-    private bool _showRestartTip;
+    public partial bool ShowRestartTip { get; set; }
 
     [ObservableProperty]
-    private bool _runStartup;
+    public partial bool RunStartup { get; set; }
 
     [ObservableProperty]
-    private bool _logonTask;
+    public partial bool LogonTask { get; set; }
 
     [ObservableProperty]
-    private int _themeIndex;
+    public partial int ThemeIndex { get; set; }
 
     [ObservableProperty]
-    private int _backdropTypeIndex;
+    public partial int BackdropTypeIndex { get; set; }
 
     [ObservableProperty]
-    private string _appDisplayName = ConstantHelper.AppDisplayName;
+    public partial string AppDisplayName { get; set; } = ConstantHelper.AppDisplayName;
 
     [ObservableProperty]
-    private string _version = $"v{InfoHelper.GetVersion()}";
+    public partial string Version { get; set; } = $"v{InfoHelper.GetVersion()}";
 
     [ObservableProperty]
-    private string _copyRight = $"{InfoHelper.GetCopyright()}";
+    public partial string CopyRight { get; set; } = $"{InfoHelper.GetCopyright()}";
 
     #endregion
 

@@ -4,15 +4,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUI3Template.UserControls;
 
-[ObservableObject]
-#pragma warning disable MVVMTK0050 // Using [ObservableObject] is not AOT compatible for WinRT
 public sealed partial class TrayMenuControl : UserControl
-#pragma warning restore MVVMTK0050 // Using [ObservableObject] is not AOT compatible for WinRT
 {
-    [ObservableProperty]
-#pragma warning disable MVVMTK0045 // Using [ObservableProperty] on fields is not AOT compatible for WinRT
-    private string _trayIconToolTip = string.Empty;
-#pragma warning restore MVVMTK0045 // Using [ObservableProperty] on fields is not AOT compatible for WinRT
+    public TrayMenuControlViewModel ViewModel { get; } = new();
 
     public TrayMenuControl()
     {
@@ -51,4 +45,10 @@ public sealed partial class TrayMenuControl : UserControl
     }
 
     #endregion
+}
+
+public partial class TrayMenuControlViewModel : ObservableObject
+{
+    [ObservableProperty]
+    public partial string TrayIconToolTip { get; set; } = ConstantHelper.AppDisplayName;
 }

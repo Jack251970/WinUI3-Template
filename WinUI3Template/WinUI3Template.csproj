@@ -42,6 +42,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <EnableMsixTooling>true</EnableMsixTooling>
+    <LangVersion>preview</LangVersion>
     <!-- Custom Settings -->
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN;$(DefineConstants)</DefineConstants><!-- Custom Program -->
     <DefineConstants>SINGLE_INSTANCE;$(DefineConstants)</DefineConstants><!-- Single Instance -->

@@ -16,10 +16,7 @@ public sealed partial class NavShellPage : Page
         InitializeComponent();
 
 #if TRAY_ICON
-        var trayIcon = new TrayMenuControl
-        {
-            TrayIconToolTip = ConstantHelper.AppDisplayName
-        };
+        var trayIcon = new TrayMenuControl();
         ContentArea.Children.Add(trayIcon);
 
         App.TrayIcon = trayIcon;
