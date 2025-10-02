@@ -10,6 +10,7 @@ public sealed partial class HomePage : Page
     public HomePage()
     {
         ViewModel = Ioc.Default.GetRequiredService<HomePageViewModel>();
+        DataContext = ViewModel;
         InitializeComponent();
     }
 }

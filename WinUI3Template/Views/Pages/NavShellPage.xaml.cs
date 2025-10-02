@@ -13,6 +13,7 @@ public sealed partial class NavShellPage : Page
     public NavShellPage()
     {
         ViewModel = Ioc.Default.GetRequiredService<NavShellPageViewModel>();
+        DataContext = ViewModel;
         InitializeComponent();
 
 #if TRAY_ICON
