@@ -19,7 +19,7 @@
     <Description>A template for WinUI 3.</Description>
     <Company>$(Title) Team</Company>
     <Authors>$(Company). AuthorName.</Authors>
-    <Copyright>Copyright © 2023-2024 $(Company)</Copyright>
+    <Copyright>Copyright © 2023-2025 $(Company)</Copyright>
     <!-- Package Properties -->
     <PackageIcon Condition="'$(Configuration)'=='Debug'">Assets\Debug\PackageIcon.png</PackageIcon>
     <PackageIcon Condition="'$(Configuration)'=='Release'">Assets\Release\PackageIcon.png</PackageIcon>
