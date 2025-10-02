@@ -83,7 +83,7 @@ internal static class InfoHelper
                 return titleAttribute.Title;
             }
         }
-        return Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().Location);
+        return string.Empty;
     }
 
     #endregion
@@ -292,7 +292,7 @@ internal static class InfoHelper
 
     private static string GetAssemblyLocation()
     {
-        return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? AppContext.BaseDirectory;
+        return AppContext.BaseDirectory;
     }
 
     #endregion
