@@ -7,7 +7,7 @@ namespace WinUI3Template.ViewModels.Pages;
 
 public partial class SettingsPageViewModel : ObservableRecipient, INavigationAware
 {
-    #region view properties
+    #region View Properties
 
     public ObservableCollection<AppLanguageItem> AppLanguages = AppLanguageHelper.SupportedLanguages;
 
