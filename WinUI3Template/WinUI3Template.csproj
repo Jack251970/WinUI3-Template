@@ -12,7 +12,7 @@
     <RootNamespace>WinUI3Template</RootNamespace>
     <!-- Assembly Info Properties -->
     <!-- Note: For some reasons, AssemblyName attribution will cause unknown issues in AppNotificationManager.Default.Register() -->
-    <!--<AssemblyName>DesktopWidget3</AssemblyName>-->
+    <!--<AssemblyName>$(Title)</AssemblyName>-->
     <AssemblyTitle>$(Title)</AssemblyTitle>
     <ProductName>$(Title)</ProductName>
     <Product>$(AssemblyName)</Product>
