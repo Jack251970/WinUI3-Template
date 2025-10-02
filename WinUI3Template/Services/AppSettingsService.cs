@@ -1,12 +1,11 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 
 namespace WinUI3Template.Services;
 
-internal class AppSettingsService(ILocalSettingsService localSettingsService, IOptions<LocalSettingsKeys> localSettingsKeys) : IAppSettingsService
+internal class AppSettingsService(ILocalSettingsService localSettingsService, LocalSettingsKeys localSettingsKeys) : IAppSettingsService
 {
     private readonly ILocalSettingsService _localSettingsService = localSettingsService;
-    private readonly LocalSettingsKeys _localSettingsKeys = localSettingsKeys.Value;
+    private readonly LocalSettingsKeys _localSettingsKeys = localSettingsKeys;
 
     private bool _isInitialized;
 

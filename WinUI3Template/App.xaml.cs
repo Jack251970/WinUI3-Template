@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using CommunityToolkit.Mvvm.DependencyInjection;
-
 #if !DISABLE_XAML_GENERATED_MAIN
 using Microsoft.Extensions.Configuration;
 #endif
@@ -138,6 +137,9 @@ public partial class App : Application
 
                 #region Settings Service
 
+                // Local Stettings
+                services.AddSingleton<LocalSettingsKeys>();
+
                 // Local Storage
                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
 
@@ -155,13 +157,6 @@ public partial class App : Application
                 services.AddTransient<HomePage>();
                 services.AddTransient<SettingsPageViewModel>();
                 services.AddTransient<SettingsPage>();
-
-                #endregion
-
-                #region Configurations
-
-                // Local Stettings
-                services.Configure<LocalSettingsKeys>(context.Configuration.GetSection(nameof(LocalSettingsKeys)));
 
                 #endregion
             })
