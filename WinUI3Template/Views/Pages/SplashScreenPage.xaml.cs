@@ -14,7 +14,7 @@ public sealed partial class SplashScreenPage : Page
     public SplashScreenPage()
     {
         InitializeComponent();
-
+        DataContext = this;
         App.MainWindow.ExtendsContentIntoTitleBar = true;
     }
 
