@@ -98,15 +98,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="UserControls\TrayMenuControl.xaml" />
-    <None Remove="Views\Pages\HomePage.xaml" />
-    <None Remove="Views\Pages\NavShellPage.xaml" />
-    <None Remove="Views\Pages\SettingsPage.xaml" />
-    <None Remove="Views\Pages\SplashScreenPage.xaml" />
-    <None Remove="Views\Windows\MainWindow.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.250402" />
     <PackageReference Include="H.NotifyIcon.WinUI" Version="2.3.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
@@ -127,27 +118,6 @@
 
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Update="UserControls\TrayMenuControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\HomePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\NavShellPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\SettingsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Pages\SplashScreenPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Views\Windows\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
 
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
