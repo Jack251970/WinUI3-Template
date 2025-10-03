@@ -16,6 +16,4 @@ public interface INavigationService
     bool GoBack();
 
     string? GetCurrentPageKey();
-
-    void SetNextParameter(string pageKey, object? parameter);
 }
