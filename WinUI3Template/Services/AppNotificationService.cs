@@ -27,10 +27,10 @@ internal class AppNotificationService(INavigationService navigationService) : IA
         /*switch (ParseArguments(args.Argument)["action"])
         {
             case "Dashboard":
-                App.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
-                    _navigationService.NavigateTo(typeof(DashboardViewModel).FullName!);
-                    App.ShowMainWindow(true);
+                    _navigationService.NavigateTo(typeof(DashboardPageViewModel).FullName!);
+                    App.MainWindow.Show();
                 });
                 break;
         }*/
