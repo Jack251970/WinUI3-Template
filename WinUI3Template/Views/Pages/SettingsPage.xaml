@@ -7,9 +7,9 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pages="using:WinUI3Template.ViewModels.Pages"
+    xmlns:viewmodels="using:WinUI3Template.ViewModels.Pages"
     behaviors:NavigationViewHeaderBehavior.HeaderContext="Shell_Settings.Content"
-    d:DataContext="{d:DesignInstance Type=pages:SettingsPageViewModel}"
+    d:DataContext="{d:DesignInstance Type=viewmodels:SettingsPageViewModel}"
     NavigationCacheMode="Required"
     mc:Ignorable="d">
 
