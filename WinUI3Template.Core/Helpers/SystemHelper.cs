@@ -9,7 +9,7 @@ namespace WinUI3Template.Core.Helpers;
 /// </summary>
 public partial class SystemHelper
 {
-    #region check window existence
+    #region Check Window Existence
 
     /// <summary>
     /// Check if window exists and show window.
