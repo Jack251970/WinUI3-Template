@@ -6,6 +6,10 @@ namespace WinUI3Template.Services;
 
 internal class PageService : IPageService
 {
+    public Type SettingPageType => typeof(SettingsPage);
+
+    public string SettingPageKey => typeof(SettingsPageViewModel).FullName!;
+
     private readonly Dictionary<string, Type> _pages = [];
 
     public PageService()

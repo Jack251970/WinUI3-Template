@@ -2,6 +2,10 @@
 
 public interface IPageService
 {
+    Type SettingPageType { get; }
+
+    string SettingPageKey { get; }
+
     Type GetPageType(string viewModel);
 
     string GetPageKey(Type pageType);
