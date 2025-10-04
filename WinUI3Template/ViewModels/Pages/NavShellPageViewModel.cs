@@ -28,13 +28,7 @@ public partial class NavShellPageViewModel : ObservableRecipient
         IsBackEnabled = NavigationService.CanGoBack;
 
         // Update the selected NavigationViewItem based on the page type
-        if (e.SourcePageType == typeof(SettingsPage))
-        {
-            Selected = NavigationViewService.SettingsItem;
-            return;
-        }
-
-        var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType);
+        var selectedItem = NavigationViewService.GetItem(e.SourcePageType);
         if (selectedItem != null)
         {
             Selected = selectedItem;

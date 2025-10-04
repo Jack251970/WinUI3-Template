@@ -6,9 +6,11 @@ namespace WinUI3Template.Services;
 
 // For more information on navigation between pages see
 // https://github.com/microsoft/TemplateStudio/blob/main/docs/WinUI/navigation.md
-internal class NavigationService(IPageService pageService) : INavigationService
+internal class NavigationService(INavigationViewService navigationViewService, IPageService pageService) : INavigationService
 {
+    private readonly INavigationViewService _navigationViewService = navigationViewService;
     private readonly IPageService _pageService = pageService;
+
     private object? _lastParameter;
     private Frame? _frame;
 
@@ -97,9 +99,10 @@ internal class NavigationService(IPageService pageService) : INavigationService
 
     public string? GetCurrentPageKey()
     {
-        if (_frame?.Content is Page page)
+        var type = GetCurrentPageType();
+        if (type != null)
         {
-            return _pageService.GetPageKey(page.GetType());
+            return _pageService.GetPageKey(type);
         }
 
         return null;
@@ -122,5 +125,34 @@ internal class NavigationService(IPageService pageService) : INavigationService
 
             Navigated?.Invoke(sender, e);
         }
+
+        // Update the contained NavigationViewItem based on the page type
+        var currentPageType = GetCurrentPageType();
+        if (currentPageType != null)
+        {
+            var containedPageKey = _pageService.GetSubpageKey(currentPageType);
+            if (containedPageKey != null)
+            {
+                var currentItem = _navigationViewService.GetSelectedItem();
+                if (currentItem != null)
+                {
+                    var currentItemKey = NavigationHelper.GetNavigateTo(currentItem);
+                    if (currentItemKey != null && currentItemKey != containedPageKey)
+                    {
+                        _navigationViewService.SetNavigateTo(containedPageKey);
+                    }
+                }
+            }
+        }
+    }
+
+    private Type? GetCurrentPageType()
+    {
+        if (_frame?.Content is Page page)
+        {
+            return page.GetType();
+        }
+
+        return null;
     }
 }

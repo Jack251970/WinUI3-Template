@@ -14,5 +14,9 @@ public interface INavigationViewService
 
     void UnregisterEvents();
 
-    NavigationViewItem? GetSelectedItem(Type pageType);
+    NavigationViewItem? GetSelectedItem();
+
+    void SetNavigateTo(string navigateTo);
+
+    NavigationViewItem? GetItem(Type pageType);
 }
