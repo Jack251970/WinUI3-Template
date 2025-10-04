@@ -1,9 +1,13 @@
 ﻿// Copyright (c) 2024 Jack251970
 // Licensed under the MIT License. See the LICENSE.
 
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using Microsoft.Windows.ApplicationModel.Resources;
+using WinUI3Template.Infrastructure;
 
 namespace WinUI3Template.Core.Extensions;
 

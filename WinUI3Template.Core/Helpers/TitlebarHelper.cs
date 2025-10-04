@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -7,6 +8,7 @@ using Windows.UI.ViewManagement;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
+using WinUI3Template.Core.Contracts.Services;
 using WinUIEx;
 
 namespace WinUI3Template.Core.Helpers;

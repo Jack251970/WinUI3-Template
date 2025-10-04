@@ -1,4 +1,8 @@
-﻿using Windows.Storage;
+﻿using System;
+using System.IO;
+using Windows.Storage;
+using WinUI3Template.Infrastructure;
+using WinUI3Template.Infrastructure.Helpers;
 
 namespace WinUI3Template.Core.Helpers;
 

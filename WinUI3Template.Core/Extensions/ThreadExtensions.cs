@@ -1,11 +1,16 @@
 ﻿// Copyright (c) 2024 Jack251970
 // Licensed under the MIT License. See the LICENSE.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Serilog;
+using WinUI3Template.Infrastructure.Helpers;
 
 namespace WinUI3Template.Core.Extensions;
 

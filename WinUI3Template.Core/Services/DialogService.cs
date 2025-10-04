@@ -1,6 +1,10 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using SuGarToolkit.Controls.Dialogs;
+using WinUI3Template.Core.Contracts.Services;
+using WinUI3Template.Core.Extensions;
 
 namespace WinUI3Template.Core.Services;
 

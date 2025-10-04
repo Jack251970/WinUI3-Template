@@ -1,4 +1,6 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System.Threading.Tasks;
+using Microsoft.UI.Xaml;
+using WinUI3Template.Core.Services;
 
 namespace WinUI3Template.Core.Contracts.Services;
 

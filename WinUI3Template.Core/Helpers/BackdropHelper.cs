@@ -1,6 +1,7 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Windows.UI.Composition;
+using WinUI3Template.Core.Models;
 using WinUIEx;
 
 namespace WinUI3Template.Core.Helpers;
