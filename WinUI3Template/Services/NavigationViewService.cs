@@ -12,7 +12,9 @@ internal class NavigationViewService(INavigationService navigationService, IPage
 
     private NavigationView? _navigationView;
 
-    public IList<object>? MenuItems => _navigationView?.MenuItems;
+    public IList<object> MenuItems => _navigationView?.MenuItems ?? [];
+
+    public IList<object> FooterMenuItems => _navigationView?.FooterMenuItems ?? [];
 
     public object? SettingsItem => _navigationView?.SettingsItem;
 

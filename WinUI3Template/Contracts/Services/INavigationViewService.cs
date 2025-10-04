@@ -6,6 +6,8 @@ public interface INavigationViewService
 {
     IList<object>? MenuItems { get; }
 
+    IList<object> FooterMenuItems { get; }
+
     object? SettingsItem { get; }
 
     void Initialize(NavigationView navigationView);
