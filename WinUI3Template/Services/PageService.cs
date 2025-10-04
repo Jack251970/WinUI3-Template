@@ -11,12 +11,17 @@ internal class PageService : IPageService
     public string SettingPageKey => typeof(SettingsPageViewModel).FullName!;
 
     private readonly Dictionary<string, Type> _pages = [];
+    private readonly Dictionary<Type, Type> _subpages = [];
 
     public PageService()
     {
         // Main Window Pages
         Configure<HomePageViewModel, HomePage>();
         Configure<SettingsPageViewModel, SettingsPage>();
+        // TODO: Add pages here
+
+        // Main Window Subpages
+        // TODO: Add subpages here
     }
 
     public Type GetPageType(string viewModel)
@@ -65,6 +70,37 @@ internal class PageService : IPageService
             }
 
             _pages.Add(viewModel, view);
+        }
+    }
+
+    public string? GetSubpageKey(Type pageType)
+    {
+        Type? subpageType;
+        lock (_subpages)
+        {
+            if (!_subpages.TryGetValue(pageType, out subpageType))
+            {
+                return null;
+            }
+        }
+
+        return GetPageKey(subpageType);
+    }
+
+    private void ConfigureSubpage<V, SV>()
+        where V : Page
+        where SV : Page
+    {
+        lock (_subpages)
+        {
+            var pageType = typeof(V);
+            if (_subpages.ContainsKey(pageType))
+            {
+                throw new ArgumentException($"The type {pageType} is already configured in PageService!");
+            }
+
+            var subpageType = typeof(SV);
+            _subpages.Add(pageType, subpageType);
         }
     }
 }
