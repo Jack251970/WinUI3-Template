@@ -3,7 +3,6 @@ global using WinUIEx;
 
 // WinUI3Template
 global using WinUI3Template.Activation;
-global using WinUI3Template.Behaviors;
 global using WinUI3Template.Contracts.Services;
 global using WinUI3Template.Contracts.ViewModels;
 global using WinUI3Template.Extensions;
