@@ -23,14 +23,14 @@ internal class MonitorInfo
     {
         var monitorCount = PInvoke.GetSystemMetrics(SYSTEM_METRICS_INDEX.SM_CMONITORS);
         var list = new List<MonitorInfo>(monitorCount);
-        var callback = new MONITORENUMPROC((HMONITOR monitor, HDC deviceContext, RECT* rect, LPARAM data) =>
+        var callback = new MONITORENUMPROC((monitor, deviceContext, rect, data) =>
         {
             list.Add(new MonitorInfo(monitor, rect));
             return true;
         });
         var dwData = new LPARAM();
         var hdc = new HDC();
-        bool ok = PInvoke.EnumDisplayMonitors(hdc, (RECT?)null, callback, dwData);
+        bool ok = PInvoke.EnumDisplayMonitors(hdc, null, callback, dwData);
         if (!ok)
         {
             Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());
@@ -47,7 +47,7 @@ internal class MonitorInfo
     {
         var nearestMonitor = PInvoke.MonitorFromWindow(new(hwnd), MONITOR_FROM_FLAGS.MONITOR_DEFAULTTONEAREST);
         MonitorInfo? nearestMonitorInfo = null;
-        var callback = new MONITORENUMPROC((HMONITOR monitor, HDC deviceContext, RECT* rect, LPARAM data) =>
+        var callback = new MONITORENUMPROC((monitor, deviceContext, rect, data) =>
         {
             if (monitor == nearestMonitor)
             {
@@ -58,7 +58,7 @@ internal class MonitorInfo
         });
         var dwData = new LPARAM();
         var hdc = new HDC();
-        bool ok = PInvoke.EnumDisplayMonitors(hdc, (RECT?)null, callback, dwData);
+        bool ok = PInvoke.EnumDisplayMonitors(hdc, null, callback, dwData);
         if (!ok)
         {
             Marshal.ThrowExceptionForHR(Marshal.GetLastWin32Error());

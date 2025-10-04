@@ -1,5 +1,4 @@
-﻿using System;
-using Windows.Win32;
+﻿using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.UI.WindowsAndMessaging;
 
@@ -18,7 +17,7 @@ public partial class SystemHelper
     public static bool IsWindowExist(string? className, string? windowName, bool showWindow)
     {
         var hwnd = PInvoke.FindWindow(className, windowName);
-        if (hwnd != IntPtr.Zero)
+        if (hwnd != HWND.Null)
         {
             if (showWindow)
             {

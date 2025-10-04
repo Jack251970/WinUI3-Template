@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml.Controls;
 using Windows.Graphics;
 using Windows.UI.ViewManagement;
 using Windows.Win32;
+using WinUIEx;
 
 namespace WinUI3Template.Views.Windows;
 

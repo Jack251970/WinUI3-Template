@@ -15,7 +15,7 @@ public static class JsonHelper
         if (jsonElement.ValueKind == JsonValueKind.String)
         {
             return jsonElement.GetString() ?? string.Empty;
-        };
+        }
 
         return string.Empty;
     }
