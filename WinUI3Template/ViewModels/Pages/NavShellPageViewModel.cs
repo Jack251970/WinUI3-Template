@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-
 using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUI3Template.ViewModels.Pages;
@@ -14,26 +13,28 @@ public partial class NavShellPageViewModel : ObservableRecipient
 
     public INavigationService NavigationService { get; }
 
-    public INavigationViewService ShellService { get; }
+    public INavigationViewService NavigationViewService { get; }
 
     public NavShellPageViewModel(INavigationService navigationService, INavigationViewService shellService)
     {
         NavigationService = navigationService;
+        NavigationViewService = shellService;
         NavigationService.Navigated += OnNavigated;
-        ShellService = shellService;
     }
 
     private void OnNavigated(object sender, NavigationEventArgs e)
     {
+        // Update the back button status
         IsBackEnabled = NavigationService.CanGoBack;
 
+        // Update the selected NavigationViewItem based on the page type
         if (e.SourcePageType == typeof(SettingsPage))
         {
-            Selected = ShellService.SettingsItem;
+            Selected = NavigationViewService.SettingsItem;
             return;
         }
 
-        var selectedItem = ShellService.GetSelectedItem(e.SourcePageType);
+        var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType);
         if (selectedItem != null)
         {
             Selected = selectedItem;

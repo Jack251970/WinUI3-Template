@@ -24,7 +24,7 @@ public sealed partial class NavShellPage : Page
 #endif
 
         ViewModel.NavigationService.Frame = ShellFrame;
-        ViewModel.ShellService.Initialize(NavigationViewControl);
+        ViewModel.NavigationViewService.Initialize(NavigationViewControl);
 
         // A custom title bar is required for full window theme and Mica support.
         // https://docs.microsoft.com/windows/apps/develop/title-bar?tabs=winui3#full-customization
