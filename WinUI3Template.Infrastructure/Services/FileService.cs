@@ -1,5 +1,11 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.IO;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Serilog;
+using WinUI3Template.Infrastructure.Contracts.Services;
+using WinUI3Template.Infrastructure.Helpers;
 
 namespace WinUI3Template.Infrastructure.Services;
 
@@ -85,5 +91,15 @@ public class FileService : IFileService
         }
 
         return Path.Combine(folderPath, fileName);
+    }
+
+    Task<T?> IFileService.ReadAsync<T>(string folderPath, string fileName, JsonSerializerOptions? jsonSerializerSettings) where T : default
+    {
+        throw new System.NotImplementedException();
+    }
+
+    Task<string?> IFileService.SaveAsync<T>(string folderPath, string fileName, T content, bool indent)
+    {
+        throw new System.NotImplementedException();
     }
 }

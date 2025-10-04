@@ -1,4 +1,7 @@
-﻿namespace WinUI3Template.Infrastructure;
+﻿using System;
+using System.IO;
+
+namespace WinUI3Template.Infrastructure;
 
 public static class Constants
 {

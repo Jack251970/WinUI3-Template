@@ -1,4 +1,6 @@
-﻿namespace WinUI3Template.Infrastructure.Helpers;
+﻿using System;
+
+namespace WinUI3Template.Infrastructure.Helpers;
 
 public class ExceptionFormatter
 {

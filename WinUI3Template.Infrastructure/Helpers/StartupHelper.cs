@@ -1,4 +1,7 @@
-﻿using System.Security.Principal;
+﻿using System;
+using System.Linq;
+using System.Security.Principal;
+using System.Threading.Tasks;
 using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 using Windows.ApplicationModel;

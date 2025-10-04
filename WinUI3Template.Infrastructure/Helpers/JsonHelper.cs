@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace WinUI3Template.Infrastructure.Helpers;
 
@@ -14,8 +15,7 @@ public static class JsonHelper
         if (jsonElement.ValueKind == JsonValueKind.String)
         {
             return jsonElement.GetString() ?? string.Empty;
-        }
-        ;
+        };
 
         return string.Empty;
     }

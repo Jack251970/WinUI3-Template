@@ -10,7 +10,6 @@
     <!-- AOT Settings -->
     <IsAotCompatible>false</IsAotCompatible>
     <!-- Other Settings -->
-    <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
